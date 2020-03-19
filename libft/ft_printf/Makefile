@@ -6,7 +6,7 @@
 #    By: osalmine <osalmine@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/12/18 12:39:52 by osalmine          #+#    #+#              #
-#    Updated: 2020/02/05 12:20:33 by osalmine         ###   ########.fr        #
+#    Updated: 2020/03/19 21:24:07 by osalmine         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,11 +24,9 @@ $(NAME):
 	@gcc $(FLAGS) -I$(INCLUDE) -c $(SOURCE)
 	@ar rc $(NAME) $(OBJ)
 	@ranlib $(NAME)
-	@echo "Compiled $(NAME)"
 
 clean:
 	@rm -f $(OBJ)
-	@echo Cleaned
 
 fclean: clean
 	@rm -f $(NAME)

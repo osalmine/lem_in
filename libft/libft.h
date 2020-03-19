@@ -6,7 +6,7 @@
 /*   By: osalmine <osalmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/24 14:53:46 by osalmine          #+#    #+#             */
-/*   Updated: 2020/02/05 12:19:06 by osalmine         ###   ########.fr       */
+/*   Updated: 2020/03/19 21:05:01 by osalmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 # include <string.h>
 # include <stdlib.h>
 # include "get_next_line.h"
-# include "ft_printf/ft_printf"
+# include "ft_printf/ft_printf.h"
 
 typedef struct		s_list
 {
@@ -37,6 +37,7 @@ int					ft_abs(int n);
 int					ft_atoi(const char *str);
 void				ft_bzero(void *s, size_t n);
 char				*ft_dtoa(long double n, int precision);
+void				ft_exit(char *str);
 char				*ft_itoa(int n);
 char				*ft_itoa_base(long long num, long long base, char up_lo);
 void				ft_itoa_base_s(long long num,
