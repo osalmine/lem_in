@@ -6,7 +6,7 @@
 #    By: osalmine <osalmine@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/10/24 14:46:14 by osalmine          #+#    #+#              #
-#    Updated: 2020/02/05 12:15:26 by osalmine         ###   ########.fr        #
+#    Updated: 2020/03/19 21:23:59 by osalmine         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,7 +24,7 @@ SOURCE = ft_atoi.c ft_bzero.c ft_isalnum.c ft_isalpha.c ft_isascii.c \
 		 ft_strnstr.c ft_strrchr.c ft_strsplit.c ft_strstr.c ft_strsub.c \
 		 ft_strtrim.c ft_tolower.c ft_toupper.c ft_isblank.c ft_islower.c \
 		 ft_isupper.c ft_words.c ft_nbs.c ft_strchri.c ft_dtoa.c ft_abs.c \
-		 ft_itoa_base.c get_next_line.c
+		 ft_itoa_base.c get_next_line.c ft_exit.c
 OBJ = $(SOURCE:%.c=%.o)
 INCLUDE = libft.h
 FLAGS = -Wall -Werror -Wextra
@@ -45,12 +45,10 @@ $(NAME): $(INCLUDE) $(SOURCE)
 clean:
 	@make -C $(PRINTF_DIR) clean
 	@rm -f $(OBJ)
-	@echo "Cleaned obj files"
 
 fclean: clean
 	@make -C $(PRINTF_DIR) fclean
 	@rm -f $(NAME)
-	@echo "Cleaned $(NAME)"
 
 re: fclean all
 	@make -C $(PRINTF_DIR) re
