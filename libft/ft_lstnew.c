@@ -6,7 +6,7 @@
 /*   By: osalmine <osalmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/30 13:47:39 by osalmine          #+#    #+#             */
-/*   Updated: 2019/10/30 17:34:28 by osalmine         ###   ########.fr       */
+/*   Updated: 2020/06/16 23:28:47 by osalmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ t_list	*ft_lstnew(void const *content, size_t content_size)
 	}
 	else
 	{
-		list->content = malloc(sizeof(content));
+		list->content = malloc(content_size);
 		if (!list->content)
 		{
 			free(list);

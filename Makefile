@@ -6,18 +6,16 @@
 #    By: osalmine <osalmine@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/03/19 19:13:02 by osalmine          #+#    #+#              #
-#    Updated: 2020/03/19 21:24:38 by osalmine         ###   ########.fr        #
+#    Updated: 2020/06/19 19:50:18 by osalmine         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = lem_in
 
-ECHO = echo
-
 FLAGS = -Wall -Werror -Wextra
 
 SOURCES_DIR = ./src/
-SOURCES_FILE = lem_in.c parse.c
+SOURCES_FILE = lem_in.c init.c read.c flags.c free.c find.c
 SOURCES = $(addprefix $(SOURCES_DIR), $(SOURCES_FILE))
 
 HEADERS_LIST = lem.h
@@ -36,16 +34,14 @@ OBJECTS	= $(addprefix $(OBJECTS_DIR), $(OBJECTS_FILE))
 
 $(NAME): all
 
-all: $(LIBFT) $(OBJECTS_DIR) $(ECHO) $(OBJECTS)
+all: $(LIBFT) $(OBJECTS_DIR) $(OBJECTS)
 	gcc $(FLAGS) $(LIBRARIES) $(INCLUDES) $(OBJECTS) -o $(NAME)
-	@echo "Ok"
 
 $(OBJECTS_DIR):
 	mkdir -p $(OBJECTS_DIR)
 	@echo "$(OBJECTS_DIR) was created"
 
 $(OBJECTS_DIR)%.o : $(SOURCES_DIR)%.c $(HEADERS)
-	@echo "OK"
 	gcc $(FLAGS) -c $(INCLUDES) $< -o $@
 	@echo ". \c"
 

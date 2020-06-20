@@ -6,7 +6,7 @@
 /*   By: osalmine <osalmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/08 08:41:16 by osalmine          #+#    #+#             */
-/*   Updated: 2020/02/05 12:20:08 by osalmine         ###   ########.fr       */
+/*   Updated: 2020/06/16 23:10:23 by osalmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,13 @@
 # include <stdarg.h>
 # include "../libft.h"
 
-# define TRUE 1
-# define FALSE 0
+# ifndef TRUE_FALSE
+#  define TRUE_FALSE
+
+#  define TRUE	1
+#  define FALSE	0
+
+# endif
 
 # define RED "\x1b[31m"
 # define GREEN "\x1b[32m"
