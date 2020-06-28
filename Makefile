@@ -6,11 +6,11 @@
 #    By: osalmine <osalmine@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/03/19 19:13:02 by osalmine          #+#    #+#              #
-#    Updated: 2020/06/19 19:50:18 by osalmine         ###   ########.fr        #
+#    Updated: 2020/06/28 23:46:15 by osalmine         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME = lem_in
+NAME = lem-in
 
 FLAGS = -Wall -Werror -Wextra
 

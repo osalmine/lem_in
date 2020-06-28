@@ -6,7 +6,7 @@
 /*   By: osalmine <osalmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/30 22:20:06 by osalmine          #+#    #+#             */
-/*   Updated: 2020/06/20 23:52:16 by osalmine         ###   ########.fr       */
+/*   Updated: 2020/06/28 23:47:48 by osalmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,29 +54,18 @@ static void read_link(t_lem *lem, char *line)
 	int		i;
 
 	room_links = ft_strsplit(line, '-');
-	ft_printf("Room links: %la\n", room_links);
-	ft_printf("Line in read link: %s\n", line);
 	i = 0;
 	while (room_links[i])
 	{
 		room = find_room(room_links[i], lem);
 		if (room)
 		{
-			if (!room->paths)
-			{
-				ft_printf("No paths for room %s\n", room->name);
-				if (!(room->paths = (t_list*)malloc(sizeof(t_list))))
-					ft_exit("Malloc error\n");
-			}
 			if (!(path = (t_path*)malloc(sizeof(t_path))))
 				ft_exit("Malloc error\n");
 			path->room1 = ft_strdup(room->name);
-			ft_printf("room_links[%i]: %s\n", i, room_links[i]);
-			path->room2 = ft_strdup(room_links[i]);
-			ft_printf("path->room2: %s\n", path->room2);
-			ft_lstadd(&room->paths, ft_lstnew(path, (sizeof(path))));
-			// free(room->name);
-			// room->name = ft_strdup("5");
+			path->room2 = ft_strdup(room_links[i ? 0 : 1]);
+			ft_lstadd(&room->paths, ft_lstnew(path, (sizeof(path) * 2)));
+			ft_lstadd(&lem->path_list, ft_lstnew(path, (sizeof(path) * 2)));
 		}
 		i++;
 	}
@@ -110,20 +99,5 @@ void		lem_read(t_lem *lem)
 		}
 		ft_printf("%s\n", line);
 		free(line);
-	}
-	ft_printf("number of ants: %d\n", lem->ant_nb);
-	while (lem->room_list->next)
-	{
-		t_room *new_room;
-		t_path *path;
-		new_room = (t_room*)lem->room_list->content;
-		ft_printf("Room name: %s, room type: %d, x: %d, y: %d, visited: %d, has_ant: %d\n", new_room->name, new_room->type, new_room->x, new_room->y, new_room->visited, new_room->has_ant);
-		while (new_room->paths->next)
-		{
-			path = (t_path*)new_room->paths->content;
-			ft_printf("Path room1: %s, room2: %s\n", path->room1, path->room2);
-			new_room->paths = new_room->paths->next;
-		}
-		lem->room_list = lem->room_list->next;
 	}
 }

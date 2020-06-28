@@ -6,7 +6,7 @@
 /*   By: osalmine <osalmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/19 19:01:54 by osalmine          #+#    #+#             */
-/*   Updated: 2020/06/20 21:20:59 by osalmine         ###   ########.fr       */
+/*   Updated: 2020/06/25 23:34:06 by osalmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,6 +93,7 @@ typedef struct	s_ant
 **	ant_nb: total ant amount
 **	ants: list of all ants represented as t_ant struct
 **	room_list: list of all rooms represented as t_room struct
+**	path_list: list of all the paths
 **	opts: options struct
 */
 
@@ -101,6 +102,7 @@ typedef struct	s_lem
 	int		ant_nb;
 	t_list	*ants;
 	t_list	*room_list;
+	t_list	*path_list;
 	t_opts	*opts;
 }				t_lem;
 
