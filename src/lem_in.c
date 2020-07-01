@@ -6,7 +6,7 @@
 /*   By: osalmine <osalmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/19 19:01:44 by osalmine          #+#    #+#             */
-/*   Updated: 2020/06/30 20:26:39 by osalmine         ###   ########.fr       */
+/*   Updated: 2020/07/01 15:04:40 by osalmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,6 @@ int	main(int argc, char **argv)
 {
 	t_lem	*lem;
 
-	char red[] = "\x1b[31m";
-	ft_printf(RED"RED\n"RESET);
 	lem = lem_init(argc, argv);
 	if (lem->opts->debug)
 	{
@@ -25,7 +23,7 @@ int	main(int argc, char **argv)
 		t_lem *lem_tmp;
 		t_path *path;
 		lem_tmp = lem;
-		while (lem_tmp->room_list->next)
+		while (lem_tmp->room_list)
 		{
 			t_room *new_room;
 			new_room = (t_room*)lem_tmp->room_list->content;
@@ -33,7 +31,7 @@ int	main(int argc, char **argv)
 			t_list *tmp;
 
 			tmp = new_room->paths;
-			while (tmp && tmp->next)
+			while (tmp)
 			{
 				path = (t_path*)tmp->content;
 				ft_printf("Path room1: %s, room2: %s\n", path->room1, path->room2);
@@ -43,7 +41,7 @@ int	main(int argc, char **argv)
 		}
 		ft_printf(RED"LEM PATH LIST:\n"RESET);
 		lem_tmp = lem;
-		while (lem_tmp->path_list->next)
+		while (lem_tmp->path_list)
 		{
 			path = (t_path*)lem_tmp->path_list->content;
 			ft_printf("Path room1: %s, room2: %s\n", path->room1, path->room2);

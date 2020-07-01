@@ -6,7 +6,7 @@
 /*   By: osalmine <osalmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/19 19:01:54 by osalmine          #+#    #+#             */
-/*   Updated: 2020/06/29 00:14:43 by osalmine         ###   ########.fr       */
+/*   Updated: 2020/07/01 13:47:42 by osalmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ typedef struct	s_options
 }				t_opts;
 
 /*
-**	Struct to see to what the room is connected to
+**	Struct to see where the room is connected to
 **	room1: first door
 **	room2: second door
 */
@@ -59,8 +59,9 @@ typedef struct	s_path
 **	x: x-coordiante
 **	y: y-coordinate
 **	has_ant: TRUE (=1) if room has ant, else FALSE (=0)
-**	type: room's type. START (=1) if room is starting room, END (=2) if room is goal room, else NORMAL (=0)
-**	path: previous and next room based on t_path struct
+**	type: room's type. START (=1) if room is starting room,
+**		END (=2) if room is goal room, else NORMAL (=0)
+**	path: list of connections to the room
 */
 
 typedef struct	s_room
@@ -106,11 +107,27 @@ typedef struct	s_lem
 	t_opts	*opts;
 }				t_lem;
 
+/*
+**	Init and read functions
+*/
+
 t_lem	*lem_init(int ac, char **av);
 void	lem_flags(t_lem *lem, int ac, char **av);
 void	lem_read(t_lem *lem);
 void	free_strsplit(char ***str);
-t_room  *find_room(char *name, t_lem *lem);
-void    guide_ants(t_lem *lem);
+void	init_ants(t_lem *lem);
+
+/*
+**	Finding functions
+*/
+
+t_room	*find_room(char *name, t_lem *lem);
+t_room  *find_room_by_type(int type, t_lem *lem);
+
+/*
+**	Pathfinding functions
+*/
+
+void	guide_ants(t_lem *lem);
 
 #endif

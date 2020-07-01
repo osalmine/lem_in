@@ -6,7 +6,7 @@
 #    By: osalmine <osalmine@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/10/24 14:46:14 by osalmine          #+#    #+#              #
-#    Updated: 2020/06/26 15:08:36 by osalmine         ###   ########.fr        #
+#    Updated: 2020/07/01 12:12:51 by osalmine         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,7 +24,7 @@ SOURCE = ft_atoi.c ft_bzero.c ft_isalnum.c ft_isalpha.c ft_isascii.c \
 		 ft_strnstr.c ft_strrchr.c ft_strsplit.c ft_strstr.c ft_strsub.c \
 		 ft_strtrim.c ft_tolower.c ft_toupper.c ft_isblank.c ft_islower.c \
 		 ft_isupper.c ft_words.c ft_nbs.c ft_strchri.c ft_dtoa.c ft_abs.c \
-		 ft_itoa_base.c get_next_line.c ft_exit.c
+		 ft_itoa_base.c get_next_line.c ft_exit.c ft_lstaddlast.c
 OBJ = $(SOURCE:%.c=%.o)
 INCLUDE = libft.h
 FLAGS = -Wall -Werror -Wextra

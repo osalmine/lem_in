@@ -1,19 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstadd.c                                        :+:      :+:    :+:   */
+/*   ft_lstaddlast.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: osalmine <osalmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/10/30 15:32:36 by osalmine          #+#    #+#             */
-/*   Updated: 2020/07/01 11:16:07 by osalmine         ###   ########.fr       */
+/*   Created: 2020/07/01 12:10:35 by osalmine          #+#    #+#             */
+/*   Updated: 2020/07/01 12:18:24 by osalmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_lstadd(t_list **alst, t_list *new)
+void	ft_lstaddlast(t_list **alst, t_list *new)
 {
-	new->next = *alst;
-	*alst = new;
+    t_list *tmp;
+
+    if (alst && *alst)
+    {
+        tmp = *alst;
+        while (tmp->next)
+            tmp = tmp->next;
+        tmp->next = new;
+    }
+    else if (alst)
+        *alst = new;
 }
