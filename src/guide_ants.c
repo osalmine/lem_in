@@ -6,7 +6,7 @@
 /*   By: osalmine <osalmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/29 00:13:34 by osalmine          #+#    #+#             */
-/*   Updated: 2020/07/01 14:31:36 by osalmine         ###   ########.fr       */
+/*   Updated: 2020/07/01 17:51:29 by osalmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,14 +43,55 @@ static char **create_que(t_lem *lem)
 	return (que);
 }
 
+static void	push_to_que(char ***que, char *room)
+{
+	int i;
+
+	i = 0;
+	while (*que[i])
+		i++;
+	*que[i] = room;
+}
+
+static char	**solve(t_room *start, t_lem *lem)
+{
+	char	**prev;
+	char	**que;
+	t_room	*node;
+	int		i;
+
+	i = 0;
+	que = create_que(lem);
+	prev = create_que(lem);
+	start->visited = TRUE;
+	push_to_que(&que, start->name);
+	ft_printf("Que: %a\n", que);
+	while (que[i] != NULL)
+	{
+		node = find_room(que[i], lem);
+		i++;
+	}
+	free_strsplit(&que);
+	return (prev);
+}
+
+static char	**bfs(t_room *start, t_room *end, t_lem *lem)
+{
+	char **prev;
+
+	prev = solve(start, lem);
+	// return (reconstruct_path(start, end, prev));
+	end = NULL;
+	return (prev);
+}
+
 void    guide_ants(t_lem *lem)
 {
 	t_room  *start;
-	char	**que;
+	t_room	*end;
+	char	**path;
 
 	start = find_room_by_type(START, lem);
-	start->visited = TRUE;
-	que = create_que(lem);
-	
-	free_strsplit(&que);
+	end = find_room_by_type(END, lem);
+	path = bfs(start, end, lem);
 }
