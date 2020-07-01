@@ -6,7 +6,7 @@
 /*   By: osalmine <osalmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/30 22:36:00 by osalmine          #+#    #+#             */
-/*   Updated: 2020/06/16 20:27:31 by osalmine         ###   ########.fr       */
+/*   Updated: 2020/06/29 00:18:05 by osalmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static void	display_help(void)
 {
-	ft_exit("Help message for lem_in. -d flag is for debug, -h is to see this");
+	ft_exit("Help message for lem_in. -d (--debug) flag is for debug, -h (--help) is to see this.");
 }
 
 void		lem_flags(t_lem *lem, int ac, char **av)
@@ -28,9 +28,9 @@ void		lem_flags(t_lem *lem, int ac, char **av)
 		i++;
 		if (ft_strequ(av[i], "--help"))
 			display_help();
-		if (ft_strequ(av[i], "--debug"))
+		else if (ft_strequ(av[i], "--debug"))
 			lem->opts->debug = TRUE;
-		if (av[i][0] == '-')
+		else if (av[i][0] == '-')
 		{
 			j = 1;
 			while (av[i][j] && !ft_isblank(av[i][j]))

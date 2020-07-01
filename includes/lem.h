@@ -6,7 +6,7 @@
 /*   By: osalmine <osalmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/19 19:01:54 by osalmine          #+#    #+#             */
-/*   Updated: 2020/06/25 23:34:06 by osalmine         ###   ########.fr       */
+/*   Updated: 2020/06/29 00:14:43 by osalmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,5 +111,6 @@ void	lem_flags(t_lem *lem, int ac, char **av);
 void	lem_read(t_lem *lem);
 void	free_strsplit(char ***str);
 t_room  *find_room(char *name, t_lem *lem);
+void    guide_ants(t_lem *lem);
 
 #endif
