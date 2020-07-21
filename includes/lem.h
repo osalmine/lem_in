@@ -6,7 +6,7 @@
 /*   By: osalmine <osalmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/19 19:01:54 by osalmine          #+#    #+#             */
-/*   Updated: 2020/07/01 13:47:42 by osalmine         ###   ########.fr       */
+/*   Updated: 2020/07/08 20:55:39 by osalmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ typedef struct	s_path
 /*
 **	Struct for each room
 **	name: room's name
+**	id: unique number id
 **	visited: if the room has been visited by the search algo that turn
 **	x: x-coordiante
 **	y: y-coordinate
@@ -67,6 +68,7 @@ typedef struct	s_path
 typedef struct	s_room
 {
 	char	*name;
+	int		id;
 	int		visited;
 	int		x;
 	int		y;
@@ -123,6 +125,7 @@ void	init_ants(t_lem *lem);
 
 t_room	*find_room(char *name, t_lem *lem);
 t_room  *find_room_by_type(int type, t_lem *lem);
+int     find_from_que(char **que, char *name);
 
 /*
 **	Pathfinding functions

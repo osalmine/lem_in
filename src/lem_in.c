@@ -6,7 +6,7 @@
 /*   By: osalmine <osalmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/19 19:01:44 by osalmine          #+#    #+#             */
-/*   Updated: 2020/07/01 15:04:40 by osalmine         ###   ########.fr       */
+/*   Updated: 2020/07/08 20:58:05 by osalmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int	main(int argc, char **argv)
 		{
 			t_room *new_room;
 			new_room = (t_room*)lem_tmp->room_list->content;
-			ft_printf("Room name: %s, room type: %d, x: %d, y: %d, visited: %d, has_ant: %d\n", new_room->name, new_room->type, new_room->x, new_room->y, new_room->visited, new_room->has_ant);
+			ft_printf("Room name: %s, id: %d, room type: %d, x: %d, y: %d, visited: %d, has_ant: %d\n", new_room->name, new_room->id, new_room->type, new_room->x, new_room->y, new_room->visited, new_room->has_ant);
 			t_list *tmp;
 
 			tmp = new_room->paths;
