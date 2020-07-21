@@ -6,7 +6,7 @@
 /*   By: osalmine <osalmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/29 00:13:34 by osalmine          #+#    #+#             */
-/*   Updated: 2020/07/08 21:47:23 by osalmine         ###   ########.fr       */
+/*   Updated: 2020/07/21 13:49:09 by osalmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ static char **create_que(t_lem *lem)
 	return (que);
 }
 
-static void	push_to_que(char **que, char *room)
+static void	push_to_arr(char **que, char *room)
 {
 	int i;
 
@@ -53,44 +53,9 @@ static void	push_to_que(char **que, char *room)
 	que[i] = ft_strdup(room);
 }
 
-static char	**solve(t_room *start, t_lem *lem)
-{
-	char	**prev;
-	char	**que;
-	t_room	*node;
-	t_room	*neighbor;
-	t_path	*path;
-	int		i;
-
-	i = 0;
-	que = create_que(lem);
-	prev = create_que(lem);
-	start->visited = TRUE;
-	push_to_que(que, start->name);
-	while (que[i] != NULL)
-	{
-		node = find_room(que[i], lem);
-		while (node->paths)
-		{
-			path = (t_path*)node->paths->content;
-			neighbor = find_room(path->room2, lem);
-			if (!neighbor->visited && !find_from_que(que, neighbor->name))
-			{
-				push_to_que(que, neighbor->name);
-				neighbor->visited = TRUE;
-				prev[neighbor->id] = ft_strdup(node->name);
-			}
-			node->paths = node->paths->next;
-		}
-		i++;
-	}
-	free_strsplit(&que);
-	return (prev);
-}
-
 static char **arr_reverse(char **arr)
 {
-	char	**tmp;
+	char	**new_arr;
 	int		count;
 	int		start;
 
@@ -98,18 +63,51 @@ static char **arr_reverse(char **arr)
 	start = 0;
 	while (arr[count])
 		count++;
-	ft_printf("Count: %d\n", count);
-	if (!(tmp = (char**)malloc(sizeof(char*) * count)))
+	if (!(new_arr = (char**)malloc(sizeof(char*) * (count + 1))))
 		ft_exit("Malloc error");
-	tmp[count] = NULL;
+	new_arr[count] = NULL;
 	while (count)
-	{
-		tmp[start] = ft_strdup(arr[count - 1]);
-		start++;
-		count--;
-	}
+		new_arr[start++] = ft_strdup(arr[(count--) - 1]);
 	free_strsplit(&arr);
-	return (tmp);
+	return (new_arr);
+}
+
+static char	**solve(t_room *start, t_lem *lem)
+{
+	char	**prev;
+	char	**que;
+	t_room	*node;
+	t_room	*neighbor;
+	t_path	*path;
+	t_list	*tmp;
+	int		i;
+
+	i = 0;
+	que = create_que(lem);
+	prev = create_que(lem);
+	start->visited = TRUE;
+	push_to_arr(que, start->name);
+	while (que[i] != NULL)
+	{
+		node = find_room(que[i], lem);
+		tmp = node->paths;
+		while (tmp)
+		{
+			ft_printf("Node: %s\n", node->name);
+			path = (t_path*)tmp->content;
+			neighbor = find_room(path->room2, lem);
+			if (!neighbor->visited && !find_from_que(que, neighbor->name) && !neighbor->has_ant)
+			{
+				push_to_arr(que, neighbor->name);
+				neighbor->visited = TRUE;
+				prev[neighbor->id] = ft_strdup(node->name);
+			}
+			tmp = tmp->next;
+		}
+		i++;
+	}
+	free_strsplit(&que);
+	return (prev);
 }
 
 static char **reconstruct_path(t_room *start, t_room* end, char **prev, t_lem *lem)
@@ -121,7 +119,7 @@ static char **reconstruct_path(t_room *start, t_room* end, char **prev, t_lem *l
 	current = end;
 	while (current != NULL)
 	{
-		push_to_que(path, current->name);
+		push_to_arr(path, current->name);
 		current = find_room(prev[current->id], lem);
 	}
 	path = arr_reverse(path);
@@ -138,7 +136,21 @@ static char	**bfs(t_room *start, t_room *end, t_lem *lem)
 	return (reconstruct_path(start, end, prev, lem));
 }
 
-void    guide_ants(t_lem *lem)
+static void	reset_rooms(t_lem *lem)
+{
+	t_list	*tmp;
+	t_room	*room;
+
+	tmp = lem->room_list;
+	while (tmp)
+	{
+		room = (t_room*)tmp->content;
+		room->visited = FALSE;
+		tmp = tmp->next;
+	}
+}
+
+void		guide_ants(t_lem *lem)
 {
 	t_room  *start;
 	t_room	*end;
@@ -146,9 +158,15 @@ void    guide_ants(t_lem *lem)
 
 	start = find_room_by_type(START, lem);
 	end = find_room_by_type(END, lem);
-	path = bfs(start, end, lem);
-	if (path != NULL)
+	while (end->has_ant != lem->ant_nb)
+	{
+		path = bfs(start, end, lem);
+			if (path != NULL)
 		ft_printf(BLUE"SHORTEST PATH: %la\n"RESET, path);
-	else
-		ft_printf("NULL return from bfs\n");
+		else
+			ft_printf(RED"ERROR: No path found\n"RESET);
+		reset_rooms(lem);
+		free_strsplit(&path);
+		end->has_ant++;
+	}
 }

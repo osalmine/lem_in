@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_lstmap.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: osalmine <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: osalmine <osalmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/30 15:57:27 by osalmine          #+#    #+#             */
-/*   Updated: 2020/01/24 13:27:48 by osalmine         ###   ########.fr       */
+/*   Updated: 2020/07/21 10:51:15 by osalmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ t_list	*ft_lstmap(t_list *lst, t_list *(*f)(t_list *elem))
 	if (lst)
 	{
 		start = f(ft_lstnew(lst->content, lst->content_size));
-		if (!start)	
+		if (!start)
 			return (NULL);
 		elem = start;
 		while ((lst = lst->next))

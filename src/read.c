@@ -6,7 +6,7 @@
 /*   By: osalmine <osalmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/30 22:20:06 by osalmine          #+#    #+#             */
-/*   Updated: 2020/07/07 20:09:27 by osalmine         ###   ########.fr       */
+/*   Updated: 2020/07/21 13:53:09 by osalmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,10 @@ static void	read_room(t_lem *lem, char *line, int room_type)
 	room->x = ft_atoi(room_arr[1]);
 	room->y = ft_atoi(room_arr[2]);
 	room->visited = FALSE;
-	room->has_ant = FALSE;
+	if (room_type == START)
+		room->has_ant = lem->ant_nb;
+	else
+		room->has_ant = FALSE;
 	room->type = room_type;
 	room->paths = NULL;
 	free_strsplit(&room_arr);
@@ -97,7 +100,7 @@ void		lem_read(t_lem *lem)
 			else
 				read_link(lem, line);
 		}
-		ft_printf("%s\n", line);
+		ft_putendl(line);
 		free(line);
 	}
 	write(1, "\n", 1);
