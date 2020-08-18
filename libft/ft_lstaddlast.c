@@ -6,7 +6,7 @@
 /*   By: osalmine <osalmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/01 12:10:35 by osalmine          #+#    #+#             */
-/*   Updated: 2020/07/21 10:52:16 by osalmine         ###   ########.fr       */
+/*   Updated: 2020/08/17 16:38:37 by osalmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,15 +14,7 @@
 
 void	ft_lstaddlast(t_list **alst, t_list *new)
 {
-	t_list *tmp;
-
-	if (alst && *alst)
-	{
-		tmp = *alst;
-		while (tmp->next)
-			tmp = tmp->next;
-		tmp->next = new;
-	}
-	else if (alst)
-		*alst = new;
+	while (*alst)
+		alst = &((*alst)->next);
+	*alst = new;
 }

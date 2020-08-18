@@ -6,7 +6,7 @@
 /*   By: osalmine <osalmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/23 12:44:53 by osalmine          #+#    #+#             */
-/*   Updated: 2020/01/24 10:57:24 by osalmine         ###   ########.fr       */
+/*   Updated: 2020/08/18 19:39:27 by osalmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ void		put_a(t_printf *pf)
 
 	arr = va_arg(pf->lst, char**);
 	i = 0;
-	while (arr[i])
+	while (arr && arr[i])
 	{
 		pf_copy = *pf;
 		put_str(&pf_copy, arr[i]);

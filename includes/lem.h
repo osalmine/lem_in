@@ -6,7 +6,7 @@
 /*   By: osalmine <osalmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/19 19:01:54 by osalmine          #+#    #+#             */
-/*   Updated: 2020/07/08 20:55:39 by osalmine         ###   ########.fr       */
+/*   Updated: 2020/08/17 22:53:42 by osalmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,8 @@ typedef struct	s_room
 **	id: ant's id
 **	has_moved: TRUE (=1) if ant has moved that turn, else FALSE (=0)
 **	room: ant's current room
+**	path: ant's path
+**	move_nb: how many times has the ant moved (to keep track where it is relative to the path)
 */
 
 typedef struct	s_ant
@@ -89,6 +91,8 @@ typedef struct	s_ant
 	int		id;
 	int		has_moved;
 	t_room	*room;
+	char	**path;
+	int		move_nb;
 }				t_ant;
 
 /*
@@ -116,8 +120,8 @@ typedef struct	s_lem
 t_lem	*lem_init(int ac, char **av);
 void	lem_flags(t_lem *lem, int ac, char **av);
 void	lem_read(t_lem *lem);
-void	free_strsplit(char ***str);
 void	init_ants(t_lem *lem);
+void	free_strsplit(char ***str);
 
 /*
 **	Finding functions

@@ -6,7 +6,7 @@
 /*   By: osalmine <osalmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/30 22:20:06 by osalmine          #+#    #+#             */
-/*   Updated: 2020/07/21 13:53:09 by osalmine         ###   ########.fr       */
+/*   Updated: 2020/08/17 16:39:17 by osalmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ static void	read_room(t_lem *lem, char *line, int room_type)
 	room->type = room_type;
 	room->paths = NULL;
 	free_strsplit(&room_arr);
-	ft_lstaddlast(&lem->room_list, ft_lstnew(room, (sizeof(room) + sizeof(t_path) + 20)));
+	ft_lstaddlast(&lem->room_list, ft_lstnew(room, sizeof(t_room)));
 }
 
 static void read_link(t_lem *lem, char *line)
@@ -60,15 +60,16 @@ static void read_link(t_lem *lem, char *line)
 	i = 0;
 	while (room_links[i])
 	{
-		room = find_room(room_links[i], lem);
+		if (!(room = find_room(room_links[i], lem)))
+			ft_exit("ERROR: room not found (read_link)\n");
 		if (room)
 		{
 			if (!(path = (t_path*)malloc(sizeof(t_path))))
 				ft_exit("Malloc error\n");
 			path->room1 = ft_strdup(room->name);
 			path->room2 = ft_strdup(room_links[i ? 0 : 1]);
-			ft_lstaddlast(&room->paths, ft_lstnew(path, (sizeof(path) * 2)));
-			ft_lstaddlast(&lem->path_list, ft_lstnew(path, (sizeof(path) * 2)));
+			ft_lstaddlast(&room->paths, ft_lstnew(path, (sizeof(t_path))));
+			ft_lstaddlast(&lem->path_list, ft_lstnew(path, (sizeof(t_path))));
 		}
 		i++;
 	}

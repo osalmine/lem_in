@@ -6,9 +6,11 @@
 /*   By: osalmine <osalmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/25 10:23:24 by osalmine          #+#    #+#             */
-/*   Updated: 2019/11/01 10:57:01 by osalmine         ###   ########.fr       */
+/*   Updated: 2020/08/17 14:21:36 by osalmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#include <stdio.h>
 
 int	ft_strcmp(char *s1, char *s2)
 {

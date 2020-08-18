@@ -6,7 +6,7 @@
 /*   By: osalmine <osalmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/19 19:01:44 by osalmine          #+#    #+#             */
-/*   Updated: 2020/07/21 13:28:56 by osalmine         ###   ########.fr       */
+/*   Updated: 2020/08/18 16:14:34 by osalmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,37 +17,46 @@ int	main(int argc, char **argv)
 	t_lem	*lem;
 
 	lem = lem_init(argc, argv);
-	// if (lem->opts->debug)
-	// {
-	// 	ft_printf("number of ants: %d\n", lem->ant_nb);
-	// 	t_lem *lem_tmp;
-	// 	t_path *path;
-	// 	lem_tmp = lem;
-	// 	while (lem_tmp->room_list)
-	// 	{
-	// 		t_room *new_room;
-	// 		new_room = (t_room*)lem_tmp->room_list->content;
-	// 		ft_printf("Room name: %s, id: %d, room type: %d, x: %d, y: %d, visited: %d, has_ant: %d\n", new_room->name, new_room->id, new_room->type, new_room->x, new_room->y, new_room->visited, new_room->has_ant);
-	// 		t_list *tmp;
+	if (lem->opts->debug)
+	{
+		ft_printf("number of ants: %d\n", lem->ant_nb);
+		ft_printf(GREEN"ptr: %p\n"RESET, lem->room_list->content);
+		if (lem->room_list == NULL)
+			ft_exit("NO ROOMS IN LIST\n");
+		ft_printf("real first room: %s\n", ((t_room*)lem->room_list->content)->name);
+		t_lem *lem_tmp;
+		t_path *path;
+		lem_tmp = lem;
+		t_list *tmp_rooms;
+		tmp_rooms = (t_list*)lem_tmp->room_list;
+		while (tmp_rooms)
+		{
+			t_room *new_room;
+			new_room = (t_room*)tmp_rooms->content;
+			ft_printf("TEST\n");
+			ft_printf("ok? room name: %s\n", new_room->name);
+			ft_printf("Room name: %s, id: %d, room type: %d, x: %d, y: %d, visited: %d, has_ant: %d\n", new_room->name, new_room->id, new_room->type, new_room->x, new_room->y, new_room->visited, new_room->has_ant);
+			t_list *tmp;
 
-	// 		tmp = new_room->paths;
-	// 		while (tmp)
-	// 		{
-	// 			path = (t_path*)tmp->content;
-	// 			ft_printf("Path room1: %s, room2: %s\n", path->room1, path->room2);
-	// 			tmp = tmp->next;
-	// 		}
-	// 		lem_tmp->room_list = lem_tmp->room_list->next;
-	// 	}
-	// 	ft_printf(RED"LEM PATH LIST:\n"RESET);
-	// 	lem_tmp = lem;
-	// 	while (lem_tmp->path_list)
-	// 	{
-	// 		path = (t_path*)lem_tmp->path_list->content;
-	// 		ft_printf("Path room1: %s, room2: %s\n", path->room1, path->room2);
-	// 		lem_tmp->path_list = lem_tmp->path_list->next;
-	// 	}
-	// }
+			tmp = new_room->paths;
+			while (tmp)
+			{
+				path = (t_path*)tmp->content;
+				ft_printf(BLUE"\tPath room1: %s, room2: %s\n"RESET, path->room1, path->room2);
+				tmp = tmp->next;
+			}
+			tmp_rooms = tmp_rooms->next;
+		}
+		ft_printf(RED"LEM PATH LIST:\n"RESET);
+		lem_tmp = lem;
+		while (lem_tmp->path_list)
+		{
+			path = (t_path*)lem_tmp->path_list->content;
+			ft_printf("Path room1: %s, room2: %s\n", path->room1, path->room2);
+			lem_tmp->path_list = lem_tmp->path_list->next;
+		}
+		write(1, "\n\n\n", 3);
+	}
 	guide_ants(lem);
 	return (0);
 }

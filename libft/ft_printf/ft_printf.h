@@ -6,7 +6,7 @@
 /*   By: osalmine <osalmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/08 08:41:16 by osalmine          #+#    #+#             */
-/*   Updated: 2020/06/16 23:10:23 by osalmine         ###   ########.fr       */
+/*   Updated: 2020/08/17 22:56:17 by osalmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,6 @@
 # define CYAN "\x1b[36m"
 # define BLACK "\x1b[30m"
 # define WHITE "\x1b[37m"
-# define RESET "\x1b[0m"
 
 # define BG_BLACK "\x1b[40m"
 # define BG_RED "\x1b[41m"
@@ -49,6 +48,8 @@
 # define UNDERLINE "\x1b[4m"
 # define REVERSED "\x1b[7m"
 # define ITALIC "\x1b[3m"
+
+# define RESET "\x1b[0m"
 
 /*
 **	flag  0-4 are 0: minus, 1: plus, 2: space, 3: zero and 4: hash
