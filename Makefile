@@ -6,13 +6,13 @@
 #    By: osalmine <osalmine@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/03/19 19:13:02 by osalmine          #+#    #+#              #
-#    Updated: 2020/08/18 17:27:19 by osalmine         ###   ########.fr        #
+#    Updated: 2020/08/21 15:02:52 by osalmine         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = lem-in
 
-FLAGS = -Wall -Werror -Wextra
+FLAGS = -Wall -Werror -Wextra -g
 
 SOURCES_DIR = ./src/
 SOURCES_FILE = lem_in.c init.c read.c flags.c free.c find.c guide_ants.c init_ants.c

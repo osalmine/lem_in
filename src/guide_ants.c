@@ -6,7 +6,7 @@
 /*   By: osalmine <osalmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/29 00:13:34 by osalmine          #+#    #+#             */
-/*   Updated: 2020/08/18 20:10:31 by osalmine         ###   ########.fr       */
+/*   Updated: 2020/08/21 16:32:51 by osalmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,17 +33,21 @@ static char **create_que(t_lem *lem)
 	int		room_nb;
 	int		i;
 
-	room_nb = room_count(lem);
-	// ft_printf("room_nb: %d\n", room_nb);
+	room_nb = room_count(lem) + 1;
+	// ft_printf(RED"room_nb: %d\n", room_nb);
 	if (!(que = (char**)malloc(sizeof(char*) * room_nb)))
-		ft_exit("Malloc error");
+		ft_exit(RED"Malloc error"RESET);
 	que[room_nb] = NULL;
 	i = 0;
 	while (i < room_nb)
 		que[i++] = NULL;
-	// i = 0;
-	// while (i++ < room_nb)
+	i = 0;
+	// while (i < room_nb)
+	// {
 	// 	ft_printf("que[%d] pointer: %p\n", i, que[i]);
+	// 	i++;
+	// }
+	// ft_printf("%s", RESET);
 	return (que);
 }
 
@@ -69,7 +73,7 @@ static char **arr_reverse(char **arr)
 	while (arr[count])
 		count++;
 	if (!(new_arr = (char**)malloc(sizeof(char*) * (count + 1))))
-		ft_exit("Malloc error");
+		ft_exit(RED"Malloc error"RESET);
 	new_arr[count] = NULL;
 	while (count)
 		new_arr[start++] = ft_strdup(arr[(count--) - 1]);
@@ -105,23 +109,23 @@ static char	**solve(t_room *start, t_lem *lem)
 	while (que[i] != NULL)
 	{
 		if (!(node = find_room(que[i], lem)))
-			ft_exit("ERROR: room not found (solve)\n");
+			ft_exit(RED"ERROR: room not found (solve)"RESET);
 		tmp = node->paths;
 		while (tmp)
 		{
 			path = (t_path*)tmp->content;
 			if (!(neighbor = find_room(path->room2, lem)))
-				ft_exit("Error: neighbor room not found (solve)\n");
+				ft_exit(RED"ERROR: neighbor room not found (solve)"RESET);
 			// ft_printf(MAGENTA"SOLVE\t\t:\tinspecting neighbor: %s, visited: %s, found from que: %s, ", neighbor->name, (neighbor->visited ? "TRUE" : "FALSE"), (find_from_que(que, neighbor->name) ? "TRUE" : "FALSE"));
-			// if (arr_size(que) == 2)
-			// 	ft_printf("array size is 2, que[1]: %s = neighbor->name: %s, %s\n"RESET, que[1], neighbor->name, (ft_strequ(que[1], neighbor->name) ? "TRUE" : "FALSE"));
+			// if (arr_size(que) == 1)
+			// 	ft_printf("array size is 1, neighbor->has_ant: %s\n"RESET, que[1], (neighbor->has_ant ? "TRUE" : "FALSE"));
 			// else
-			// 	ft_printf("array size is not 2 (%d), neighbor->has_ant: %s, neighbor->type: %d\n"RESET, arr_size(que), (neighbor->has_ant ? "TRUE" : "FALSE"), neighbor->type);
+			// 	ft_printf("array size is not 1\n"RESET);
 			// (arr_size(que) == 1 ? !ft_strequ(que[1], neighbor->name) : (!neighbor->has_ant || neighbor->type == END))
 			if (!neighbor->visited && !find_from_que(que, neighbor->name) && !(arr_size(que) == 1 && neighbor->has_ant))
 			{
 				push_to_arr(que, neighbor->name);
-				// ft_printf(YELLOW"SOLVE\t\t:\tpushing %s to que: %la\n"RESET, neighbor->name, que);
+				// ft_printf(YELLOW"SOLVE\t\t:\tpushed %s to que: %la\n"RESET, neighbor->name, que);
 				neighbor->visited = TRUE;
 				prev[neighbor->id] = ft_strdup(node->name);
 			}
@@ -130,6 +134,8 @@ static char	**solve(t_room *start, t_lem *lem)
 		i++;
 	}
 	free_strsplit(&que);
+	// ft_printf(BG_WHITE BLACK"RETURN SOLVE"RESET);
+	// ft_putchar('\n');
 	return (prev);
 }
 
@@ -198,9 +204,12 @@ static void	reset_turn(t_lem *lem)
 	t_list	*ant_list;
 
 	ant_list = lem->ants;
+	// ft_printf(BG_RED"Reset turn"RESET);
+	// write(1, "\n", 1);
 	while (ant_list)
 	{
 		cur_ant = (t_ant*)ant_list->content;
+		// ft_printf("cur_ant: %d, has_moved: %s\n", cur_ant->id, (cur_ant->has_moved ? "TRUE" : "FALSE"));
 		if (cur_ant->has_moved)
 		{
 			// prev_room = find_room(cur_ant->path[cur_ant->move_nb - 1], lem);
@@ -231,7 +240,7 @@ static void	turn_loop(t_lem *lem, t_room *start, t_room *end)
 			if (!cur_ant->path)
 				cur_ant->path = bfs(start, end, lem);
 			if (cur_ant->path == NULL && cur_ant->id == 1)
-				ft_exit(RED"ERROR: No path found\n"RESET);
+				ft_exit(RED"ERROR: No path found"RESET);
 			// if (cur_ant->path == NULL)
 			// 	ft_printf(RED"No path found\n"RESET);
 			// else
@@ -264,7 +273,6 @@ static void	turn_loop(t_lem *lem, t_room *start, t_room *end)
 	}
 	ft_putchar('\n');
 	lem->moves_count++;
-	// free_strsplit(&path);
 }
 
 void		guide_ants(t_lem *lem)
@@ -273,9 +281,9 @@ void		guide_ants(t_lem *lem)
 	t_room	*end;
 
 	if (!(start = find_room_by_type(START, lem)))
-		ft_exit("ERROR: No start room (guide_ants)\n");
+		ft_exit(RED"ERROR: No start room (guide_ants)"RESET);
 	if (!(end = find_room_by_type(END, lem)))
-		ft_exit("ERROR: No end room (guide_ants)\n");
+		ft_exit(RED"ERROR: No end room (guide_ants)"RESET);
 	while (end->has_ant != lem->ant_nb)
 	{
 		// t_list	*tmp;

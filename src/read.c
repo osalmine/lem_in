@@ -6,18 +6,38 @@
 /*   By: osalmine <osalmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/30 22:20:06 by osalmine          #+#    #+#             */
-/*   Updated: 2020/08/20 21:48:37 by osalmine         ###   ########.fr       */
+/*   Updated: 2020/08/21 17:45:46 by osalmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/lem.h"
 
-static int	read_command(char *line, int room_type)
+static int	read_command(t_lem *lem, char *line, int room_type)
 {
+	t_list *rooms;
+
 	if (ft_strequ(line, "##start"))
+	{
+		rooms = lem->room_list;
+		while (rooms)
+		{
+			if (((t_room*)rooms->content)->type == START)
+				ft_exit(RED"ERROR: multiple start rooms"RESET);
+			rooms = rooms->next;
+		}
 		return (START);
+	}
 	else if (ft_strequ(line, "##end"))
+	{
+		rooms = lem->room_list;
+		while (rooms)
+		{
+			if (((t_room*)rooms->content)->type == END)
+				ft_exit(RED"ERROR: multiple end rooms"RESET);
+			rooms = rooms->next;
+		}
 		return (END);
+	}
 	return (room_type);
 }
 
@@ -138,7 +158,7 @@ void		lem_read(t_lem *lem)
 		if (i == 1 && !(i = 0))
 			lem->ant_nb = ft_atoi(line);
 		else if (line[0] == '#')
-			room_type = read_command(line, room_type);
+			room_type = read_command(lem, line, room_type);
 		else
 		{
 			if (ft_strchr(line, ' '))
