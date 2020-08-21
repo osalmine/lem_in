@@ -6,7 +6,7 @@
 /*   By: osalmine <osalmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/19 19:01:54 by osalmine          #+#    #+#             */
-/*   Updated: 2020/08/17 22:53:42 by osalmine         ###   ########.fr       */
+/*   Updated: 2020/08/18 20:11:02 by osalmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@
 typedef struct	s_options
 {
 	int	debug;
+	int lines;
 }				t_opts;
 
 /*
@@ -111,6 +112,7 @@ typedef struct	s_lem
 	t_list	*room_list;
 	t_list	*path_list;
 	t_opts	*opts;
+	int		moves_count;
 }				t_lem;
 
 /*

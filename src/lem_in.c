@@ -6,7 +6,7 @@
 /*   By: osalmine <osalmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/19 19:01:44 by osalmine          #+#    #+#             */
-/*   Updated: 2020/08/18 16:14:34 by osalmine         ###   ########.fr       */
+/*   Updated: 2020/08/21 13:47:57 by osalmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,6 @@ int	main(int argc, char **argv)
 	if (lem->opts->debug)
 	{
 		ft_printf("number of ants: %d\n", lem->ant_nb);
-		ft_printf(GREEN"ptr: %p\n"RESET, lem->room_list->content);
-		if (lem->room_list == NULL)
-			ft_exit("NO ROOMS IN LIST\n");
-		ft_printf("real first room: %s\n", ((t_room*)lem->room_list->content)->name);
 		t_lem *lem_tmp;
 		t_path *path;
 		lem_tmp = lem;
@@ -33,8 +29,6 @@ int	main(int argc, char **argv)
 		{
 			t_room *new_room;
 			new_room = (t_room*)tmp_rooms->content;
-			ft_printf("TEST\n");
-			ft_printf("ok? room name: %s\n", new_room->name);
 			ft_printf("Room name: %s, id: %d, room type: %d, x: %d, y: %d, visited: %d, has_ant: %d\n", new_room->name, new_room->id, new_room->type, new_room->x, new_room->y, new_room->visited, new_room->has_ant);
 			t_list *tmp;
 
@@ -58,5 +52,7 @@ int	main(int argc, char **argv)
 		write(1, "\n\n\n", 3);
 	}
 	guide_ants(lem);
+	if (lem->opts->lines)
+		ft_printf(GREEN BOLD"lines: %d\n"RESET, lem->moves_count);
 	return (0);
 }

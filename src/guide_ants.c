@@ -6,7 +6,7 @@
 /*   By: osalmine <osalmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/29 00:13:34 by osalmine          #+#    #+#             */
-/*   Updated: 2020/08/18 19:44:36 by osalmine         ###   ########.fr       */
+/*   Updated: 2020/08/18 20:10:31 by osalmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -263,6 +263,7 @@ static void	turn_loop(t_lem *lem, t_room *start, t_room *end)
 		reset_turn(lem);
 	}
 	ft_putchar('\n');
+	lem->moves_count++;
 	// free_strsplit(&path);
 }
 

@@ -6,7 +6,7 @@
 /*   By: osalmine <osalmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/30 22:20:06 by osalmine          #+#    #+#             */
-/*   Updated: 2020/08/17 16:39:17 by osalmine         ###   ########.fr       */
+/*   Updated: 2020/08/20 21:48:37 by osalmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static int	read_command(char *line, int room_type)
 	return (room_type);
 }
 
-static void	read_room(t_lem *lem, char *line, int room_type)
+static void	read_room(t_lem *lem, char *line, int *room_type)
 {
 	char	**room_arr;
 	int		arr_len;
@@ -32,40 +32,67 @@ static void	read_room(t_lem *lem, char *line, int room_type)
 	while (room_arr[arr_len])
 		arr_len++;
 	if (arr_len != 3 || room_arr[0][0] == 'L')
-		ft_exit("ERROR\n");
+		ft_exit(RED"ERROR: room error"RESET);
 	if (!(room = (t_room*)malloc(sizeof(t_room))))
-		ft_exit("Malloc error\n");
+		ft_exit(RED"Malloc error"RESET);
 	room->name = ft_strdup(room_arr[0]);
 	room->x = ft_atoi(room_arr[1]);
 	room->y = ft_atoi(room_arr[2]);
 	room->visited = FALSE;
-	if (room_type == START)
+	if (*room_type == START)
 		room->has_ant = lem->ant_nb;
 	else
 		room->has_ant = FALSE;
-	room->type = room_type;
+	room->type = *room_type;
 	room->paths = NULL;
+	*room_type = NORMAL;
 	free_strsplit(&room_arr);
 	ft_lstaddlast(&lem->room_list, ft_lstnew(room, sizeof(t_room)));
 }
 
-static void read_link(t_lem *lem, char *line)
+static int	check_link_dups(t_lem *lem, char **links)
+{
+	t_room *room1;
+	t_room *room2;
+	t_list *link_list;
+	t_path *cur_path;
+
+	if (!(room1 = find_room(links[0], lem)))
+		ft_exit(RED"ERROR: room1 not found (check_link_dups)"RESET);
+	if (!(room2 = find_room(links[1], lem)))
+		ft_exit(RED"ERROR: room2 not found (check_link_dups)"RESET);
+	link_list = lem->path_list;
+	while (link_list)
+	{
+		cur_path = (t_path*)link_list->content;
+		if (ft_strequ(links[0], cur_path->room1) && ft_strequ(links[1], cur_path->room2))
+			return (1);
+		link_list = link_list->next;
+	}
+	return (0);
+}
+
+static void	read_link(t_lem *lem, char *line)
 {
 	t_room	*room;
 	t_path	*path;
 	char	**room_links;
 	int		i;
+	int		duplicate;
 
 	room_links = ft_strsplit(line, '-');
 	i = 0;
-	while (room_links[i])
+	duplicate = check_link_dups(lem, room_links);
+	while (!duplicate && room_links[i])
 	{
+		if (i > 1)
+			ft_exit(RED"ERROR: probably too many rooms in a link"RESET);
 		if (!(room = find_room(room_links[i], lem)))
-			ft_exit("ERROR: room not found (read_link)\n");
+			ft_exit(RED"ERROR: room not found (read_link)"RESET);
 		if (room)
 		{
 			if (!(path = (t_path*)malloc(sizeof(t_path))))
-				ft_exit("Malloc error\n");
+				ft_exit(RED"Malloc error"RESET);
 			path->room1 = ft_strdup(room->name);
 			path->room2 = ft_strdup(room_links[i ? 0 : 1]);
 			ft_lstaddlast(&room->paths, ft_lstnew(path, (sizeof(t_path))));
@@ -76,33 +103,50 @@ static void read_link(t_lem *lem, char *line)
 	free_strsplit(&room_links);
 }
 
+static char	*str_append(char *str, char *append)
+{
+	char *tmp;
+
+	tmp = ft_strjoin(append, "\n");
+	ft_memdel((void**)&append);
+	append = ft_strdup(tmp);
+	ft_memdel((void**)&tmp);
+	if (str)
+		tmp = ft_strjoin(str, append);
+	else
+		tmp = ft_strdup(append);
+	ft_memdel((void**)&str);
+	ft_memdel((void**)&append);
+	str = ft_strdup(tmp);
+	ft_memdel((void**)&tmp);
+	return (str);
+}
+
 void		lem_read(t_lem *lem)
 {
 	int		ret;
 	int		i;
 	int		room_type;
 	char	*line;
+	char	*output;
 
-	i = 0;
+	i = 1;
+	output = NULL;
 	room_type = NORMAL;
-	while ((ret = get_next_line(0, &line)) && ++i)
+	while ((ret = get_next_line(0, &line)))
 	{
-		if (i == 1)
+		if (i == 1 && !(i = 0))
 			lem->ant_nb = ft_atoi(line);
 		else if (line[0] == '#')
 			room_type = read_command(line, room_type);
 		else
 		{
 			if (ft_strchr(line, ' '))
-			{
-				read_room(lem, line, room_type);
-				room_type = NORMAL;
-			}
+				read_room(lem, line, &room_type);
 			else
 				read_link(lem, line);
 		}
-		ft_putendl(line);
-		free(line);
+		output = str_append(output, line);
 	}
-	write(1, "\n", 1);
+	ft_printf("%s\n", output);
 }
