@@ -6,7 +6,7 @@
 /*   By: osalmine <osalmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/30 22:20:06 by osalmine          #+#    #+#             */
-/*   Updated: 2020/08/21 17:45:46 by osalmine         ###   ########.fr       */
+/*   Updated: 2020/08/26 12:16:31 by osalmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ static void	read_room(t_lem *lem, char *line, int *room_type)
 	else
 		room->has_ant = FALSE;
 	room->type = *room_type;
-	room->paths = NULL;
+	room->links = NULL;
 	*room_type = NORMAL;
 	free_strsplit(&room_arr);
 	ft_lstaddlast(&lem->room_list, ft_lstnew(room, sizeof(t_room)));
@@ -75,17 +75,17 @@ static int	check_link_dups(t_lem *lem, char **links)
 	t_room *room1;
 	t_room *room2;
 	t_list *link_list;
-	t_path *cur_path;
+	t_link *cur_link;
 
 	if (!(room1 = find_room(links[0], lem)))
 		ft_exit(RED"ERROR: room1 not found (check_link_dups)"RESET);
 	if (!(room2 = find_room(links[1], lem)))
 		ft_exit(RED"ERROR: room2 not found (check_link_dups)"RESET);
-	link_list = lem->path_list;
+	link_list = lem->link_list;
 	while (link_list)
 	{
-		cur_path = (t_path*)link_list->content;
-		if (ft_strequ(links[0], cur_path->room1) && ft_strequ(links[1], cur_path->room2))
+		cur_link = (t_link*)link_list->content;
+		if (ft_strequ(links[0], cur_link->room1) && ft_strequ(links[1], cur_link->room2))
 			return (1);
 		link_list = link_list->next;
 	}
@@ -95,7 +95,7 @@ static int	check_link_dups(t_lem *lem, char **links)
 static void	read_link(t_lem *lem, char *line)
 {
 	t_room	*room;
-	t_path	*path;
+	t_link	*path;
 	char	**room_links;
 	int		i;
 	int		duplicate;
@@ -111,12 +111,12 @@ static void	read_link(t_lem *lem, char *line)
 			ft_exit(RED"ERROR: room not found (read_link)"RESET);
 		if (room)
 		{
-			if (!(path = (t_path*)malloc(sizeof(t_path))))
+			if (!(path = (t_link*)malloc(sizeof(t_link))))
 				ft_exit(RED"Malloc error"RESET);
 			path->room1 = ft_strdup(room->name);
 			path->room2 = ft_strdup(room_links[i ? 0 : 1]);
-			ft_lstaddlast(&room->paths, ft_lstnew(path, (sizeof(t_path))));
-			ft_lstaddlast(&lem->path_list, ft_lstnew(path, (sizeof(t_path))));
+			ft_lstaddlast(&room->links, ft_lstnew(path, (sizeof(t_link))));
+			ft_lstaddlast(&lem->link_list, ft_lstnew(path, (sizeof(t_link))));
 		}
 		i++;
 	}
@@ -155,7 +155,7 @@ void		lem_read(t_lem *lem)
 	room_type = NORMAL;
 	while ((ret = get_next_line(0, &line)))
 	{
-		if (i == 1 && !(i = 0))
+		if (ft_isdigit(line[0]) && i == 1 && !(i = 0))
 			lem->ant_nb = ft_atoi(line);
 		else if (line[0] == '#')
 			room_type = read_command(lem, line, room_type);

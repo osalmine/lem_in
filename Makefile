@@ -6,7 +6,7 @@
 #    By: osalmine <osalmine@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/03/19 19:13:02 by osalmine          #+#    #+#              #
-#    Updated: 2020/08/21 15:02:52 by osalmine         ###   ########.fr        #
+#    Updated: 2020/08/25 18:00:33 by osalmine         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,33 +32,38 @@ OBJECTS_DIR = obj/
 OBJECTS_FILE = $(patsubst %.c, %.o, $(SOURCES_FILE))
 OBJECTS	= $(addprefix $(OBJECTS_DIR), $(OBJECTS_FILE))
 
+RESET		= \e[0m
+YELLOW		= \e[33m
+BLUE		= \e[34m
+MAGENTA		= \e[35m
+
 $(NAME): all
 
 all: $(LIBFT) $(OBJECTS_DIR) $(OBJECTS)
 	@gcc $(FLAGS) $(LIBRARIES) $(INCLUDES) $(OBJECTS) -o $(NAME)
-	@echo ''
-	@echo 'Compiled $(NAME)'
+	@printf "$(MAGENTA)%-42s$(RESET)\n" "Compiled $(NAME)"
 
 $(OBJECTS_DIR):
 	@mkdir -p $(OBJECTS_DIR)
-	@echo "$(OBJECTS_DIR) was created"
+	@printf "$(OBJECTS_DIR) was created"
 
 $(OBJECTS_DIR)%.o : $(SOURCES_DIR)%.c $(HEADERS)
 	@gcc $(FLAGS) -c $(INCLUDES) $< -o $@
-	@echo ". \c"
+	@printf "$(ITALIC)$(BLUE)%-42.42s$(RESET)\r" "Compiled $@"
 
 $(LIBFT):
 	@$(MAKE) -sC $(LIBFT_DIR)
+	@printf "$(BLUE)Compiled $(LIBFT)$(RESET)\n"
 
 clean:
 	@$(MAKE) -sC $(LIBFT_DIR) clean
 	@rm -rf $(OBJECTS_DIR)
-	@echo 'Removed $(OBJECTS_DIR)'
+	@printf "$(YELLOW)Removed $(OBJECTS_DIR) directory$(RESET)\n"
 
 fclean: clean
 	@$(MAKE) -sC $(LIBFT_DIR) fclean
 	@rm -f $(NAME)
-	@echo 'Removed $(NAME)'
+	@printf "$(YELLOW)Removed $(NAME)$(RESET)\n"
 
 re: fclean all
 

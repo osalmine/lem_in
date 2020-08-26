@@ -6,7 +6,7 @@
 /*   By: osalmine <osalmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/19 19:01:44 by osalmine          #+#    #+#             */
-/*   Updated: 2020/08/21 13:55:47 by osalmine         ###   ########.fr       */
+/*   Updated: 2020/08/26 12:18:44 by osalmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	main(int argc, char **argv)
 	{
 		ft_printf("number of ants: %d\n", lem->ant_nb);
 		t_lem *lem_tmp;
-		t_path *path;
+		t_link *link;
 		lem_tmp = lem;
 		t_list *tmp_rooms;
 		tmp_rooms = (t_list*)lem_tmp->room_list;
@@ -32,22 +32,22 @@ int	main(int argc, char **argv)
 			ft_printf("Room name: %s, id: %d, room type: %d, x: %d, y: %d, visited: %d, has_ant: %d\n", new_room->name, new_room->id, new_room->type, new_room->x, new_room->y, new_room->visited, new_room->has_ant);
 			t_list *tmp;
 
-			tmp = new_room->paths;
+			tmp = new_room->links;
 			while (tmp)
 			{
-				path = (t_path*)tmp->content;
-				ft_printf(BLUE"\tPath room1: %s, room2: %s\n"RESET, path->room1, path->room2);
+				link = (t_link*)tmp->content;
+				ft_printf(BLUE"Link room1: %s, room2: %s\n"RESET, link->room1, link->room2);
 				tmp = tmp->next;
 			}
 			tmp_rooms = tmp_rooms->next;
 		}
-		ft_printf(RED"LEM PATH LIST:\n"RESET);
+		ft_printf(RED"LEM LINK LIST:\n"RESET);
 		lem_tmp = lem;
-		while (lem_tmp->path_list)
+		while (lem_tmp->link_list)
 		{
-			path = (t_path*)lem_tmp->path_list->content;
-			ft_printf("Path room1: %s, room2: %s\n", path->room1, path->room2);
-			lem_tmp->path_list = lem_tmp->path_list->next;
+			link = (t_link*)lem_tmp->link_list->content;
+			ft_printf("Link room1: %s, room2: %s\n", link->room1, link->room2);
+			lem_tmp->link_list = lem_tmp->link_list->next;
 		}
 		write(1, "\n\n\n", 3);
 	}

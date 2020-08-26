@@ -6,7 +6,7 @@
 /*   By: osalmine <osalmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/30 22:36:00 by osalmine          #+#    #+#             */
-/*   Updated: 2020/08/21 15:01:34 by osalmine         ###   ########.fr       */
+/*   Updated: 2020/08/26 13:38:42 by osalmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static void	display_help(void)
 {
-	ft_exit("Help message for lem-in. -d (--debug) flag is for debug, -l (--lines) is to see output line count -h (--help) is to see this.");
+	ft_exit("Help message for lem-in. -d (--debug) flag is for debug, -l (--lines) is to see output line count, -p (--paths) to see the paths, -h (--help) is to see this.");
 }
 
 static void	dash_flags(t_lem *lem, char **av, int i)
@@ -28,6 +28,8 @@ static void	dash_flags(t_lem *lem, char **av, int i)
 			lem->opts->debug = TRUE;
 		else if (av[i][j] == 'l')
 			lem->opts->lines = TRUE;
+		else if (av[i][j] == 'p')
+			lem->opts->paths = TRUE;
 		else if (av[i][j] == 'h')
 			display_help();
 		else
@@ -53,6 +55,8 @@ void		lem_flags(t_lem *lem, int ac, char **av)
 			lem->opts->debug = TRUE;
 		else if (ft_strequ(av[i], "--lines"))
 			lem->opts->lines = TRUE;
+		else if (ft_strequ(av[i], "--paths"))
+			lem->opts->paths = TRUE;
 		else if (av[i][0] == '-')
 			dash_flags(lem, av, i);
 		// else

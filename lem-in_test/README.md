@@ -4,7 +4,7 @@
 Lots of tests for lem-in @ 42.  
 
 ###What  
->This shell script will take your lem-in executable and perform a lot of tests (More than 100) to test errors and correct paths for lem-in.  
+>This shell script will take your lem-in executable and perform a lot of tests (More than 100) to test errors and correct links for lem-in.  
 >Maybe all the tests are not here, and maybe your program will not react as expected for this test. This is not always errors, it just can be your own way for this project.  
 >Please note that this script doesn't do the correction for you, and you have to test the program by yourself !  
 >Please, do not hesitate to report issues !  

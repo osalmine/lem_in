@@ -6,7 +6,7 @@
 #    By: osalmine <osalmine@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/10/24 14:46:14 by osalmine          #+#    #+#              #
-#    Updated: 2020/08/18 17:33:41 by osalmine         ###   ########.fr        #
+#    Updated: 2020/08/25 17:59:19 by osalmine         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -40,7 +40,6 @@ $(NAME): $(INCLUDE) $(SOURCE)
 	@cp $(PRINTF_DIR)$(PRINTF_LIB) $(NAME)
 	@ar rc $(NAME) $(OBJ)
 	@ranlib $(NAME)
-	@echo "Compiled $(NAME)"
 
 clean:
 	@make -C $(PRINTF_DIR) clean
