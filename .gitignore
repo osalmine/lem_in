@@ -1,0 +1,6 @@
+lem-in
+lem-in.*/
+
+obj/
+*.a
+*.o

@@ -6,7 +6,7 @@
 /*   By: osalmine <osalmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/19 19:01:54 by osalmine          #+#    #+#             */
-/*   Updated: 2020/08/26 13:48:57 by osalmine         ###   ########.fr       */
+/*   Updated: 2020/08/29 16:17:27 by osalmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@
 **	Struct for options
 **	debug:	set to TRUE (=1) for debugging
 **	lines:	program outputs the number of turns used (lines outputted)
+**	paths:	output the paths
 */
 
 typedef struct	s_options
@@ -107,18 +108,17 @@ typedef struct	s_ant
 	int		id;
 	int		has_moved;
 	t_room	*room;
-	// char	**path; // replace with t_path*
 	t_path	*path;
 	int		move_nb;
 }				t_ant;
 
 /*
-**	t_lem:		main struct
+**	t_lem is the main struct
 **	ant_nb:		total ant amount
-**	ants:		list of all ants represented as t_ant struct
-**	room_list:	list of all rooms represented as t_room struct
+**	ants:		list of all ants
+**	room_list:	list of all rooms
 **	link_list:	list of all the links
-**	paths_list:	list of all the paths;
+**	paths_list:	list of all the paths
 **	opts:		options struct
 */
 
@@ -157,5 +157,12 @@ int     find_from_que(char **que, char *name);
 
 void	guide_ants(t_lem *lem);
 void    find_paths(t_lem *lem, t_room *start, t_room *end);
+void    assign_paths(t_lem *lem, t_room *start);
+
+/*
+**	Print and debug functions
+*/
+
+void    print_paths(t_lem *lem);
 
 #endif

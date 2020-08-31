@@ -6,30 +6,11 @@
 /*   By: osalmine <osalmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/29 00:13:34 by osalmine          #+#    #+#             */
-/*   Updated: 2020/08/26 13:50:06 by osalmine         ###   ########.fr       */
+/*   Updated: 2020/08/27 11:16:48 by osalmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/lem.h"
-
-static void	reset_rooms(t_lem *lem)
-{
-	t_list	*tmp;
-	t_room	*room;
-
-	tmp = lem->room_list;
-	// ft_printf(BG_RED"Reset loop"RESET);
-	// write(1, "\n", 1);
-	while (tmp)
-	{
-		room = (t_room*)tmp->content;
-		// ft_printf("Room name: %s\n", room->name);
-		room->visited = FALSE;
-		// if (room->type == NORMAL)
-		// 	room->has_ant = FALSE;
-		tmp = tmp->next;
-	}
-}
 
 static void	reset_turn(t_lem *lem)
 {
@@ -99,7 +80,6 @@ static void	turn_loop(t_lem *lem, t_room *end)
 					}
 				}
 			}
-			reset_rooms(lem);
 		}
 		i++;
 		ant_list = ant_list->next;
@@ -119,6 +99,7 @@ void		guide_ants(t_lem *lem)
 	if (!(end = find_room_by_type(END, lem)))
 		ft_exit(RED"ERROR: No end room (guide_ants)"RESET);
 	find_paths(lem, start, end);
+	assign_paths(lem, start);
 	while (end->has_ant != lem->ant_nb)
 	{
 		// t_list	*tmp;
