@@ -6,7 +6,7 @@
 /*   By: osalmine <osalmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/30 22:36:00 by osalmine          #+#    #+#             */
-/*   Updated: 2020/08/26 13:38:42 by osalmine         ###   ########.fr       */
+/*   Updated: 2020/09/01 09:47:35 by osalmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,9 @@ void		lem_flags(t_lem *lem, int ac, char **av)
 {
 	int i;
 
+	lem->opts->debug = FALSE;
+	lem->opts->lines = FALSE;
+	lem->opts->paths = FALSE;
 	i = 1;
 	while (--ac > 0)
 	{

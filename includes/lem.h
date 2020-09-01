@@ -6,7 +6,7 @@
 /*   By: osalmine <osalmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/19 19:01:54 by osalmine          #+#    #+#             */
-/*   Updated: 2020/08/29 16:17:27 by osalmine         ###   ########.fr       */
+/*   Updated: 2020/09/01 11:20:08 by osalmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,7 +141,6 @@ t_lem	*lem_init(int ac, char **av);
 void	lem_flags(t_lem *lem, int ac, char **av);
 void	lem_read(t_lem *lem);
 void	init_ants(t_lem *lem);
-void	free_strsplit(char ***str);
 
 /*
 **	Finding functions
@@ -164,5 +163,13 @@ void    assign_paths(t_lem *lem, t_room *start);
 */
 
 void    print_paths(t_lem *lem);
+
+/*
+**	Free functions
+*/
+
+void	free_lem(t_lem *lem);
+void	free_room_arr(char ***str, int len);
+void	free_strsplit(char ***str);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: osalmine <osalmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/25 16:25:46 by osalmine          #+#    #+#             */
-/*   Updated: 2020/08/31 15:26:41 by osalmine         ###   ########.fr       */
+/*   Updated: 2020/09/01 09:23:54 by osalmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,20 +34,20 @@ static char **create_arr(t_lem *lem, ssize_t size)
 
 	if (size == -1)
 		size = room_count(lem) + 1;
-	// ft_printf(RED"room_nb: %d\n", room_nb);
+	// ft_printf(RED"room_nb + 1: %d\n", size);
 	if (!(que = (char**)malloc(sizeof(char*) * size)))
 		ft_exit(RED"Malloc error"RESET);
-	que[size] = NULL;
+	que[size - 1] = NULL;
 	i = 0;
 	while (i < size)
 		que[i++] = NULL;
-	// i = 0;
-	// while (i < size)
-	// {
-	// 	ft_printf("que[%d] pointer: %p\n", i, que[i]);
-	// 	i++;
-	// }
-	// ft_printf("%s", RESET);
+	i = 0;
+	while (i < size)
+	{
+		// ft_printf("que[%d] pointer: %p\n", i, que[i]);
+		i++;
+	}
+	ft_printf("%s", RESET);
 	return (que);
 }
 
@@ -102,6 +102,7 @@ static int  find_in_path(t_lem *lem, t_room *room, t_room *end)
 	// ft_putchar('\n');
 	// ft_printf(BG_BLUE BLACK"FIND_IN_PATH"RESET);
 	// ft_putchar('\n');
+	// ft_printf("FIND_IN_PATH\t:\tpaths pointer: %p\n", paths);
 	if (room == end)
 	{
 		// ft_printf("ROOM IS END ROOM\n");
@@ -111,10 +112,13 @@ static int  find_in_path(t_lem *lem, t_room *room, t_room *end)
 	{
 		i = 0;
 		cur_path = (t_path*)paths->content;
+		// ft_printf("FIND_IN_PATH\t:\tcur_path pointer: %p\n", cur_path);
 		tmp = cur_path->path_arr;
+		// ft_printf("FIND_IN_PATH\t:\ttmp pointer: %p\n", tmp);
 		// ft_printf("path: %la\n", tmp);
 		while (tmp[i])
 		{
+			// ft_printf("FIND_IN_PATH\t:\ttmp[%d] pointer: %p\n", i, tmp[i]);
 			// ft_printf("tmp[%d]: %s, room->name: %s\n", i, tmp[i], room->name);
 			if (ft_strequ(tmp[i], room->name))
 				return (1);
@@ -161,6 +165,13 @@ static char	**solve(t_room *start, t_room *end, t_lem *lem)
 				neighbor->visited = TRUE;
 				prev[neighbor->id] = ft_strdup(node->name);
 				// ft_printf(BLUE"Pushed %s to prev at id: %d : %s\n"RESET, node->name, neighbor->id, prev[neighbor->id]);
+				// ft_printf(BG_CYAN WHITE"FULL PREV ARRAY IN SOLVE:"RESET);
+				// ft_putchar('\n');
+				// int j = 0;
+				// int s = room_count(lem);
+				// while (j < s)
+					// ft_printf(CYAN"%s "RESET, prev[j++]);
+				// ft_putchar('\n');
 			}
 			tmp = tmp->next;
 		}
@@ -181,8 +192,15 @@ static char **reconstruct_path(t_room *start, t_room* end, char **prev, t_lem *l
 	path = create_arr(lem, -1);
 	current = end;
 	// ft_printf("prev[0] is %s\n", prev[0]);
-	prev[0] = ft_strdup(start->name);
+	// prev[0] = ft_strdup(start->name);
 	// ft_printf("prev[0] is %s\n", prev[0]);
+	// ft_printf(BG_CYAN WHITE"FULL PREV ARRAY IN RECONSTRUCT_PATH:"RESET);
+	// ft_putchar('\n');
+	// int j = 0;
+	// int s = room_count(lem);
+	// while (j < s)
+	// 	ft_printf(CYAN"%s "RESET, prev[j++]);
+	// ft_putchar('\n');
 	while (current != NULL)
 	{
 		// ft_printf(CYAN"RECONSTRUCT PATH\t:\tcurrent->name: %s\n"RESET, current->name);
@@ -312,5 +330,6 @@ void        find_paths(t_lem *lem, t_room *start, t_room *end)
 	// 	ft_printf("Path: %la, length: %d\n", ((t_path*)tmp->content)->path_arr, ((t_path*)tmp->content)->len);
 	// 	tmp = tmp->next;
 	// }
-	print_paths(lem);
+	if (lem->opts->paths)
+		print_paths(lem);
 }

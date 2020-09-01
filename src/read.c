@@ -6,7 +6,7 @@
 /*   By: osalmine <osalmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/30 22:20:06 by osalmine          #+#    #+#             */
-/*   Updated: 2020/08/26 12:16:31 by osalmine         ###   ########.fr       */
+/*   Updated: 2020/09/01 12:39:51 by osalmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,7 +123,7 @@ static void	read_link(t_lem *lem, char *line)
 	free_strsplit(&room_links);
 }
 
-static char	*str_append(char *str, char *append)
+static void str_append(char **output, char *append)
 {
 	char *tmp;
 
@@ -131,15 +131,14 @@ static char	*str_append(char *str, char *append)
 	ft_memdel((void**)&append);
 	append = ft_strdup(tmp);
 	ft_memdel((void**)&tmp);
-	if (str)
-		tmp = ft_strjoin(str, append);
+	if (*output)
+		tmp = ft_strjoin(*output, append);
 	else
 		tmp = ft_strdup(append);
-	ft_memdel((void**)&str);
+	ft_memdel((void**)output);
 	ft_memdel((void**)&append);
-	str = ft_strdup(tmp);
+	*output = ft_strdup(tmp);
 	ft_memdel((void**)&tmp);
-	return (str);
 }
 
 void		lem_read(t_lem *lem)
@@ -166,7 +165,7 @@ void		lem_read(t_lem *lem)
 			else
 				read_link(lem, line);
 		}
-		output = str_append(output, line);
+		str_append(&output, line);
 	}
 	ft_printf("%s\n", output);
 }
