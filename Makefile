@@ -6,7 +6,7 @@
 #    By: osalmine <osalmine@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/03/19 19:13:02 by osalmine          #+#    #+#              #
-#    Updated: 2020/09/01 09:47:07 by osalmine         ###   ########.fr        #
+#    Updated: 2020/09/07 14:28:19 by osalmine         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,7 @@ FLAGS = -Wall -Werror -Wextra -g
 
 SOURCES_DIR = ./src/
 SOURCES_FILE =	lem_in.c init.c read.c flags.c frees.c find.c guide_ants.c \
-				init_ants.c find_paths.c assign_paths.c print_paths.c
+				init_ants.c find_paths.c assign_paths.c print_paths.c utils.c
 SOURCES = $(addprefix $(SOURCES_DIR), $(SOURCES_FILE))
 
 HEADERS_LIST = lem.h

@@ -6,7 +6,7 @@
 /*   By: osalmine <osalmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/29 00:13:34 by osalmine          #+#    #+#             */
-/*   Updated: 2020/08/27 11:16:48 by osalmine         ###   ########.fr       */
+/*   Updated: 2020/09/02 19:27:30 by osalmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,10 @@ static void	turn_loop(t_lem *lem, t_room *end)
 				{
 					cur_ant->room->has_ant = FALSE;
 					cur_ant->room = next_room;
-					ft_printf("L%d-%s ", cur_ant->id, cur_ant->room->name);
+					if (lem->opts->colours)
+						ft_printf("%sL%d-%s "RESET, cur_ant->path->colour, cur_ant->id, cur_ant->room->name);
+					else
+						ft_printf("L%d-%s ", cur_ant->id, cur_ant->room->name);
 					if (cur_ant->room->type == NORMAL)
 						cur_ant->room->has_ant = TRUE;
 					cur_ant->has_moved = TRUE;

@@ -6,7 +6,7 @@
 /*   By: osalmine <osalmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/26 23:36:24 by osalmine          #+#    #+#             */
-/*   Updated: 2020/08/31 15:25:44 by osalmine         ###   ########.fr       */
+/*   Updated: 2020/09/03 11:28:52 by osalmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@ void    assign_paths(t_lem *lem, t_room *start)
 	t_list	*paths;
 	t_list	*prev_paths;
 	t_path	*cur_path;
-	// t_path	*prev_path;
 	int		starting_ants;
 	int		decider;
 
@@ -26,28 +25,33 @@ void    assign_paths(t_lem *lem, t_room *start)
 	paths = lem->paths_list;
 	starting_ants = start->has_ant;
 	decider = 0;
-	// ft_printf("Starting ants beginning: %d\n", starting_ants);
 	while (ants)
 	{
+		// ft_printf(CYAN"Assigning path for ant id: %d\n"RESET, ((t_ant*)ants->content)->id);
 		if (!paths)
 			paths = lem->paths_list;
-		// ft_printf("Ok\n");
 		prev_paths = lem->paths_list;
 		cur_path = (t_path*)paths->content;
+		// ft_printf(YELLOW"Current path is %la, length: %d\n"RESET, cur_path->path_arr, cur_path->len);
 		while (prev_paths && prev_paths != paths)
 		{
-			decider += cur_path->len - ((t_path*)prev_paths->next)->len;
+			// ft_printf(GREEN"Decider: %d, cur_path len: %d - prev len : %d is %d, TOTAL NEW DECIDER = ", decider, cur_path->len, ((t_path*)prev_paths->content)->len, cur_path->len - ((t_path*)prev_paths->content)->len);
+			decider += cur_path->len - ((t_path*)prev_paths->content)->len;
+			// ft_printf("%d\n"RESET, decider);
 			prev_paths = prev_paths->next;
 		}
+		// ft_printf(BLUE"STARTING ANTS: %d > DECIDER: %d ?\n"RESET, starting_ants, decider);
 		if (starting_ants > decider)
 		{
 			((t_ant*)ants->content)->path = cur_path;
 			starting_ants--;
 			paths = paths->next;
 			ants = ants->next;
-			// ft_printf("Starting ants: %d\n", starting_ants);
 		}
 		else
+		{
 			paths = lem->paths_list;
+			decider = 0;
+		}
 	}
 }

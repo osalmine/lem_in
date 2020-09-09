@@ -6,7 +6,7 @@
 /*   By: osalmine <osalmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/18 22:39:15 by osalmine          #+#    #+#             */
-/*   Updated: 2020/08/31 15:23:54 by osalmine         ###   ########.fr       */
+/*   Updated: 2020/09/07 14:34:27 by osalmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,51 +14,33 @@
 
 t_room  *find_room(char *name, t_lem *lem)
 {
-    t_room *found_room;
     t_room *current_room;
     t_list *tmp;
 
     tmp = lem->room_list;
-    // ft_printf("Searching for room %s\n", name);
-    // ft_printf("Find room before while\n");
     while (tmp && name)
     {
         current_room = (t_room*)tmp->content;
         if (ft_strequ(current_room->name, name))
-        {
-            found_room = current_room;
-            // ft_printf("Find room return ok\n");
-            return (found_room);
-        }
+            return (current_room);
         tmp = tmp->next;
     }
-    // ft_printf("Find room return NULL\n");
     return (NULL);
 }
 
 t_room  *find_room_by_type(int type, t_lem *lem)
 {
-    t_room *found_room;
     t_room *current_room;
-    t_list *head;
+    t_list *tmp;
 
-    head = lem->room_list;
-    // ft_printf("Searching for room type: %d\n", type);
-    // ft_printf("Find room by type before while\n");
-    while (lem->room_list)
+    tmp = lem->room_list;
+    while (tmp)
     {
-        current_room = (t_room*)lem->room_list->content;
+        current_room = (t_room*)tmp->content;
         if (current_room->type == type)
-        {
-            found_room = current_room;
-            lem->room_list = head;
-            // ft_printf("Find room by type return ok\n");
-            return (found_room);
-        }
-        lem->room_list = lem->room_list->next;
+            return (current_room);
+        tmp = tmp->next;
     }
-    lem->room_list = head;
-    // ft_printf("Find room by type return NULL\n");
     return (NULL);
 }
 
@@ -74,4 +56,30 @@ int     find_from_que(char **que, char *name)
         i++;
     }
     return (0);
+}
+
+int  find_in_path(t_lem *lem, t_room *room, t_room *end)
+{
+    t_list	*paths;
+	t_path	*cur_path;
+	char	**tmp;
+	int		i;
+
+	paths = lem->paths_list;
+	if (room == end)
+		return (0);
+	while (paths)
+	{
+		i = 0;
+		cur_path = (t_path*)paths->content;
+		tmp = cur_path->path_arr;
+		while (tmp[i])
+		{
+			if (ft_strequ(tmp[i], room->name))
+				return (1);
+			i++;
+		}
+		paths = paths->next;
+	}
+	return (0);
 }

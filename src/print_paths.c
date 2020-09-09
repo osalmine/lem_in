@@ -6,7 +6,7 @@
 /*   By: osalmine <osalmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/29 16:15:05 by osalmine          #+#    #+#             */
-/*   Updated: 2020/08/29 17:18:07 by osalmine         ###   ########.fr       */
+/*   Updated: 2020/09/02 18:04:17 by osalmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,13 @@ void    print_paths(t_lem *lem)
     int     i;
 
     paths = lem->paths_list;
-    ft_putstr("\n\n");
+    ft_putstr("\n");
     while (paths)
     {
         i = 0;
         path = (t_path*)paths->content;
+        if (lem->opts->colours)
+            ft_putstr(path->colour);
         while (i <= path->len)
         {
             if (i == path->len)
@@ -32,8 +34,9 @@ void    print_paths(t_lem *lem)
                 ft_printf("[%s]->", path->path_arr[i]);
             i++;
         }
-        ft_putchar('\n');
+        ft_putstr(RESET);
+        ft_putstr("\n\n");
         paths = paths->next;
     }
-    ft_putstr("\n\n");
+    ft_putstr("\n");
 }

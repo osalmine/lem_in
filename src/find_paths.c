@@ -6,130 +6,11 @@
 /*   By: osalmine <osalmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/25 16:25:46 by osalmine          #+#    #+#             */
-/*   Updated: 2020/09/01 09:23:54 by osalmine         ###   ########.fr       */
+/*   Updated: 2020/09/07 14:43:41 by osalmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/lem.h"
-
-static int  room_count(t_lem* lem)
-{
-	int		counter;
-	t_list	*tmp;
-
-	counter = 0;
-	tmp = lem->room_list;
-	while (tmp)
-	{
-		counter++;
-		tmp = tmp->next;
-	}
-	return (counter);
-}
-
-static char **create_arr(t_lem *lem, ssize_t size)
-{
-	char	**que;
-	int		i;
-
-	if (size == -1)
-		size = room_count(lem) + 1;
-	// ft_printf(RED"room_nb + 1: %d\n", size);
-	if (!(que = (char**)malloc(sizeof(char*) * size)))
-		ft_exit(RED"Malloc error"RESET);
-	que[size - 1] = NULL;
-	i = 0;
-	while (i < size)
-		que[i++] = NULL;
-	i = 0;
-	while (i < size)
-	{
-		// ft_printf("que[%d] pointer: %p\n", i, que[i]);
-		i++;
-	}
-	ft_printf("%s", RESET);
-	return (que);
-}
-
-static void	push_to_arr(char **que, char *room)
-{
-	int i;
-
-	i = 0;
-	while (que[i])
-		i++;
-	que[i] = ft_strdup(room);
-}
-
-static char **arr_reverse(char **arr)
-{
-	char	**new_arr;
-	int		count;
-	int		start;
-
-	count = 0;
-	start = 0;
-	// ft_printf("ARR REVERSE arr: %la\n", arr);
-	while (arr[count])
-		count++;
-	if (!(new_arr = (char**)malloc(sizeof(char*) * (count + 1))))
-		ft_exit(RED"Malloc error"RESET);
-	new_arr[count] = NULL;
-	while (count)
-		new_arr[start++] = ft_strdup(arr[(count--) - 1]);
-	free_strsplit(&arr);
-	return (new_arr);
-}
-
-static int	arr_size(char **arr)
-{
-	int i;
-
-	i = 0;
-	while(arr[i])
-		i++;
-	return (i);
-}
-
-static int  find_in_path(t_lem *lem, t_room *room, t_room *end)
-{
-    t_list	*paths;
-	t_path	*cur_path;
-	char	**tmp;
-	int		i;
-
-	paths = lem->paths_list;
-	// ft_putchar('\n');
-	// ft_printf(BG_BLUE BLACK"FIND_IN_PATH"RESET);
-	// ft_putchar('\n');
-	// ft_printf("FIND_IN_PATH\t:\tpaths pointer: %p\n", paths);
-	if (room == end)
-	{
-		// ft_printf("ROOM IS END ROOM\n");
-		return (0);
-	}
-	while (paths)
-	{
-		i = 0;
-		cur_path = (t_path*)paths->content;
-		// ft_printf("FIND_IN_PATH\t:\tcur_path pointer: %p\n", cur_path);
-		tmp = cur_path->path_arr;
-		// ft_printf("FIND_IN_PATH\t:\ttmp pointer: %p\n", tmp);
-		// ft_printf("path: %la\n", tmp);
-		while (tmp[i])
-		{
-			// ft_printf("FIND_IN_PATH\t:\ttmp[%d] pointer: %p\n", i, tmp[i]);
-			// ft_printf("tmp[%d]: %s, room->name: %s\n", i, tmp[i], room->name);
-			if (ft_strequ(tmp[i], room->name))
-				return (1);
-			i++;
-		}
-		// ft_printf("find_in_path after tmp while, i: %d\n", i);
-		paths = paths->next;
-	}
-	// ft_printf("Returning 0 from find_in_path\n");
-	return (0);
-}
 
 static char	**solve(t_room *start, t_room *end, t_lem *lem)
 {
@@ -191,9 +72,6 @@ static char **reconstruct_path(t_room *start, t_room* end, char **prev, t_lem *l
 
 	path = create_arr(lem, -1);
 	current = end;
-	// ft_printf("prev[0] is %s\n", prev[0]);
-	// prev[0] = ft_strdup(start->name);
-	// ft_printf("prev[0] is %s\n", prev[0]);
 	// ft_printf(BG_CYAN WHITE"FULL PREV ARRAY IN RECONSTRUCT_PATH:"RESET);
 	// ft_putchar('\n');
 	// int j = 0;
@@ -212,9 +90,7 @@ static char **reconstruct_path(t_room *start, t_room* end, char **prev, t_lem *l
 		// else
 		// 	ft_printf(BLUE"CURRENT IS NULL\n"RESET);
 	}
-	// ft_printf("path[0]: %s, start->name: %s\n", path[0], start->name);
 	path = arr_reverse(path);
-	// ft_printf("path[0]: %s, start->name: %s\n", path[0], start->name);
 	if (ft_strequ(path[0], start->name))
 		return (path);
 	return (NULL);
@@ -224,15 +100,7 @@ static char	**bfs(t_room *start, t_room *end, t_lem *lem)
 {
 	char 	**prev;
 	char 	**path;
-	// t_list	*tmp;
 
-	// tmp = lem->ants;
-	// while (tmp)
-	// {
-	// 	t_ant *ant = (t_ant*)tmp->content;
-	// 	ft_printf("Ant id: %d\n", ant->id);
-	// 	tmp = tmp->next;
-	// }
 	prev = solve(start, end, lem);
 	path = reconstruct_path(start, end, prev, lem);
 	free_strsplit(&prev);
@@ -278,6 +146,29 @@ static void	reset_rooms(t_lem *lem)
 	}
 }
 
+static char *assign_colour(t_lem *lem)
+{
+	t_list	*paths;
+	char	*tmp;
+	char	*colour;
+	int		i;
+
+	paths = lem->paths_list;
+	i = 1;
+	while (paths)
+	{
+		if (i >= 256)
+			i = 1;
+		else
+			i += 10;
+		paths = paths->next;
+	}
+	tmp = ft_strjoin("\x1b[38;5;", ft_itoa(i));
+	colour = ft_strjoin(tmp, "m");
+	ft_strdel(&tmp);
+	return (colour);
+}
+
 static void add_path(t_lem *lem, char **path)
 {
     int		len;
@@ -292,16 +183,9 @@ static void add_path(t_lem *lem, char **path)
 	path_struct->len = len - 1;
 	// ft_printf("BEFORE PATH DUP: %la\n", path);
 	path_struct->path_arr = ft_2dstrdup(path);
+	path_struct->colour = assign_colour(lem);
 	// ft_printf("AFTER PATH DUP: %la\n", path_struct->path_arr);
 	ft_lstaddlast(&lem->paths_list, ft_lstnew(path_struct, sizeof(t_path)));
-	// t_list *pth_lst;
-	// pth_lst = lem->paths_list;
-	// ft_printf("Printing all paths\n");
-	// while (pth_lst)
-	// {
-	// 	ft_printf("pth_lst arr: %la\n", ((t_path*)pth_lst->content)->path_arr);
-	// 	pth_lst = pth_lst->next;
-	// }
 }
 
 void        find_paths(t_lem *lem, t_room *start, t_room *end)
@@ -323,13 +207,6 @@ void        find_paths(t_lem *lem, t_room *start, t_room *end)
 	// ft_printf(RED BOLD UNDERLINE"FOUND ALL PATHS\n"RESET);
 	if (!lem->paths_list)
 		ft_exit(RED"ERROR: No paths found"RESET);
-	// t_list *tmp;
-	// tmp = lem->paths_list;
-	// while (tmp)
-	// {
-	// 	ft_printf("Path: %la, length: %d\n", ((t_path*)tmp->content)->path_arr, ((t_path*)tmp->content)->len);
-	// 	tmp = tmp->next;
-	// }
 	if (lem->opts->paths)
 		print_paths(lem);
 }

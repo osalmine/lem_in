@@ -6,7 +6,7 @@
 /*   By: osalmine <osalmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/19 19:01:54 by osalmine          #+#    #+#             */
-/*   Updated: 2020/09/01 11:20:08 by osalmine         ###   ########.fr       */
+/*   Updated: 2020/09/07 14:34:10 by osalmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ typedef struct	s_options
 	int	debug;
 	int lines;
 	int paths;
+	int colours;
 }				t_opts;
 
 /*
@@ -92,6 +93,7 @@ typedef struct	s_path
 {
 	char	**path_arr;
 	int		len;
+	char	*colour;
 }				t_path;
 
 /*
@@ -149,6 +151,7 @@ void	init_ants(t_lem *lem);
 t_room	*find_room(char *name, t_lem *lem);
 t_room  *find_room_by_type(int type, t_lem *lem);
 int     find_from_que(char **que, char *name);
+int		find_in_path(t_lem *lem, t_room *room, t_room *end);
 
 /*
 **	Pathfinding functions
@@ -171,5 +174,15 @@ void    print_paths(t_lem *lem);
 void	free_lem(t_lem *lem);
 void	free_room_arr(char ***str, int len);
 void	free_strsplit(char ***str);
+
+/*
+**	Utility functions
+*/
+
+int 	room_count(t_lem* lem);
+char	**create_arr(t_lem *lem, ssize_t size);
+void	push_to_arr(char **que, char *room);
+char	**arr_reverse(char **arr);
+int		arr_size(char **arr);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: osalmine <osalmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/01 09:45:19 by osalmine          #+#    #+#             */
-/*   Updated: 2020/09/01 12:17:05 by osalmine         ###   ########.fr       */
+/*   Updated: 2020/09/02 17:42:14 by osalmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ static void	free_path(void *path, size_t size)
 {
 	size = 0;
 	free_strsplit(&((t_path*)path)->path_arr);
+	ft_strdel(&((t_path*)path)->colour);
 	ft_memdel(&path);
 }
 
