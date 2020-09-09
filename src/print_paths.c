@@ -6,7 +6,7 @@
 /*   By: osalmine <osalmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/29 16:15:05 by osalmine          #+#    #+#             */
-/*   Updated: 2020/09/02 18:04:17 by osalmine         ###   ########.fr       */
+/*   Updated: 2020/09/09 12:28:26 by osalmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,7 @@ void    print_paths(t_lem *lem)
                 ft_printf("[%s]->", path->path_arr[i]);
             i++;
         }
-        ft_putstr(RESET);
-        ft_putstr("\n\n");
+        ft_putstr(RESET"\n\n");
         paths = paths->next;
     }
     ft_putstr("\n");
