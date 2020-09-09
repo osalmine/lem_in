@@ -6,7 +6,7 @@
 /*   By: osalmine <osalmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/19 19:01:54 by osalmine          #+#    #+#             */
-/*   Updated: 2020/09/07 14:34:10 by osalmine         ###   ########.fr       */
+/*   Updated: 2020/09/09 16:13:24 by osalmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@
 # define NORMAL	0
 # define START	1
 # define END	2
+# define INF	2147483647
 
 /*
 **	Struct for options
@@ -49,7 +50,7 @@ typedef struct	s_options
 **	Struct to see where the room is connected to
 **	room1:	first door
 **	room2:	second door
-**	flow:	links current flow (initialized as 0)
+**	flow:	link's current flow (initialized as INF)
 */
 
 typedef struct	s_link
@@ -152,6 +153,7 @@ t_room	*find_room(char *name, t_lem *lem);
 t_room  *find_room_by_type(int type, t_lem *lem);
 int     find_from_que(char **que, char *name);
 int		find_in_path(t_lem *lem, t_room *room, t_room *end);
+t_link	*find_link(t_lem *lem, char *room1, char *room2);
 
 /*
 **	Pathfinding functions

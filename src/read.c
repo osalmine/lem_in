@@ -6,7 +6,7 @@
 /*   By: osalmine <osalmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/30 22:20:06 by osalmine          #+#    #+#             */
-/*   Updated: 2020/09/01 12:39:51 by osalmine         ###   ########.fr       */
+/*   Updated: 2020/09/09 15:58:28 by osalmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,6 +115,7 @@ static void	read_link(t_lem *lem, char *line)
 				ft_exit(RED"Malloc error"RESET);
 			path->room1 = ft_strdup(room->name);
 			path->room2 = ft_strdup(room_links[i ? 0 : 1]);
+			path->flow = INF;
 			ft_lstaddlast(&room->links, ft_lstnew(path, (sizeof(t_link))));
 			ft_lstaddlast(&lem->link_list, ft_lstnew(path, (sizeof(t_link))));
 		}
