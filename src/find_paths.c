@@ -6,11 +6,24 @@
 /*   By: osalmine <osalmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/25 16:25:46 by osalmine          #+#    #+#             */
-/*   Updated: 2020/09/07 14:43:41 by osalmine         ###   ########.fr       */
+/*   Updated: 2020/09/09 16:49:05 by osalmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/lem.h"
+
+static int	check_for_flow(t_lem *lem, t_room *current, t_room *next)
+{
+	int		check;
+	t_link	*link;
+
+	check = 0;
+	if (!(link = find_link(lem, current->name, next->name)))
+		ft_exit(RED"ERROR: can't find link (check_for_flow)"RESET);
+	if ((link->flow == INF || link->flow == -1) && next->type != END)
+		check = 1;
+	return (check);
+}
 
 static char	**solve(t_room *start, t_room *end, t_lem *lem)
 {
@@ -21,6 +34,7 @@ static char	**solve(t_room *start, t_room *end, t_lem *lem)
 	t_link	*path;
 	t_list	*tmp;
 	int		i;
+	int		can_use_link;
 
 	i = 0;
 	que = create_arr(lem, -1);
@@ -39,7 +53,8 @@ static char	**solve(t_room *start, t_room *end, t_lem *lem)
 				ft_exit(RED"ERROR: neighbor room not found (solve)"RESET);
 			// ft_printf(MAGENTA"SOLVE\t\t:\tinspecting neighbor: %s, visited: %s, found from que: %s, ", neighbor->name, (neighbor->visited ? "TRUE" : "FALSE"), (find_from_que(que, neighbor->name) ? "TRUE" : "FALSE"));
 			// ft_printf("found from path: %s\n", (find_in_path(lem, neighbor, end) ? "TRUE" : "FALSE"));
-			if (!neighbor->visited && !find_from_que(que, neighbor->name) && !find_in_path(lem, neighbor, end))
+			can_use_link = check_for_flow(lem, node, neighbor);
+			if (!neighbor->visited && !find_from_que(que, neighbor->name) && (can_use_link || !find_in_path(lem, neighbor, end)))
 			{
 				push_to_arr(que, neighbor->name);
 				// ft_printf(YELLOW"SOLVE\t\t:\tpushed %s to que: %la\n"RESET, neighbor->name, que);
@@ -61,7 +76,6 @@ static char	**solve(t_room *start, t_room *end, t_lem *lem)
 	free_strsplit(&que);
 	// ft_printf(BG_WHITE BLACK"RETURN SOLVE"RESET);
 	// ft_putchar('\n');
-	// ft_printf(GREEN"PREV[0]: %s\n"RESET, prev[0]);
 	return (prev);
 }
 
@@ -113,7 +127,6 @@ static char	**ft_2dstrdup(char **str)
 	char	**new_str;
 
 	i = arr_size(str);
-	// ft_printf("PATH SIZE: %d\n", i);
 	if (!(new_str = (char**)malloc(sizeof(char*) * (i + 1))))
 		ft_exit(RED"ERROR: Malloc error"RESET);
 	new_str[i] = NULL;
@@ -123,7 +136,6 @@ static char	**ft_2dstrdup(char **str)
 		new_str[i] = ft_strdup(str[i]);
 		i++;
 	}
-	// ft_printf(RED"2DSTRDUP NEW: %la\n"RESET, new_str);
 	return (new_str);
 }
 
@@ -133,15 +145,10 @@ static void	reset_rooms(t_lem *lem)
 	t_room	*room;
 
 	tmp = lem->room_list;
-	// ft_printf(BG_RED"Reset loop"RESET);
-	// write(1, "\n", 1);
 	while (tmp)
 	{
 		room = (t_room*)tmp->content;
-		// ft_printf("Room name: %s\n", room->name);
 		room->visited = FALSE;
-		// if (room->type == NORMAL)
-		// 	room->has_ant = FALSE;
 		tmp = tmp->next;
 	}
 }
@@ -188,6 +195,31 @@ static void add_path(t_lem *lem, char **path)
 	ft_lstaddlast(&lem->paths_list, ft_lstnew(path_struct, sizeof(t_path)));
 }
 
+static void	assign_flows(t_lem *lem, char **path)
+{
+	int		i;
+	t_link	*link;
+
+	i = 0;
+	ft_printf(RED BOLD"NEW ASSIGN\n"RESET);
+	while (path[i + 1])
+	{
+		if (!(link = find_link(lem, path[i], path[i + 1])))
+			ft_exit(RED"ERROR: couldn't find link\n"RESET);
+		if (link->flow == INF)
+			link->flow = 1;
+		else
+			link->flow--;
+		if (!(link = find_link(lem, path[i + 1], path[i])))
+			ft_exit(RED"ERROR: couldn't find link\n"RESET);
+		if (link->flow == INF)
+			link->flow = -1;
+		else
+			link->flow++;
+		i++;
+	}
+}
+
 void        find_paths(t_lem *lem, t_room *start, t_room *end)
 {
     char **path;
@@ -195,9 +227,16 @@ void        find_paths(t_lem *lem, t_room *start, t_room *end)
 	while ((path = bfs(start, end, lem)))
 	{
 		if (!path)
-		{
-			// ft_printf("No path found!\n");
 			break ;
+		assign_flows(lem, path);
+		t_list *links;
+		t_link *link;
+		links = lem->link_list;
+		while (links)
+		{
+			link = (t_link*)links->content;
+			ft_printf("LINK: room1: %s, room2: %s, flow: %d\n", link->room1, link->room2, link->flow);
+			links = links->next;
 		}
 		// ft_printf("Path: %la\n", path);
 		add_path(lem, path);
