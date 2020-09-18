@@ -4,3 +4,7 @@ lem-in.*/
 obj/
 *.a
 *.o
+
+src/visu/*
+visualizer.bash
+lem-in_test/

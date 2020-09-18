@@ -6,7 +6,7 @@
 /*   By: osalmine <osalmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/19 19:01:44 by osalmine          #+#    #+#             */
-/*   Updated: 2020/09/02 17:40:21 by osalmine         ###   ########.fr       */
+/*   Updated: 2020/09/10 20:31:45 by osalmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,12 +42,12 @@ int	main(int argc, char **argv)
 			tmp_rooms = tmp_rooms->next;
 		}
 		ft_printf(RED"LEM LINK LIST:\n"RESET);
-		lem_tmp = lem;
-		while (lem_tmp->link_list)
+		tmp_rooms = lem->link_list;
+		while (tmp_rooms)
 		{
-			link = (t_link*)lem_tmp->link_list->content;
+			link = (t_link*)tmp_rooms->content;
 			ft_printf("Link room1: %s, room2: %s\n", link->room1, link->room2);
-			lem_tmp->link_list = lem_tmp->link_list->next;
+			tmp_rooms = tmp_rooms->next;
 		}
 		write(1, "\n\n\n", 3);
 	}

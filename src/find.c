@@ -6,7 +6,7 @@
 /*   By: osalmine <osalmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/18 22:39:15 by osalmine          #+#    #+#             */
-/*   Updated: 2020/09/09 16:13:06 by osalmine         ###   ########.fr       */
+/*   Updated: 2020/09/14 15:55:05 by osalmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,14 +58,14 @@ int     find_from_que(char **que, char *name)
     return (0);
 }
 
-int		find_in_path(t_lem *lem, t_room *room, t_room *end)
+int		find_in_path(t_list *list, t_room *room, t_room *end)
 {
     t_list	*paths;
 	t_path	*cur_path;
 	char	**tmp;
 	int		i;
 
-	paths = lem->paths_list;
+	paths = list;
 	if (room == end)
 		return (0);
 	while (paths)

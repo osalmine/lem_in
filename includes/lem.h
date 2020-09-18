@@ -6,7 +6,7 @@
 /*   By: osalmine <osalmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/19 19:01:54 by osalmine          #+#    #+#             */
-/*   Updated: 2020/09/09 16:13:24 by osalmine         ###   ########.fr       */
+/*   Updated: 2020/09/18 13:15:23 by osalmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,7 @@ typedef struct	s_link
 **	has_ant:	TRUE (=1) if room has ant, else FALSE (=0)
 **	type:		room's type. START (=1) if room is starting room,
 **				END (=2) if room is goal room, else NORMAL (=0)
+**	weight:		distance from starting node
 **	path:		list of connections to the room
 */
 
@@ -82,6 +83,7 @@ typedef struct	s_room
 	int		y;
 	int		has_ant;
 	int		type;
+	int		weight;
 	t_list	*links;
 }				t_room;
 
@@ -117,12 +119,14 @@ typedef struct	s_ant
 
 /*
 **	t_lem is the main struct
-**	ant_nb:		total ant amount
-**	ants:		list of all ants
-**	room_list:	list of all rooms
-**	link_list:	list of all the links
-**	paths_list:	list of all the paths
-**	opts:		options struct
+**	ant_nb:			total ant amount
+**	ants:			list of all ants
+**	room_list:		list of all rooms
+**	link_list:		list of all the links
+**	paths_list:		list of all the paths
+**	opts:			options struct
+**	paths_bef_ek:	paths before running them through edmonds-karp pathfinding
+**	moves_count:	counts the number of turns (lines)
 */
 
 typedef struct	s_lem
@@ -133,6 +137,7 @@ typedef struct	s_lem
 	t_list	*link_list;
 	t_list	*paths_list;
 	t_opts	*opts;
+	t_list	*paths_bef_ek;
 	int		moves_count;
 }				t_lem;
 
@@ -152,7 +157,7 @@ void	init_ants(t_lem *lem);
 t_room	*find_room(char *name, t_lem *lem);
 t_room  *find_room_by_type(int type, t_lem *lem);
 int     find_from_que(char **que, char *name);
-int		find_in_path(t_lem *lem, t_room *room, t_room *end);
+int		find_in_path(t_list *list, t_room *room, t_room *end);
 t_link	*find_link(t_lem *lem, char *room1, char *room2);
 
 /*
@@ -186,5 +191,6 @@ char	**create_arr(t_lem *lem, ssize_t size);
 void	push_to_arr(char **que, char *room);
 char	**arr_reverse(char **arr);
 int		arr_size(char **arr);
+void	sort_paths(t_lem *lem);
 
 #endif
