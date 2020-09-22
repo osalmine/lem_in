@@ -6,7 +6,7 @@
 /*   By: osalmine <osalmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/01 10:30:08 by osalmine          #+#    #+#             */
-/*   Updated: 2020/08/18 17:00:12 by osalmine         ###   ########.fr       */
+/*   Updated: 2020/09/18 14:22:47 by osalmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void			init_ants(t_lem *lem)
 
 	i = 1;
 	if (!(ant_room = find_room_by_type(START, lem)))
-		ft_exit("ERROR: room not found (init_ants)\n");
+		ft_exit(RED"ERROR: room not found (init_ants)\n"RESET);
 	while (i <= lem->ant_nb)
 		ft_lstaddlast(&lem->ants, ft_lstnew(add_ant(i++, ant_room), sizeof(t_ant)));
 }

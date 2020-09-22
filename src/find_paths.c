@@ -6,7 +6,7 @@
 /*   By: osalmine <osalmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/25 16:25:46 by osalmine          #+#    #+#             */
-/*   Updated: 2020/09/18 13:47:07 by osalmine         ###   ########.fr       */
+/*   Updated: 2020/09/22 16:32:25 by osalmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -190,7 +190,8 @@ static void add_path(t_lem *lem, char **path)
 		ft_exit(RED"ERROR: Malloc error"RESET);
 	path_struct->len = len - 1;
 	path_struct->path_arr = ft_2dstrdup(path);
-	path_struct->colour = assign_colour(lem);
+	if (lem->opts->colours)
+		path_struct->colour = assign_colour(lem);
 	ft_lstaddlast(&lem->paths_list, ft_lstnew(path_struct, sizeof(t_path)));
 }
 
@@ -224,6 +225,32 @@ static void	assign_flows(t_lem *lem, char **path)
 	}
 }
 
+static int	check_for_dup_path(t_lem *lem, char **path)
+{
+	t_list	*paths;
+	int		i;
+	int		path_len;
+
+	paths = lem->paths_list;
+	path_len = arr_size(path) - 1;
+	// ft_printf("path_len: %d\n", path_len);
+	while (paths && path_len == 1)
+	{
+		i = 0;
+		// ft_printf("LEM PATH LEN: %d, PATH LEN: %d\n", ((t_path*)paths->content)->len, path_len);
+		if (((t_path*)paths->content)->len == path_len)
+		{
+			while (path[i] && ft_strequ(((t_path*)paths->content)->path_arr[i], path[i]))
+				i++;
+			// ft_printf("i: %d\n", i);
+			if (i == path_len + 1)
+				return (1);
+		}
+		paths = paths->next;
+	}
+	return (0);
+}
+
 static char	**ek_find_path(t_lem *lem)
 {
 	char	**path;
@@ -238,6 +265,13 @@ static char	**ek_find_path(t_lem *lem)
 	current = find_room_by_type(START, lem);
 	push_to_arr(path, current->name);
 	current->visited = TRUE;
+	t_list *paths;
+	paths = lem->paths_list;
+	while (paths)
+	{
+		// ft_printf("%la, len: %d\n", ((t_path*)(paths->content))->path_arr, ((t_path*)(paths->content))->len);
+		paths = paths->next;
+	}
 	while (path[i])
 	{
 		// ft_printf("path[%d]: %s\n", i, path[i]);
@@ -248,9 +282,12 @@ static char	**ek_find_path(t_lem *lem)
 			if (find_link(lem, ((t_link*)links->content)->room1, ((t_link*)links->content)->room2)->flow == 1)
 			{
 				next = find_room(((t_link*)links->content)->room2, lem);
+				// ft_printf("Next name: %s\n", next->name);
 				if (!next->visited && !find_in_path(lem->paths_list, next, find_room_by_type(END, lem)))
 				{
+					// ft_printf("Ok\n");
 					current = next;
+					current->visited = TRUE;
 					push_to_arr(path, current->name);
 					break ;
 				}
@@ -259,8 +296,8 @@ static char	**ek_find_path(t_lem *lem)
 		}
 		i++;
 	}
-	// ft_printf("PATH: %la\n", path);
-	if (ft_strequ(path[arr_size(path) - 1], (find_room_by_type(END, lem))->name))
+	// ft_printf(BLUE"PATH: %la\n"RESET, path);
+	if (!check_for_dup_path(lem, path) && ft_strequ(path[arr_size(path) - 1], (find_room_by_type(END, lem))->name))
 		return (path);
 	return (NULL);
 }
@@ -285,12 +322,12 @@ static void	assign_weights(t_lem *lem, char **path)
 	while (path[i])
 	{
 		room = find_room(path[i], lem);
-		ft_printf("ASSIGN WEIGHTS ROOM: %s", room->name);
+		// ft_printf("ASSIGN WEIGHTS ROOM: %s", room->name);
 		if (room->type == END)
 			room->weight = INF;
 		else
 			room->weight = i;
-		ft_printf(", WEIGHT: %d\n", room->weight);
+		// ft_printf(", WEIGHT: %d\n", room->weight);
 		i++;
 	}
 }
