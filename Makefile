@@ -6,7 +6,7 @@
 #    By: osalmine <osalmine@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/03/19 19:13:02 by osalmine          #+#    #+#              #
-#    Updated: 2020/09/24 20:18:45 by osalmine         ###   ########.fr        #
+#    Updated: 2020/10/06 08:50:05 by osalmine         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,15 +21,15 @@ SOURCES_FILE =	lem_in.c init.c read.c flags.c frees.c find.c guide_ants.c \
 				ek_pathfinder.c
 SOURCES = $(addprefix $(SOURCES_DIR), $(SOURCES_FILE))
 
-HEADERS_LIST = lem.h
-HEADERS_DIR = ./includes/
-HEADERS = $(addprefix $(HEADERS_DIR), $(HEADERS_LIST))
+HEADER_LIST = lem.h
+HEADER_DIR = ./includes/
+HEADER = $(addprefix $(HEADER_DIR), $(HEADER_LIST))
 
 LIBFT_DIR = libft/
 LIBFT = $(LIBFT_DIR)libft.a
 
 LIBRARIES = -lft -L$(LIBFT_DIR)
-INCLUDES = -I$(HEADERS_DIR) -I$(LIBFT_DIR)
+INCLUDES = -I$(HEADER_DIR) -I$(LIBFT_DIR)
 
 OBJECTS_DIR = obj/
 OBJECTS_FILE = $(patsubst %.c, %.o, $(SOURCES_FILE))
@@ -50,7 +50,7 @@ $(OBJECTS_DIR):
 	@mkdir -p $(OBJECTS_DIR)
 	@printf "$(OBJECTS_DIR) was created"
 
-$(OBJECTS_DIR)%.o : $(SOURCES_DIR)%.c $(HEADERS)
+$(OBJECTS_DIR)%.o : $(SOURCES_DIR)%.c $(HEADER)
 	@gcc $(FLAGS) -c $(INCLUDES) $< -o $@
 	@printf "$(ITALIC)$(BLUE)%-42.42s$(RESET)\r" "Compiled $@"
 

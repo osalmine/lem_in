@@ -6,7 +6,7 @@
 /*   By: osalmine <osalmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/01 09:45:19 by osalmine          #+#    #+#             */
-/*   Updated: 2020/09/27 19:13:32 by osalmine         ###   ########.fr       */
+/*   Updated: 2020/10/06 10:38:26 by osalmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,16 +42,17 @@ static void	free_room(void *room, size_t size)
 	ft_memdel(&room);
 }
 
-void	free_a_path(t_path *path, size_t size)
+void	free_a_path(t_path **path, size_t size)
 {
 	size = 0;
-	free_strsplit(&path->path_arr);
-	ft_printf("path arr address: %p\n", path->path_arr);
-	ft_printf("path colour: %s aa\n", path->colour);
-	if (path->colour)
-		ft_strdel(&path->colour);
-	ft_printf("path clolour address: %p\n", path->colour);
-	ft_memdel((void**)&path);
+	free_strsplit(&(*path)->path_arr);
+	// ft_printf("path arr address: %p\n", (*path)->path_arr);
+	// ft_printf("path colour: %s aa\n", (*path)->colour);
+	if ((*path)->colour)
+		ft_strdel(&(*path)->colour);
+	// ft_printf("path clolour address: %p\n", (*path)->colour);
+	ft_memdel((void**)&(*path));
+	// ft_printf("return free_a_path\n");
 }
 
 static void	free_path(void *path, size_t size)

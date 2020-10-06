@@ -6,7 +6,7 @@
 /*   By: osalmine <osalmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/19 19:01:54 by osalmine          #+#    #+#             */
-/*   Updated: 2020/09/27 19:11:33 by osalmine         ###   ########.fr       */
+/*   Updated: 2020/10/06 13:26:33 by osalmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,10 @@ typedef struct	s_room
 
 /*
 **	Struct for each path
-**	path:	
+**	path_arr:	names of the rooms on the path in order
+**	len:		path's lenght
+**	colour:		the colour of the path (debugging and prettiness)
+**	in_use:		if the path can be used
 */
 
 typedef struct	s_path
@@ -97,6 +100,7 @@ typedef struct	s_path
 	char	**path_arr;
 	int		len;
 	char	*colour;
+	int		in_use;
 }				t_path;
 
 /*
@@ -127,6 +131,9 @@ typedef struct	s_ant
 **	opts:			options struct
 **	paths_bef_ek:	paths before running them through edmonds-karp pathfinding
 **	moves_count:	counts the number of turns (lines)
+**	start:			start room
+**	end:			end room
+**	max_flow:		maximum flow of the graph
 */
 
 typedef struct	s_lem
@@ -139,6 +146,9 @@ typedef struct	s_lem
 	t_opts	*opts;
 	t_list	*paths_bef_ek;
 	int		moves_count;
+	t_room	*start;
+	t_room	*end;
+	int		max_flow;
 }				t_lem;
 
 /*
@@ -167,7 +177,7 @@ t_path  *find_path(t_list *list, t_room *room, t_room *end);
 
 void	guide_ants(t_lem *lem);
 void    find_paths(t_lem *lem, t_room *start, t_room *end);
-void    assign_paths(t_lem *lem, t_room *start);
+void    assign_paths(t_lem *lem);
 char	**bfs(t_room *start, t_room *end, t_lem *lem);
 void	flows_pathfinder(t_lem *lem);
 
@@ -185,7 +195,7 @@ void	free_lem(t_lem *lem);
 void	free_room_arr(char ***str, int len);
 void	free_strsplit(char ***str);
 // void	free_path(void *path, size_t size);
-void	free_a_path(t_path *path, size_t size);
+void	free_a_path(t_path **path, size_t size);
 
 /*
 **	Utility functions
@@ -198,10 +208,11 @@ char	**arr_reverse(char **arr);
 int		arr_size(char **arr);
 void	sort_paths(t_lem *lem);
 char	**ft_2dstrdup(char **str);
-void	add_path(t_lem *lem, char **path);
+void	add_path(t_lem *lem, char **path, int decide);
 int     check_for_dup_path(t_lem *lem, char **path);
 void	assign_weights(t_lem *lem, char **path);
 void	assign_flows(t_lem *lem, char **path);
 void	reset_rooms(t_lem *lem);
+int		min_3(int x, int y, int z);
 
 #endif

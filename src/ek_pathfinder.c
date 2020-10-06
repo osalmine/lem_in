@@ -6,7 +6,7 @@
 /*   By: osalmine <osalmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/24 20:17:58 by osalmine          #+#    #+#             */
-/*   Updated: 2020/09/25 18:21:44 by osalmine         ###   ########.fr       */
+/*   Updated: 2020/10/06 10:23:26 by osalmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ static char	**ek_find_path(t_lem *lem)
 	i = 0;
 	reset_rooms(lem);
 	path = create_arr(lem, -1);
-	current = find_room_by_type(START, lem);
+	current = lem->start;
 	push_to_arr(path, current->name);
 	current->visited = TRUE;
 	// t_list *paths;
@@ -44,7 +44,7 @@ static char	**ek_find_path(t_lem *lem)
 			{
 				next = find_room(((t_link*)links->content)->room2, lem);
 				// ft_printf("Next name: %s\n", next->name);
-				if (!next->visited && !find_in_path(lem->paths_list, next, find_room_by_type(END, lem)))
+				if (!next->visited && !find_in_path(lem->paths_list, next, lem->end))
 				{
 					// ft_printf("Ok\n");
 					current = next;
@@ -58,7 +58,7 @@ static char	**ek_find_path(t_lem *lem)
 		i++;
 	}
 	// ft_printf(BLUE"PATH: %la\n"RESET, path);
-	if (!check_for_dup_path(lem, path) && ft_strequ(path[arr_size(path) - 1], (find_room_by_type(END, lem))->name))
+	if (!check_for_dup_path(lem, path) && ft_strequ(path[arr_size(path) - 1], lem->end->name))
 		return (path);
 	return (NULL);
 }
@@ -76,7 +76,7 @@ void	flows_pathfinder(t_lem *lem)
     // }
 	while ((path = ek_find_path(lem)))
 	{
-		add_path(lem, path);
+		add_path(lem, path, 2);
 		free_strsplit(&path);
 	}
 }

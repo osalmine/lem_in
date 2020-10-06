@@ -6,7 +6,7 @@
 /*   By: osalmine <osalmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/29 00:13:34 by osalmine          #+#    #+#             */
-/*   Updated: 2020/09/18 13:15:54 by osalmine         ###   ########.fr       */
+/*   Updated: 2020/10/06 13:26:50 by osalmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,16 +94,9 @@ static void	turn_loop(t_lem *lem, t_room *end)
 
 void		guide_ants(t_lem *lem)
 {
-	t_room  *start;
-	t_room	*end;
-
-	if (!(start = find_room_by_type(START, lem)))
-		ft_exit(RED"ERROR: No start room (guide_ants)"RESET);
-	if (!(end = find_room_by_type(END, lem)))
-		ft_exit(RED"ERROR: No end room (guide_ants)"RESET);
-	find_paths(lem, start, end);
-	assign_paths(lem, start);
-	while (end->has_ant != lem->ant_nb)
+	find_paths(lem, lem->start, lem->end);
+	assign_paths(lem);
+	while (lem->end->has_ant != lem->ant_nb)
 	{
 		// t_list	*tmp;
 
@@ -123,7 +116,7 @@ void		guide_ants(t_lem *lem)
 			// ft_printf(CYAN"Ant id: %d\n"RESET, ((t_ant*)tmp_ant->content)->id);
 			// tmp_ant = tmp_ant->next;
 		// }
-		turn_loop(lem, end);
+		turn_loop(lem, lem->end);
 		// ft_printf("%send node %sant amount: %d, ant amount: %d\n"RESET, RED, BLUE, end->has_ant, lem->ant_nb);
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: osalmine <osalmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/25 16:25:46 by osalmine          #+#    #+#             */
-/*   Updated: 2020/09/25 18:22:01 by osalmine         ###   ########.fr       */
+/*   Updated: 2020/10/06 11:11:38 by osalmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	reset_rooms(t_lem *lem)
 void        find_paths(t_lem *lem, t_room *start, t_room *end)
 {
     char	**path;
-	t_path	*path_struct;
+	// t_path	*path_struct;
 
 	start->weight = 0;
 	while ((path = bfs(start, end, lem)))
@@ -38,26 +38,26 @@ void        find_paths(t_lem *lem, t_room *start, t_room *end)
 			break ;
 		assign_weights(lem, path);
 		assign_flows(lem, path);
-		// ft_printf(BOLD RED"Path returned from BFS: %la\n\n"RESET, path);
+		// ft_printf(BOLD YELLOW"Path returned from BFS: %la\n\n"RESET, path);
 		if (lem->ant_nb == 1)
 		{
-			add_path(lem, path);
+			add_path(lem, path, 2);
 			free_strsplit(&path);
 		}
 		else
 		{
-			if (!(path_struct = (t_path*)malloc(sizeof(t_path))))
-				ft_exit(RED"ERROR: Malloc error"RESET);
-			path_struct->path_arr = ft_2dstrdup(path);
-			path_struct->colour = NULL;
-			ft_lstaddlast(&lem->paths_bef_ek, ft_lstnew(path_struct, sizeof(t_path)));
-
+			// if (!(path_struct = (t_path*)malloc(sizeof(t_path))))
+			// 	ft_exit(RED"ERROR: Malloc error"RESET);
+			// path_struct->path_arr = ft_2dstrdup(path);
+			// path_struct->colour = NULL;
+			// ft_lstaddlast(&lem->paths_bef_ek, ft_lstnew(path_struct, sizeof(t_path)));
+			add_path(lem, path, 1);
 		}
 		// t_list *pths;
 		// pths = lem->paths_bef_ek;
 		// while (pths)
 		// {
-		// 	ft_printf("PATH IN PATHS_BEF_EK: %la\n", ((t_path*)pths->content)->path_arr);
+		// 	ft_printf("PATH IN PATHS_BEF_EK: %la, IN USE: %d\n", ((t_path*)pths->content)->path_arr, ((t_path*)pths->content)->in_use);
 		// 	pths = pths->next;
 		// }
 		reset_rooms(lem);

@@ -6,7 +6,7 @@
 /*   By: osalmine <osalmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/01 10:30:08 by osalmine          #+#    #+#             */
-/*   Updated: 2020/09/18 14:22:47 by osalmine         ###   ########.fr       */
+/*   Updated: 2020/10/06 08:55:45 by osalmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,11 +29,8 @@ static t_ant	*add_ant(int id, t_room *ant_room)
 void			init_ants(t_lem *lem)
 {
 	int		i;
-	t_room	*ant_room;
 
 	i = 1;
-	if (!(ant_room = find_room_by_type(START, lem)))
-		ft_exit(RED"ERROR: room not found (init_ants)\n"RESET);
 	while (i <= lem->ant_nb)
-		ft_lstaddlast(&lem->ants, ft_lstnew(add_ant(i++, ant_room), sizeof(t_ant)));
+		ft_lstaddlast(&lem->ants, ft_lstnew(add_ant(i++, lem->start), sizeof(t_ant)));
 }

@@ -6,7 +6,7 @@
 /*   By: osalmine <osalmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/24 20:11:08 by osalmine          #+#    #+#             */
-/*   Updated: 2020/09/24 20:13:35 by osalmine         ###   ########.fr       */
+/*   Updated: 2020/10/06 11:50:14 by osalmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,4 +54,9 @@ int     check_for_dup_path(t_lem *lem, char **path)
 		paths = paths->next;
 	}
 	return (0);
+}
+
+int		min_3(int x, int y, int z)
+{
+	return x < y ? (x < z ? x : z) : (y < z ? y : z);
 }
