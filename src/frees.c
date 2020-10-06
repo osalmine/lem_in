@@ -6,7 +6,7 @@
 /*   By: osalmine <osalmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/01 09:45:19 by osalmine          #+#    #+#             */
-/*   Updated: 2020/09/02 17:42:14 by osalmine         ###   ########.fr       */
+/*   Updated: 2020/09/27 19:13:32 by osalmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@ void		free_strsplit(char ***str)
 	}
 }
 
-
 static void	free_link(void *link, size_t size)
 {
 	size = 0;
@@ -43,11 +42,24 @@ static void	free_room(void *room, size_t size)
 	ft_memdel(&room);
 }
 
+void	free_a_path(t_path *path, size_t size)
+{
+	size = 0;
+	free_strsplit(&path->path_arr);
+	ft_printf("path arr address: %p\n", path->path_arr);
+	ft_printf("path colour: %s aa\n", path->colour);
+	if (path->colour)
+		ft_strdel(&path->colour);
+	ft_printf("path clolour address: %p\n", path->colour);
+	ft_memdel((void**)&path);
+}
+
 static void	free_path(void *path, size_t size)
 {
 	size = 0;
 	free_strsplit(&((t_path*)path)->path_arr);
-	ft_strdel(&((t_path*)path)->colour);
+	if (((t_path*)path)->colour)
+		ft_strdel(&((t_path*)path)->colour);
 	ft_memdel(&path);
 }
 

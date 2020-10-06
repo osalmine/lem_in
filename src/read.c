@@ -6,7 +6,7 @@
 /*   By: osalmine <osalmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/30 22:20:06 by osalmine          #+#    #+#             */
-/*   Updated: 2020/09/11 00:27:44 by osalmine         ###   ########.fr       */
+/*   Updated: 2020/09/24 23:51:42 by osalmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,7 @@ static void	read_room(t_lem *lem, char *line, int *room_type)
 		room->has_ant = FALSE;
 	room->type = *room_type;
 	room->links = NULL;
+	room->weight = INF - 1;
 	*room_type = NORMAL;
 	free_strsplit(&room_arr);
 	ft_lstaddlast(&lem->room_list, ft_lstnew(room, sizeof(t_room)));

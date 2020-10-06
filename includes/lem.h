@@ -6,7 +6,7 @@
 /*   By: osalmine <osalmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/19 19:01:54 by osalmine          #+#    #+#             */
-/*   Updated: 2020/09/18 13:15:23 by osalmine         ###   ########.fr       */
+/*   Updated: 2020/09/27 19:11:33 by osalmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -159,6 +159,7 @@ t_room  *find_room_by_type(int type, t_lem *lem);
 int     find_from_que(char **que, char *name);
 int		find_in_path(t_list *list, t_room *room, t_room *end);
 t_link	*find_link(t_lem *lem, char *room1, char *room2);
+t_path  *find_path(t_list *list, t_room *room, t_room *end);
 
 /*
 **	Pathfinding functions
@@ -167,6 +168,8 @@ t_link	*find_link(t_lem *lem, char *room1, char *room2);
 void	guide_ants(t_lem *lem);
 void    find_paths(t_lem *lem, t_room *start, t_room *end);
 void    assign_paths(t_lem *lem, t_room *start);
+char	**bfs(t_room *start, t_room *end, t_lem *lem);
+void	flows_pathfinder(t_lem *lem);
 
 /*
 **	Print and debug functions
@@ -181,6 +184,8 @@ void    print_paths(t_lem *lem);
 void	free_lem(t_lem *lem);
 void	free_room_arr(char ***str, int len);
 void	free_strsplit(char ***str);
+// void	free_path(void *path, size_t size);
+void	free_a_path(t_path *path, size_t size);
 
 /*
 **	Utility functions
@@ -192,5 +197,11 @@ void	push_to_arr(char **que, char *room);
 char	**arr_reverse(char **arr);
 int		arr_size(char **arr);
 void	sort_paths(t_lem *lem);
+char	**ft_2dstrdup(char **str);
+void	add_path(t_lem *lem, char **path);
+int     check_for_dup_path(t_lem *lem, char **path);
+void	assign_weights(t_lem *lem, char **path);
+void	assign_flows(t_lem *lem, char **path);
+void	reset_rooms(t_lem *lem);
 
 #endif

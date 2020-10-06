@@ -6,7 +6,7 @@
 /*   By: osalmine <osalmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/18 22:39:15 by osalmine          #+#    #+#             */
-/*   Updated: 2020/09/14 15:55:05 by osalmine         ###   ########.fr       */
+/*   Updated: 2020/09/27 16:43:07 by osalmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ int		find_in_path(t_list *list, t_room *room, t_room *end)
 		i = 0;
 		cur_path = (t_path*)paths->content;
 		tmp = cur_path->path_arr;
-		while (tmp[i])
+		while (tmp && tmp[i])
 		{
 			if (ft_strequ(tmp[i], room->name))
 				return (1);
@@ -82,6 +82,32 @@ int		find_in_path(t_list *list, t_room *room, t_room *end)
 		paths = paths->next;
 	}
 	return (0);
+}
+
+t_path  *find_path(t_list *list, t_room *room, t_room *end)
+{
+    t_list	*paths;
+	t_path	*cur_path;
+	char	**tmp;
+	int		i;
+
+	paths = list;
+	if (room == end)
+		return (NULL);
+	while (paths)
+	{
+		i = 0;
+		cur_path = (t_path*)paths->content;
+		tmp = cur_path->path_arr;
+		while (tmp && tmp[i])
+		{
+			if (ft_strequ(tmp[i], room->name))
+				return (cur_path);
+			i++;
+		}
+		paths = paths->next;
+	}
+	return (NULL);
 }
 
 t_link	*find_link(t_lem *lem, char *room1, char *room2)
