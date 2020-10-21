@@ -6,7 +6,7 @@
 /*   By: osalmine <osalmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/29 00:13:34 by osalmine          #+#    #+#             */
-/*   Updated: 2020/10/06 13:26:50 by osalmine         ###   ########.fr       */
+/*   Updated: 2020/10/13 21:30:58 by osalmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,8 @@ static void	turn_loop(t_lem *lem, t_room *end)
 			// 	ft_printf(BLUE"SHORTEST PATH: %la\n"RESET, cur_ant->path);
 			if (cur_ant->path != NULL)
 			{
-				next_room = find_room(cur_ant->path->path_arr[cur_ant->move_nb + 1], lem);
+				if (!(next_room = find_room(cur_ant->path->path_arr[cur_ant->move_nb + 1], lem)))
+					ft_exit(RED"ERROR: room not found (turn_loop)"RESET);
 				if (!next_room->has_ant || next_room->type == END)
 				{
 					cur_ant->room->has_ant = FALSE;
@@ -91,6 +92,29 @@ static void	turn_loop(t_lem *lem, t_room *end)
 	ft_putchar('\n');
 	lem->moves_count++;
 }
+
+// static int	max_flow(t_lem *lem)
+// {
+// 	t_list	*links;
+// 	int		start_links;
+// 	int		end_links;
+
+// 	start_links = 0;
+// 	end_links = 0;
+// 	links = lem->start->links;
+// 	while (links)
+// 	{
+// 		start_links++;
+// 		links = links->next;
+// 	}
+// 	links = lem->end->links;
+// 	while (links)
+// 	{
+// 		end_links++;
+// 		links = links->next;
+// 	}
+// 	return (min_3(lem->ant_nb, start_links, end_links));
+// }
 
 void		guide_ants(t_lem *lem)
 {

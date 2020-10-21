@@ -6,7 +6,7 @@
 /*   By: osalmine <osalmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/26 23:36:24 by osalmine          #+#    #+#             */
-/*   Updated: 2020/10/06 17:00:25 by osalmine         ###   ########.fr       */
+/*   Updated: 2020/10/21 16:54:19 by osalmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@
 // 	}
 // }
 
-static int	max_flow(t_lem *lem)
+int			max_flow(t_lem *lem)
 {
 	t_list	*links;
 	int		start_links;
@@ -89,13 +89,18 @@ static int	*get_steps(t_lem *lem, int *total)
 		ft_exit(RED"ERROR: malloc error"RESET);
 	paths = lem->paths_list;
 	i = 0;
-	while (i < lem->max_flow)
+	while (paths && i < lem->max_flow)
 	{
 		steps[i] = ((t_path*)paths->content)->len;
+		// ft_printf("PATH ARR: %la\n", ((t_path*)paths->content)->path_arr);
 		total[0] += steps[i];
 		i++;
 		paths = paths->next;
+		// ft_printf("PATH NEXT PTR: %p\n", paths);
 	}
+	// while (i < lem->max_flow && !paths)
+	// 	steps[i++] = -1;
+	// steps[lem->max_flow] = -1;
 	return (steps);
 }
 
@@ -105,8 +110,15 @@ static int	*calc_div(t_lem *lem, int *divide, int total, int *steps)
 
 	i = 0;
 	total = (total + lem->ant_nb) / lem->max_flow;
+	// for (int j = 0; j <= lem->max_flow; j++)
+	// 		ft_printf("steps[%d]: %d\n", j, steps[j]);
 	while (i < lem->max_flow)
 	{
+		// if (steps[i] < 0)
+		// {
+		// 	divide[i] = -1;
+		// 	break ;
+		// }
 		divide[i] = total - steps[i];
 		i++;
 	}
@@ -175,16 +187,15 @@ static int	*check_total(int *division, t_lem *lem, int *longest)
 	return (division);
 }
 
-static void	paths_to_ants(t_lem *lem, int *division)
+static void	paths_to_ants(t_lem *lem, int *division, int max)
 {
 	t_list	*paths;
 	t_list	*ants;
 	int		i;
-	// int		j;
 
-	ft_printf("division arr:\n");
-	for (int i = 0; i < lem->max_flow; i++)
-		ft_printf("division[%d]: %d\n", i, division[i]);
+	// ft_printf("division arr:\n");
+	// for (int j = 0; j < max; j++)
+	// 	ft_printf("division[%d]: %d\n", j, division[j]);
 	paths = lem->paths_list;
 	ants = lem->ants;
 	i = 0;
@@ -196,39 +207,80 @@ static void	paths_to_ants(t_lem *lem, int *division)
 			ants = ants->next;
 			division[i]--;
 		}
-		// while (j > 0 && ants)
-		// {
-		// 	((t_ant*)ants->content)->path = ((t_path*)paths->content);
-		// 	ants = ants->next;
-		// 	j--;
-		// }
-		if (++i >= lem->max_flow)
+		if (++i >= max)
 			i = 0;
-		if (!(paths = paths->next))
+		if (!(paths = paths->next) || i == 0)
 			paths = lem->paths_list;
 	}
-
-	// while (1) ;
 }
 
 void    	assign_paths(t_lem *lem)
 {
 	int *division;
+	int	*tmp_div;
 	int	*steps;
 	int total;
 	int longest;
+	int i;
+	int	div_sum;
+	int max;
+	int	assign_max;
+	t_list *paths;
+	int paths_count;
 
-	total = 0;
-	lem->max_flow = max_flow(lem);
-	ft_printf("max flow: %d\n", lem->max_flow);
-	if (!(division = (int*)malloc(sizeof(int) * lem->max_flow)))
-		ft_exit(RED"ERROR: malloc error"RESET);
-	steps = get_steps(lem, &total);
-	division = calc_div(lem, division, total, steps);
-	longest = find_longest(division, steps, lem->max_flow);
-	division = check_total(division, lem, &longest);
-	longest = find_longest(division, steps, lem->max_flow);
-	ft_memdel((void*)&steps);
-	ft_printf("longest: %d\n", longest);
-	paths_to_ants(lem, division);
+	// lem->max_flow = max;
+	max = max_flow(lem);
+	// ft_printf("max flow for graph: %d\n", max);
+	i = 0;
+	division = NULL;
+	div_sum = 0;
+	assign_max = 0;
+	paths = lem->paths_list;
+	paths_count = 0;
+	while (paths)
+	{
+		paths_count++;
+		paths = paths->next;
+	}
+	if (paths_count < max)
+		max = paths_count;
+	while (i++ < max)
+	{
+		lem->max_flow = i;
+		total = 0;
+		if (!(tmp_div = (int*)malloc(sizeof(int) * i)))
+			ft_exit(RED"ERROR: malloc error"RESET);
+		steps = get_steps(lem, &total);
+		tmp_div = calc_div(lem, tmp_div, total, steps);
+		// for (int j = 0; j < i; j++)
+		// 	ft_printf("tmp_div[%d]: %d\n", j, tmp_div[j]);
+		longest = find_longest(tmp_div, steps, i);
+		tmp_div = check_total(tmp_div, lem, &longest);
+		longest = find_longest(tmp_div, steps, i);
+		// ft_printf("max flow: %d\n", i);
+		// ft_printf("longest: %d\n", longest);
+		// ft_printf("division arr:\n");
+		// for (int j = 0; j < i; j++)
+		// 	ft_printf("division[%d]: %d\n", j, tmp_div[j]);
+		longest = -1;
+		total = 0;
+		while (++longest < i)
+			if (tmp_div[longest] > 0)
+				total += tmp_div[longest];
+		// ft_printf(BLUE"THIS ROUND TOTAL: %d\n"RESET, total);
+		// ft_printf(YELLOW"DIV_SUM: %d, ANT NB: %d\n"RESET, div_sum, lem->ant_nb);
+		// ft_printf(RED"FT_ABS(ant_nb - div_sum) + 3 = %d, FT_ABS(ant_nb - total) = %d\n"RESET, ft_abs(lem->ant_nb - div_sum) + 3, ft_abs(lem->ant_nb - total));
+		if (division == NULL || ft_abs(lem->ant_nb - div_sum) + 3 >= ft_abs(lem->ant_nb - total))
+		{
+			ft_memdel((void*)&division);
+			// ft_printf(CYAN"ASSIGN NEW DIVISION\n"RESET);
+			division = tmp_div;
+			div_sum = total;
+			assign_max = i;
+		}
+		else
+			free(tmp_div);
+		ft_memdel((void*)&steps);
+	}
+	paths_to_ants(lem, division, assign_max);
 }

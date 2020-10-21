@@ -6,31 +6,32 @@
 /*   By: osalmine <osalmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/24 20:16:35 by osalmine          #+#    #+#             */
-/*   Updated: 2020/09/25 18:20:22 by osalmine         ###   ########.fr       */
+/*   Updated: 2020/10/21 16:54:46 by osalmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/lem.h"
 
-void	assign_weights(t_lem *lem, char **path)
-{
-	int		i;
-	t_room	*room;
+// void	assign_weights(t_lem *lem, char **path)
+// {
+// 	int		i;
+// 	t_room	*room;
 
-	i = 0;
-	// ft_printf("PATH IN ASSIGN_WEIGHTS: %la\n", path);
-	while (path[i])
-	{
-		room = find_room(path[i], lem);
-		// ft_printf("ASSIGN WEIGHTS ROOM: %s", room->name);
-		if (room->type == END)
-			room->weight = INF;
-		else
-			room->weight = i;
-		// ft_printf(", WEIGHT: %d\n", room->weight);
-		i++;
-	}
-}
+// 	i = 0;
+// 	ft_printf("PATH IN ASSIGN_WEIGHTS: %la\n", path);
+// 	while (path[i])
+// 	{
+// 		if (!(room = find_room(path[i], lem)))
+// 			ft_exit(RED"ERROR: room not found"RESET);
+// 		ft_printf("ASSIGN WEIGHTS ROOM: %s", room->name);
+// 		if (room->type == END)
+// 			room->weight = INF;
+// 		else if (room->weight > i)
+// 			room->weight = i;
+// 		ft_printf(", WEIGHT: %d\n", room->weight);
+// 		i++;
+// 	}
+// }
 
 void	assign_flows(t_lem *lem, char **path)
 {

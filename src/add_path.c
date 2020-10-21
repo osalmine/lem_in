@@ -6,7 +6,7 @@
 /*   By: osalmine <osalmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/24 20:12:01 by osalmine          #+#    #+#             */
-/*   Updated: 2020/10/06 10:46:38 by osalmine         ###   ########.fr       */
+/*   Updated: 2020/10/17 16:13:24 by osalmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ static char *assign_colour(t_lem *lem)
 	t_list	*paths;
 	char	*tmp;
 	char	*colour;
+	char	*nb;
 	int		i;
 
 	paths = lem->paths_list;
@@ -29,8 +30,10 @@ static char *assign_colour(t_lem *lem)
 			i += 10;
 		paths = paths->next;
 	}
-	tmp = ft_strjoin("\x1b[38;5;", ft_itoa(i));
+	nb = ft_itoa(i);
+	tmp = ft_strjoin("\x1b[38;5;", nb);
 	colour = ft_strjoin(tmp, "m");
+	ft_strdel(&nb);
 	ft_strdel(&tmp);
 	return (colour);
 }
@@ -47,7 +50,7 @@ void        add_path(t_lem *lem, char **path, int decide)
 		ft_exit(RED"ERROR: Malloc error"RESET);
 	path_struct->len = len - 1;
 	path_struct->path_arr = ft_2dstrdup(path);
-	path_struct->in_use = TRUE;
+	// path_struct->in_use = TRUE;
 	if (lem->opts->colours && decide == 2)
 		path_struct->colour = assign_colour(lem);
 	else 

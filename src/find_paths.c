@@ -6,7 +6,7 @@
 /*   By: osalmine <osalmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/25 16:25:46 by osalmine          #+#    #+#             */
-/*   Updated: 2020/10/06 11:11:38 by osalmine         ###   ########.fr       */
+/*   Updated: 2020/10/21 16:53:55 by osalmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,12 +31,12 @@ void        find_paths(t_lem *lem, t_room *start, t_room *end)
     char	**path;
 	// t_path	*path_struct;
 
-	start->weight = 0;
+	// start->weight = 0;
 	while ((path = bfs(start, end, lem)))
 	{
 		if (!path)
 			break ;
-		assign_weights(lem, path);
+		// assign_weights(lem, path);
 		assign_flows(lem, path);
 		// ft_printf(BOLD YELLOW"Path returned from BFS: %la\n\n"RESET, path);
 		if (lem->ant_nb == 1)
@@ -71,6 +71,7 @@ void        find_paths(t_lem *lem, t_room *start, t_room *end)
 	// 	ft_printf("LINK: room1: %s, room2: %s, flow: %d\n", link->room1, link->room2, link->flow);
 	// 	links = links->next;
 	// }
+	// ft_printf("lem->ant_nb: %d\n", lem->ant_nb);
 	if (lem->ant_nb != 1)
 		flows_pathfinder(lem);
 	sort_paths(lem);
