@@ -6,7 +6,7 @@
 /*   By: osalmine <osalmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/24 20:17:58 by osalmine          #+#    #+#             */
-/*   Updated: 2020/10/21 16:53:43 by osalmine         ###   ########.fr       */
+/*   Updated: 2020/10/21 19:15:09 by osalmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@ void	flows_pathfinder(t_lem *lem)
 		// ft_printf(BOLD RED"NEW EK LOOP, i: %d\n"RESET, i);
 		if (path)
 		{
-			add_path(lem, path, 2);
+			add_path(lem, path, &(lem->paths_list));
 			free_strsplit(&path);
 		}
 	}

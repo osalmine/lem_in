@@ -6,7 +6,7 @@
 /*   By: osalmine <osalmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/19 19:01:54 by osalmine          #+#    #+#             */
-/*   Updated: 2020/10/17 17:46:49 by osalmine         ###   ########.fr       */
+/*   Updated: 2020/10/22 16:59:54 by osalmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ typedef struct	s_room
 	int		y;
 	int		has_ant;
 	int		type;
-	// int		weight;
+	int		weight;
 	t_list	*links;
 }				t_room;
 
@@ -100,7 +100,7 @@ typedef struct	s_path
 	char	**path_arr;
 	int		len;
 	char	*colour;
-	// int		in_use;
+	int		in_use;
 }				t_path;
 
 /*
@@ -159,6 +159,7 @@ t_lem	*lem_init(int ac, char **av);
 void	lem_flags(t_lem *lem, int ac, char **av);
 void	lem_read(t_lem *lem);
 void	init_ants(t_lem *lem);
+void	read_link(t_lem *lem, char *line);
 
 /*
 **	Finding functions
@@ -208,7 +209,7 @@ char	**arr_reverse(char **arr);
 int		arr_size(char **arr);
 void	sort_paths(t_lem *lem);
 char	**ft_2dstrdup(char **str);
-void	add_path(t_lem *lem, char **path, int decide);
+void	add_path(t_lem *lem, char **path, t_list **path_list);
 int     check_for_dup_path_size_1(t_lem *lem, char **path);
 int     check_for_dup_path(t_list *paths_lst, char **path);
 void	assign_weights(t_lem *lem, char **path);

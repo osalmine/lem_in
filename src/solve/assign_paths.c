@@ -6,7 +6,7 @@
 /*   By: osalmine <osalmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/26 23:36:24 by osalmine          #+#    #+#             */
-/*   Updated: 2020/10/21 16:54:19 by osalmine         ###   ########.fr       */
+/*   Updated: 2020/10/21 19:19:07 by osalmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -230,7 +230,7 @@ void    	assign_paths(t_lem *lem)
 
 	// lem->max_flow = max;
 	max = max_flow(lem);
-	// ft_printf("max flow for graph: %d\n", max);
+	ft_printf("max flow for graph: %d\n", max);
 	i = 0;
 	division = NULL;
 	div_sum = 0;
@@ -257,23 +257,23 @@ void    	assign_paths(t_lem *lem)
 		longest = find_longest(tmp_div, steps, i);
 		tmp_div = check_total(tmp_div, lem, &longest);
 		longest = find_longest(tmp_div, steps, i);
-		// ft_printf("max flow: %d\n", i);
-		// ft_printf("longest: %d\n", longest);
-		// ft_printf("division arr:\n");
-		// for (int j = 0; j < i; j++)
-		// 	ft_printf("division[%d]: %d\n", j, tmp_div[j]);
+		ft_printf("max flow: %d\n", i);
+		ft_printf("longest: %d\n", longest);
+		ft_printf("division arr:\n");
+		for (int j = 0; j < i; j++)
+			ft_printf("division[%d]: %d\n", j, tmp_div[j]);
 		longest = -1;
 		total = 0;
 		while (++longest < i)
 			if (tmp_div[longest] > 0)
 				total += tmp_div[longest];
-		// ft_printf(BLUE"THIS ROUND TOTAL: %d\n"RESET, total);
-		// ft_printf(YELLOW"DIV_SUM: %d, ANT NB: %d\n"RESET, div_sum, lem->ant_nb);
-		// ft_printf(RED"FT_ABS(ant_nb - div_sum) + 3 = %d, FT_ABS(ant_nb - total) = %d\n"RESET, ft_abs(lem->ant_nb - div_sum) + 3, ft_abs(lem->ant_nb - total));
+		ft_printf(BLUE"THIS ROUND TOTAL: %d\n"RESET, total);
+		ft_printf(YELLOW"DIV_SUM: %d, ANT NB: %d\n"RESET, div_sum, lem->ant_nb);
+		ft_printf(RED"FT_ABS(ant_nb - div_sum) + 3 = %d, FT_ABS(ant_nb - total) = %d\n"RESET, ft_abs(lem->ant_nb - div_sum) + 3, ft_abs(lem->ant_nb - total));
 		if (division == NULL || ft_abs(lem->ant_nb - div_sum) + 3 >= ft_abs(lem->ant_nb - total))
 		{
 			ft_memdel((void*)&division);
-			// ft_printf(CYAN"ASSIGN NEW DIVISION\n"RESET);
+			ft_printf(CYAN"ASSIGN NEW DIVISION\n"RESET);
 			division = tmp_div;
 			div_sum = total;
 			assign_max = i;

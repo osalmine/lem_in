@@ -6,7 +6,7 @@
 /*   By: osalmine <osalmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/24 20:12:01 by osalmine          #+#    #+#             */
-/*   Updated: 2020/10/17 16:13:24 by osalmine         ###   ########.fr       */
+/*   Updated: 2020/10/21 19:15:47 by osalmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ static char *assign_colour(t_lem *lem)
 	return (colour);
 }
 
-void        add_path(t_lem *lem, char **path, int decide)
+void        add_path(t_lem *lem, char **path, t_list **path_list)
 {
     int		len;
 	t_path	*path_struct;
@@ -50,13 +50,10 @@ void        add_path(t_lem *lem, char **path, int decide)
 		ft_exit(RED"ERROR: Malloc error"RESET);
 	path_struct->len = len - 1;
 	path_struct->path_arr = ft_2dstrdup(path);
-	// path_struct->in_use = TRUE;
-	if (lem->opts->colours && decide == 2)
+	path_struct->in_use = TRUE;
+	if (lem->opts->colours)
 		path_struct->colour = assign_colour(lem);
 	else 
 		path_struct->colour = NULL;
-	if (decide == 2)
-		ft_lstaddlast(&lem->paths_list, ft_lstnew(path_struct, sizeof(t_path)));
-	if (decide == 1)
-		ft_lstaddlast(&lem->paths_bef_ek, ft_lstnew(path_struct, sizeof(t_path)));
+	ft_lstaddlast(&(*path_list), ft_lstnew(path_struct, sizeof(t_path)));
 }

@@ -6,7 +6,7 @@
 /*   By: osalmine <osalmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/25 16:25:46 by osalmine          #+#    #+#             */
-/*   Updated: 2020/10/21 16:53:55 by osalmine         ###   ########.fr       */
+/*   Updated: 2020/10/21 19:16:44 by osalmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,27 +31,24 @@ void        find_paths(t_lem *lem, t_room *start, t_room *end)
     char	**path;
 	// t_path	*path_struct;
 
-	// start->weight = 0;
+	start->weight = 0;
 	while ((path = bfs(start, end, lem)))
 	{
-		if (!path)
+		if (!path || check_for_dup_path(lem->paths_bef_ek, path))
 			break ;
-		// assign_weights(lem, path);
+		assign_weights(lem, path);
 		assign_flows(lem, path);
-		// ft_printf(BOLD YELLOW"Path returned from BFS: %la\n\n"RESET, path);
+		ft_printf(BOLD YELLOW"Path returned from BFS: %la\n\n"RESET, path);
 		if (lem->ant_nb == 1)
 		{
-			add_path(lem, path, 2);
+			add_path(lem, path, &(lem->paths_list));
+			// ft_printf("added path to paths_list, ptr: %p\n", lem->paths_list);
 			free_strsplit(&path);
+			break ;
 		}
 		else
 		{
-			// if (!(path_struct = (t_path*)malloc(sizeof(t_path))))
-			// 	ft_exit(RED"ERROR: Malloc error"RESET);
-			// path_struct->path_arr = ft_2dstrdup(path);
-			// path_struct->colour = NULL;
-			// ft_lstaddlast(&lem->paths_bef_ek, ft_lstnew(path_struct, sizeof(t_path)));
-			add_path(lem, path, 1);
+			add_path(lem, path, &(lem->paths_bef_ek));
 		}
 		// t_list *pths;
 		// pths = lem->paths_bef_ek;
