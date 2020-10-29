@@ -6,7 +6,7 @@
 /*   By: osalmine <osalmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/19 19:01:54 by osalmine          #+#    #+#             */
-/*   Updated: 2020/10/22 16:59:54 by osalmine         ###   ########.fr       */
+/*   Updated: 2020/10/26 12:52:29 by osalmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,9 +33,11 @@
 
 /*
 **	Struct for options
-**	debug:	set to TRUE (=1) for debugging
-**	lines:	program outputs the number of turns used (lines outputted)
-**	paths:	output the paths
+**	All default to FALSE (= 0)
+**	debug:		see debug information about structures
+**	lines:		outputs the number of turns used (lines outputted)
+**	paths:		outputs the paths that were found
+**	colours:	if set to TRUE, paths are coloured
 */
 
 typedef struct	s_options
@@ -160,6 +162,9 @@ void	lem_flags(t_lem *lem, int ac, char **av);
 void	lem_read(t_lem *lem);
 void	init_ants(t_lem *lem);
 void	read_link(t_lem *lem, char *line);
+void	read_room(t_lem *lem, char *line, int *room_type, int format_check);
+int		read_command(t_lem *lem, char *line, int room_type);
+void	remove_dead_ends(t_lem *lem);
 
 /*
 **	Finding functions
@@ -197,6 +202,8 @@ void	free_room_arr(char ***str, int len);
 void	free_strsplit(char ***str);
 // void	free_path(void *path, size_t size);
 void	free_a_path(t_path **path, size_t size);
+void	free_room(void *room, size_t size);
+void	free_link(void *link, size_t size);
 
 /*
 **	Utility functions

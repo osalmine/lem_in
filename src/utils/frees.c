@@ -6,7 +6,7 @@
 /*   By: osalmine <osalmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/01 09:45:19 by osalmine          #+#    #+#             */
-/*   Updated: 2020/10/06 10:38:26 by osalmine         ###   ########.fr       */
+/*   Updated: 2020/10/22 20:17:30 by osalmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void		free_strsplit(char ***str)
 	}
 }
 
-static void	free_link(void *link, size_t size)
+void		free_link(void *link, size_t size)
 {
 	size = 0;
 	ft_strdel(&((t_link*)link)->room1);
@@ -35,7 +35,7 @@ static void	free_link(void *link, size_t size)
 	ft_memdel(&link);
 }
 
-static void	free_room(void *room, size_t size)
+void		free_room(void *room, size_t size)
 {
 	size = 0;
 	ft_strdel(&((t_room*)room)->name);

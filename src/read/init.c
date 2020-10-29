@@ -6,7 +6,7 @@
 /*   By: osalmine <osalmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/30 18:33:54 by osalmine          #+#    #+#             */
-/*   Updated: 2020/10/06 09:01:56 by osalmine         ###   ########.fr       */
+/*   Updated: 2020/10/29 14:38:41 by osalmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,9 +47,10 @@ t_lem	*lem_init(int ac, char **av)
 	lem_read(lem);
 	add_room_id(lem);
 	if (!(lem->start = find_room_by_type(START, lem)))
-		ft_exit(RED"ERROR: starting room not found\n"RESET);
+		ft_exit(RED"ERROR: starting room not found"RESET);
 	if (!(lem->end = find_room_by_type(END, lem)))
-		ft_exit(RED"ERROR: ending room not found\n"RESET);
+		ft_exit(RED"ERROR: ending room not found"RESET);
 	init_ants(lem);
+	// remove_dead_ends(lem);
 	return (lem);
 }

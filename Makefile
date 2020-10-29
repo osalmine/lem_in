@@ -6,7 +6,7 @@
 #    By: osalmine <osalmine@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/03/19 19:13:02 by osalmine          #+#    #+#              #
-#    Updated: 2020/10/22 17:31:26 by osalmine         ###   ########.fr        #
+#    Updated: 2020/10/22 20:20:08 by osalmine         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,7 +19,8 @@ SOURCES_SUBDIR_READ = read/
 SOURCES_SUBDIR_SOLVE = solve/
 SOURCES_SUBDIR_UTILS = utils/
 
-READ_DIR_SOURCES	= 	init.c read.c flags.c init_ants.c read_link.c
+READ_DIR_SOURCES	= 	init.c read.c flags.c init_ants.c read_link.c read_room.c \
+						read_command.c optimize_graph.c
 SOLVE_DIR_SOURCES	= 	guide_ants.c find_paths.c assign_paths.c \
 						bfs.c ek_pathfinder.c
 UTILS_DIR_SOURCES	= 	frees.c find.c print_paths.c utils.c \
