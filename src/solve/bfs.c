@@ -6,11 +6,14 @@
 /*   By: osalmine <osalmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/22 16:50:08 by osalmine          #+#    #+#             */
-/*   Updated: 2020/10/21 19:03:51 by osalmine         ###   ########.fr       */
+/*   Updated: 2020/10/29 21:28:38 by osalmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/lem.h"
+
+// #include <time.h>
+
 
 static void	reset_path(t_lem *lem, t_path *path)
 {
@@ -197,8 +200,24 @@ char	**bfs(t_room *start, t_room *end, t_lem *lem)
 	char 	**prev;
 	char 	**path;
 
+	// clock_t start_1 = clock();
+
 	prev = solve(start, lem);
+
+	// clock_t end_1 = clock();
+	// double elapsed_1 = (double)(end_1 - start_1)/CLOCKS_PER_SEC;
+
+	// ft_printf(YELLOW"Time measeured for solve in bfs: %.3f seconds.\n"RESET, elapsed_1);
+	
+	// clock_t start_2 = clock();
+
 	path = reconstruct_path(start, end, prev, lem);
+
+	// clock_t end_2 = clock();
+	// double elapsed_2 = (double)(end_2 - start_2)/CLOCKS_PER_SEC;
+
+	// ft_printf(GREEN"Time measeured for reconstruct path in bfs: %.3f seconds.\n"RESET, elapsed_2);
+
 	free_strsplit(&prev);
 	// t_list *pths;
 	// pths = lem->paths_bef_ek;

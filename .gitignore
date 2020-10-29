@@ -9,3 +9,5 @@ src/visu/*
 visualizer.bash
 lem-in_test/
 Lem-in-Checker/
+
+.DS_Store

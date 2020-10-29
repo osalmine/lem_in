@@ -6,11 +6,13 @@
 /*   By: osalmine <osalmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/30 22:20:06 by osalmine          #+#    #+#             */
-/*   Updated: 2020/10/22 19:22:42 by osalmine         ###   ########.fr       */
+/*   Updated: 2020/10/29 15:19:49 by osalmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/lem.h"
+
+#include <time.h>
 
 static void str_append(char **output, char *append)
 {
@@ -48,6 +50,9 @@ void		lem_read(t_lem *lem)
 	char	*line;
 	char	*output;
 
+	// clock_t start = clock();
+	// clock_t end;
+
 	i = 0;
 	output = NULL;
 	room_type = NORMAL;
@@ -65,6 +70,9 @@ void		lem_read(t_lem *lem)
 				read_link(lem, line);
 		}
 		str_append(&output, line);
+		// end = clock();
+		// double elapsed = (double)(end - start)/CLOCKS_PER_SEC;
+		// str_append(&output, ft_dtoa(elapsed, 4));
 	}
 	ft_printf("%s\n", output);
 }

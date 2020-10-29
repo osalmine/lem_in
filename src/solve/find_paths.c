@@ -6,11 +6,13 @@
 /*   By: osalmine <osalmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/25 16:25:46 by osalmine          #+#    #+#             */
-/*   Updated: 2020/10/21 19:16:44 by osalmine         ###   ########.fr       */
+/*   Updated: 2020/10/29 21:29:05 by osalmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/lem.h"
+
+// #include <time.h>
 
 void	reset_rooms(t_lem *lem)
 {
@@ -32,13 +34,20 @@ void        find_paths(t_lem *lem, t_room *start, t_room *end)
 	// t_path	*path_struct;
 
 	start->weight = 0;
+
+	// clock_t start_time = clock();
+	// clock_t end_time;
 	while ((path = bfs(start, end, lem)))
 	{
+		// end_time = clock();
+		// double elapsed = (double)(end_time - start_time)/CLOCKS_PER_SEC;
+
+		// ft_printf("Time measeured for bfs to return: %.3f seconds.\n", elapsed);
 		if (!path || check_for_dup_path(lem->paths_bef_ek, path))
 			break ;
 		assign_weights(lem, path);
 		assign_flows(lem, path);
-		ft_printf(BOLD YELLOW"Path returned from BFS: %la\n\n"RESET, path);
+		// ft_printf(BOLD YELLOW"Path returned from BFS: %la\n\n"RESET, path);
 		if (lem->ant_nb == 1)
 		{
 			add_path(lem, path, &(lem->paths_list));
@@ -69,8 +78,13 @@ void        find_paths(t_lem *lem, t_room *start, t_room *end)
 	// 	links = links->next;
 	// }
 	// ft_printf("lem->ant_nb: %d\n", lem->ant_nb);
+	// clock_t start_2 = clock();
 	if (lem->ant_nb != 1)
 		flows_pathfinder(lem);
+	// clock_t end_2 = clock();
+	// double elapsed_2 = (double)(end_2 - start_2)/CLOCKS_PER_SEC;
+
+	// ft_printf("Time measeured for flows_pathfinder: %.3f seconds.\n", elapsed_2);
 	sort_paths(lem);
 	// ft_printf(RED BOLD UNDERLINE"FOUND ALL PATHS\n"RESET);
 	if (!lem->paths_list)

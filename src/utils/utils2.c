@@ -6,7 +6,7 @@
 /*   By: osalmine <osalmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/24 20:11:08 by osalmine          #+#    #+#             */
-/*   Updated: 2020/10/21 19:17:06 by osalmine         ###   ########.fr       */
+/*   Updated: 2020/10/29 21:29:22 by osalmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,8 +68,8 @@ int     check_for_dup_path(t_list *paths_lst, char **path)
 
 	paths = paths_lst;
 	path_len = arr_size(path) - 1;
-	ft_printf(RED"CHECK_FOR_DUP_PATH\n"RESET);
-	ft_printf("path to be found: %la\n", path);
+	// ft_printf(RED"CHECK_FOR_DUP_PATH\n"RESET);
+	// ft_printf("path to be found: %la\n", path);
 	while (paths)
 	{
 		i = 0;
@@ -78,10 +78,10 @@ int     check_for_dup_path(t_list *paths_lst, char **path)
 		{
 			while (path[i] && ft_strequ(((t_path*)paths->content)->path_arr[i], path[i]))
 				i++;
-			ft_printf("i: %d\n", i);
+			// ft_printf("i: %d\n", i);
 			if (i == path_len + 1)
 			{
-				ft_printf(BOLD RED"FOUND DUP PATH\n"RESET);
+				// ft_printf(BOLD RED"FOUND DUP PATH\n"RESET);
 				return (1);
 			}
 		}

@@ -6,15 +6,19 @@
 /*   By: osalmine <osalmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/19 19:01:44 by osalmine          #+#    #+#             */
-/*   Updated: 2020/10/06 09:39:05 by osalmine         ###   ########.fr       */
+/*   Updated: 2020/10/29 21:30:24 by osalmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/lem.h"
 
+// #include <time.h>
+
 int	main(int argc, char **argv)
 {
 	t_lem	*lem;
+
+	// clock_t start = clock();
 
 	lem = lem_init(argc, argv);
 	if (lem->opts->debug)
@@ -55,6 +59,10 @@ int	main(int argc, char **argv)
 	if (lem->opts->lines)
 		ft_printf(GREEN BOLD"lines: %d\n"RESET, lem->moves_count);
 	free_lem(lem);
+	// clock_t end = clock();
+	// double elapsed = (double)(end - start)/CLOCKS_PER_SEC;
+
+	// ft_printf("Time measeured for whole program: %.3f seconds.\n", elapsed);
 	// while (1) ;
 	return (0);
 }

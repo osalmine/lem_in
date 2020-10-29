@@ -6,11 +6,13 @@
 /*   By: osalmine <osalmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/30 18:33:54 by osalmine          #+#    #+#             */
-/*   Updated: 2020/10/29 14:38:41 by osalmine         ###   ########.fr       */
+/*   Updated: 2020/10/29 21:28:48 by osalmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/lem.h"
+
+// #include <time.h>
 
 static void  add_room_id(t_lem* lem)
 {
@@ -33,6 +35,8 @@ t_lem	*lem_init(int ac, char **av)
 {
 	t_lem *lem;
 
+	// clock_t start = clock();
+
 	if (!(lem = (t_lem*)malloc(sizeof(t_lem))))
 		ft_exit(RED"Malloc error"RESET);
 	lem->ants = NULL;
@@ -52,5 +56,11 @@ t_lem	*lem_init(int ac, char **av)
 		ft_exit(RED"ERROR: ending room not found"RESET);
 	init_ants(lem);
 	// remove_dead_ends(lem);
+
+	// clock_t end = clock();
+	// double elapsed = (double)(end - start)/CLOCKS_PER_SEC;
+
+	// ft_printf("Time measeured for init: %.3f seconds.\n", elapsed);
+
 	return (lem);
 }
