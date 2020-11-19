@@ -6,7 +6,7 @@
 /*   By: osalmine <osalmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/19 19:01:44 by osalmine          #+#    #+#             */
-/*   Updated: 2020/10/29 21:30:24 by osalmine         ###   ########.fr       */
+/*   Updated: 2020/11/01 20:09:46 by osalmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int	main(int argc, char **argv)
 			while (tmp)
 			{
 				link = (t_link*)tmp->content;
-				ft_printf(BLUE"Link room1: %s, room2: %s\n"RESET, link->room1, link->room2);
+				ft_printf(BLUE"Link room1: %s, room2: %s\n"RESET, link->room1->name, link->room2->name);
 				tmp = tmp->next;
 			}
 			tmp_rooms = tmp_rooms->next;
@@ -50,7 +50,7 @@ int	main(int argc, char **argv)
 		while (tmp_rooms)
 		{
 			link = (t_link*)tmp_rooms->content;
-			ft_printf("Link room1: %s, room2: %s\n", link->room1, link->room2);
+			ft_printf("Link room1: %s, room2: %s\n", link->room1->name, link->room2->name);
 			tmp_rooms = tmp_rooms->next;
 		}
 		write(1, "\n\n\n", 3);

@@ -6,7 +6,7 @@
 /*   By: osalmine <osalmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/29 00:13:34 by osalmine          #+#    #+#             */
-/*   Updated: 2020/10/13 21:30:58 by osalmine         ###   ########.fr       */
+/*   Updated: 2020/11/04 20:07:59 by osalmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ static void	reset_turn(t_lem *lem)
 	}
 }
 
-static void	turn_loop(t_lem *lem, t_room *end)
+static void	turn_loop(t_lem *lem)
 {
 	int		i;
 	t_ant	*cur_ant;
@@ -62,7 +62,7 @@ static void	turn_loop(t_lem *lem, t_room *end)
 			// 	ft_printf(BLUE"SHORTEST PATH: %la\n"RESET, cur_ant->path);
 			if (cur_ant->path != NULL)
 			{
-				if (!(next_room = find_room(cur_ant->path->path_arr[cur_ant->move_nb + 1], lem)))
+				if (!(next_room = find_room(cur_ant->path->path_arr[cur_ant->move_nb + 1]->name, lem)))
 					ft_exit(RED"ERROR: room not found (turn_loop)"RESET);
 				if (!next_room->has_ant || next_room->type == END)
 				{
@@ -80,7 +80,7 @@ static void	turn_loop(t_lem *lem, t_room *end)
 					{
 						// ft_printf(BG_CYAN BLACK"ANT %d REACHED END"RESET, cur_ant->id);
 						// write(1, "\n", 1);
-						end->has_ant++;
+						lem->end->has_ant++;
 					}
 				}
 			}
@@ -118,7 +118,7 @@ static void	turn_loop(t_lem *lem, t_room *end)
 
 void		guide_ants(t_lem *lem)
 {
-	find_paths(lem, lem->start, lem->end);
+	find_paths(lem);
 	assign_paths(lem);
 	while (lem->end->has_ant != lem->ant_nb)
 	{
@@ -140,7 +140,7 @@ void		guide_ants(t_lem *lem)
 			// ft_printf(CYAN"Ant id: %d\n"RESET, ((t_ant*)tmp_ant->content)->id);
 			// tmp_ant = tmp_ant->next;
 		// }
-		turn_loop(lem, lem->end);
+		turn_loop(lem);
 		// ft_printf("%send node %sant amount: %d, ant amount: %d\n"RESET, RED, BLUE, end->has_ant, lem->ant_nb);
 	}
 }

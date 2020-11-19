@@ -6,7 +6,7 @@
 /*   By: osalmine <osalmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/24 20:12:01 by osalmine          #+#    #+#             */
-/*   Updated: 2020/10/21 19:15:47 by osalmine         ###   ########.fr       */
+/*   Updated: 2020/11/02 14:29:49 by osalmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,18 +38,14 @@ static char *assign_colour(t_lem *lem)
 	return (colour);
 }
 
-void        add_path(t_lem *lem, char **path, t_list **path_list)
+void        add_path(t_lem *lem, t_room **path, t_list **path_list)
 {
-    int		len;
 	t_path	*path_struct;
 
-	len = 0;
-	while (path[len])
-		len++;
 	if (!(path_struct = (t_path*)malloc(sizeof(t_path))))
 		ft_exit(RED"ERROR: Malloc error"RESET);
-	path_struct->len = len - 1;
-	path_struct->path_arr = ft_2dstrdup(path);
+	path_struct->len = room_arr_size(path) - 1;
+	path_struct->path_arr = path;
 	path_struct->in_use = TRUE;
 	if (lem->opts->colours)
 		path_struct->colour = assign_colour(lem);

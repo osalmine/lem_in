@@ -6,7 +6,7 @@
 /*   By: osalmine <osalmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/25 16:25:46 by osalmine          #+#    #+#             */
-/*   Updated: 2020/10/29 21:29:05 by osalmine         ###   ########.fr       */
+/*   Updated: 2020/11/04 22:17:24 by osalmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,31 +28,34 @@ void	reset_rooms(t_lem *lem)
 	}
 }
 
-void        find_paths(t_lem *lem, t_room *start, t_room *end)
+void        find_paths(t_lem *lem)
 {
-    char	**path;
+    t_room	**path;
 	// t_path	*path_struct;
 
-	start->weight = 0;
+	lem->start->weight = 0;
 
 	// clock_t start_time = clock();
 	// clock_t end_time;
-	while ((path = bfs(start, end, lem)))
+	while ((path = bfs(lem)))
 	{
 		// end_time = clock();
 		// double elapsed = (double)(end_time - start_time)/CLOCKS_PER_SEC;
 
 		// ft_printf("Time measeured for bfs to return: %.3f seconds.\n", elapsed);
+		ft_printf(BOLD YELLOW"Path returned from BFS: "RESET);
+		for (int i = 0; path[i]; i++)
+			ft_printf(BOLD YELLOW"%s "RESET, path[i]->name);
+		ft_printf("\n\n");
 		if (!path || check_for_dup_path(lem->paths_bef_ek, path))
 			break ;
 		assign_weights(lem, path);
 		assign_flows(lem, path);
-		// ft_printf(BOLD YELLOW"Path returned from BFS: %la\n\n"RESET, path);
 		if (lem->ant_nb == 1)
 		{
 			add_path(lem, path, &(lem->paths_list));
 			// ft_printf("added path to paths_list, ptr: %p\n", lem->paths_list);
-			free_strsplit(&path);
+			free(path);
 			break ;
 		}
 		else

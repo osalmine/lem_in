@@ -6,7 +6,7 @@
 /*   By: osalmine <osalmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/30 18:33:54 by osalmine          #+#    #+#             */
-/*   Updated: 2020/10/29 21:28:48 by osalmine         ###   ########.fr       */
+/*   Updated: 2020/11/02 13:30:20 by osalmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,13 +49,15 @@ t_lem	*lem_init(int ac, char **av)
 		ft_exit(RED"Malloc error"RESET);
 	lem_flags(lem, ac, av);
 	lem_read(lem);
-	add_room_id(lem);
 	if (!(lem->start = find_room_by_type(START, lem)))
 		ft_exit(RED"ERROR: starting room not found"RESET);
 	if (!(lem->end = find_room_by_type(END, lem)))
 		ft_exit(RED"ERROR: ending room not found"RESET);
 	init_ants(lem);
 	// remove_dead_ends(lem);
+	add_room_id(lem);
+	lem->room_nb = room_count(lem);
+	create_room_table(lem);
 
 	// clock_t end = clock();
 	// double elapsed = (double)(end - start)/CLOCKS_PER_SEC;

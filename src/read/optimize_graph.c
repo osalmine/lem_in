@@ -6,7 +6,7 @@
 /*   By: osalmine <osalmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/22 19:36:34 by osalmine          #+#    #+#             */
-/*   Updated: 2020/10/26 13:25:14 by osalmine         ###   ########.fr       */
+/*   Updated: 2020/10/31 15:28:53 by osalmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ static void	remove_links_to_room(t_list **links, t_room *removed_room)
 	while (links_list)
 	{
 		// ft_printf("AA\n");
-		if (ft_strequ(((t_link*)links_list->content)->room2, removed_room->name))
+		if (((t_link*)links_list->content)->room2->id == removed_room->id)
 		{
 			// ft_printf("matching link: room2: %s, removed_room: %s\n", ((t_link*)links_list->content)->room2, removed_room->name);
 			// ft_printf("BEF prev ptr: %p, prev next: %p, link_list: %p, link_list next: %p\n", prev, prev ? prev->next : NULL, links_list, links_list->next);
@@ -52,10 +52,10 @@ static void	link_list_remove(t_list **list, t_room *room1, t_room *room2)
 	while (link_list)
 	{
 		// ft_printf("OK\n");
-		if ((ft_strequ(((t_link*)link_list->content)->room1, room1->name) && \
-			ft_strequ(((t_link*)link_list->content)->room2, room2->name)) || \
-			(ft_strequ(((t_link*)link_list->content)->room2, room1->name) && \
-			ft_strequ(((t_link*)link_list->content)->room1, room2->name)))
+		if ((((t_link*)link_list->content)->room1->id == room1->id && \
+			((t_link*)link_list->content)->room2->id == room2->id) || \
+			(((t_link*)link_list->content)->room2->id == room1->id && \
+			((t_link*)link_list->content)->room1->id == room2->id))
 		{
 			// ft_printf("matching link: room1: %s, room2: %s\n", ((t_link*)link_list->content)->room1, ((t_link*)link_list->content)->room2);
 			// ft_printf("BEF prev ptr: %p, prev next: %p, link_list: %p, link_list next: %p\n", prev, prev ? prev->next : NULL, link_list, link_list->next);
@@ -104,7 +104,6 @@ void    	remove_dead_ends(t_lem *lem)
 {
     t_list	*rooms;
 	t_list	*room_links;
-	t_room	*room2;
     int		link_count;
 	int		new_loop;
 
@@ -136,12 +135,10 @@ void    	remove_dead_ends(t_lem *lem)
 					room_links = ((t_room*)rooms->content)->links;
 					if (room_links)
 					{
-						if (!(room2 = find_room(((t_link*)room_links->content)->room2, lem)))
-							ft_exit(RED"ERROR: no room found"RESET);
 						// t_list *rooms_lst;
 						// for (rooms_lst = room2->links; rooms_lst; rooms_lst = rooms_lst->next)
 						// 	ft_printf(YELLOW"LINK IN ROOM BEF: room1: %s room2: %s\n"RESET, ((t_link*)rooms_lst->content)->room1, ((t_link*)rooms_lst->content)->room2);
-						link_list_remove(&(lem->link_list), ((t_room*)rooms->content), room2);
+						link_list_remove(&(lem->link_list), ((t_room*)rooms->content), ((t_link*)room_links->content)->room2);
 						// for (rooms_lst = room2->links; rooms_lst; rooms_lst = rooms_lst->next)
 						// 	ft_printf(YELLOW"LINK IN ROOM AFT: room1: %s room2: %s\n"RESET, ((t_link*)rooms_lst->content)->room1, ((t_link*)rooms_lst->content)->room2);
 					}

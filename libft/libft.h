@@ -6,7 +6,7 @@
 /*   By: osalmine <osalmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/24 14:53:46 by osalmine          #+#    #+#             */
-/*   Updated: 2020/07/21 13:54:08 by osalmine         ###   ########.fr       */
+/*   Updated: 2020/10/31 18:57:04 by osalmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ void				ft_lstadd(t_list **alst, t_list *new);
 void				ft_lstaddlast(t_list **alst, t_list *new);
 void				ft_lstiter(t_list *lst, void (*f)(t_list *elem));
 t_list				*ft_lstmap(t_list *lst, t_list *(*f)(t_list *elem));
+void				ft_lstrev(t_list **list);
 
 int					ft_abs(int n);
 int					ft_atoi(const char *str);

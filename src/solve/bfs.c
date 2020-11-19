@@ -6,7 +6,7 @@
 /*   By: osalmine <osalmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/22 16:50:08 by osalmine          #+#    #+#             */
-/*   Updated: 2020/10/29 21:28:38 by osalmine         ###   ########.fr       */
+/*   Updated: 2020/11/05 12:17:51 by osalmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,15 +25,15 @@ static void	reset_path(t_lem *lem, t_path *path)
 	// ft_printf("resetting path\n");
 	while (path->path_arr[i + 1])
 	{
-		if (!(link = find_link(lem, path->path_arr[i], path->path_arr[i + 1])))
+		if (!(link = find_link(lem, path->path_arr[i]->name, path->path_arr[i + 1]->name)))
 			ft_exit(RED"ERROR: link not found (reset_path)"RESET);
 		// if (ft_strequ(link->room1, node->name))
 		// 	break ;
 		link->flow = INF;
-		if (!(link = find_link(lem, path->path_arr[i + 1], path->path_arr[i])))
+		if (!(link = find_link(lem, path->path_arr[i + 1]->name, path->path_arr[i]->name)))
 			ft_exit(RED"ERROR: link not found (reset_path)"RESET);
 		link->flow = INF;
-		room = find_room(path->path_arr[i], lem);
+		room = find_room(path->path_arr[i]->name, lem);
 		room->weight = INF - 1;
 		i++;
 	}
@@ -93,7 +93,7 @@ static int	check_for_flow_weight(t_lem *lem, t_room *current, t_room *next)
 	return (check);
 }
 
-static void	solve_loop(t_lem *lem, char ***prev, char ***que, int i)
+static void	solve_loop(t_lem *lem, t_room ***prev, t_room ***que, int i)
 {
 	int		can_use_link;
 	t_room	*node;
@@ -101,24 +101,26 @@ static void	solve_loop(t_lem *lem, char ***prev, char ***que, int i)
 	t_list	*tmp;
 	t_path	*path;
 
-	if (!(node = find_room((*que)[i], lem)))
+	if (!(node = find_room((*que)[i]->name, lem)))
 		ft_exit(RED"ERROR: room not found (solve)"RESET);
 	tmp = node->links;
 	while (tmp)
 	{
-		if (!(neighbor = find_room(((t_link*)tmp->content)->room2, lem)))
-			ft_exit(RED"ERROR: neighbor room not found (solve)"RESET);
-		// ft_printf(MAGENTA"SOLVE\t\t:\tinspecting neighbor: %s, visited: %s, found from que: %s, ", neighbor->name, (neighbor->visited ? "TRUE" : "FALSE"), (find_from_que((*que), neighbor->name) ? "TRUE" : "FALSE"));
-		// ft_printf("found from path: %s\n"RESET, (find_in_path(lem->paths_bef_ek, neighbor, lem->end) ? "TRUE" : "FALSE"));
+		neighbor = ((t_link*)tmp->content)->room2;
+		ft_printf(MAGENTA"SOLVE\t\t:\tinspecting neighbor: %s, visited: %s, found from que: %s, ", neighbor->name, (neighbor->visited ? "TRUE" : "FALSE"), (find_from_que((*que), neighbor) ? "TRUE" : "FALSE"));
+		ft_printf("found from path: %s\n"RESET, (find_in_path(lem->paths_bef_ek, neighbor, lem->end) ? "TRUE" : "FALSE"));
 		can_use_link = check_for_flow_weight(lem, node, neighbor);
-		if (!neighbor->visited && !find_from_que(*que, neighbor->name) \
+		if (!neighbor->visited && !find_from_que(*que, neighbor) \
 			&& ((can_use_link || !find_in_path(lem->paths_bef_ek, neighbor, lem->end)) \
 			&& (!can_use_link ? neighbor->type != END : TRUE)))
 		{
-			push_to_arr(*que, neighbor->name);
-			// ft_printf(YELLOW"SOLVE\t\t:\tpushed %s to que: %la\n"RESET, neighbor->name, (*que));
+			push_to_room_arr(*que, neighbor);
+			ft_printf(YELLOW"SOLVE\t\t:\tpushed %s to que: ", neighbor->name);
+			for (int i = 0; (*que)[i]; i++)
+				ft_printf("%s ", (*que)[i] ? (*que)[i]->name : NULL);
+			ft_printf("\n"RESET);
 			neighbor->visited = TRUE;
-			(*prev)[neighbor->id] = ft_strdup(node->name);
+			(*prev)[neighbor->id] = node;
 			if (node->type != END && neighbor->type != END && node->weight + 1 < neighbor->weight && (path = find_path(lem->paths_bef_ek, neighbor, lem->end)))
 			{
 				// ft_printf("current->name: %s, next->name: %s\n", node->name, neighbor->name);
@@ -128,81 +130,104 @@ static void	solve_loop(t_lem *lem, char ***prev, char ***que, int i)
 				path->in_use = FALSE;
 				// ft_printf("Removed a path\n");
 			}
-			// ft_printf(BLUE"Pushed %s to prev at id: %d : %s\n"RESET, node->name, neighbor->id, (*prev)[neighbor->id]);
-			// ft_printf(BG_CYAN WHITE"FULL PREV ARRAY IN SOLVE:"RESET);
-			// ft_putchar('\n');
-			// int j = 0;
-			// int s = room_count(lem);
-			// while (j < s)
-			// 	ft_printf(CYAN"%s "RESET, (*prev)[j++]);
-			// ft_putchar('\n');
+			ft_printf(BLUE"Assigned %s to prev at id: %d : %s\n"RESET, node->name, neighbor->id, (*prev)[neighbor->id]->name);
+			ft_printf(BG_CYAN BLACK"FULL PREV ARRAY IN SOLVE:"RESET);
+			ft_putchar('\n');
+			int j = 0;
+			while (j < lem->room_nb)
+			{
+				ft_printf(CYAN"%s (%p) "RESET, (*prev)[j] ? (*prev)[j]->name : NULL, (*prev)[j]);
+				j++;
+			}
+			ft_putchar('\n');
 		}
 		tmp = tmp->next;
 	}
 }
 
-static char	**solve(t_room *start, t_lem *lem)
+static t_room	**solve(t_lem *lem)
 {
-	char	**prev;
-	char	**que;
+	t_room	**prev;
+	t_room	**que;
 	int		i;
 
 	i = 0;
-	que = create_arr(lem, -1);
-	prev = create_arr(lem, -1);
-	start->visited = TRUE;
-	push_to_arr(que, start->name);
+	que = create_room_arr(lem, -1);
+	prev = create_room_arr(lem, -1);
+	lem->start->visited = TRUE;
+	push_to_room_arr(que, lem->start);
 	while (que[i] != NULL)
 	{
 		solve_loop(lem, &prev, &que, i);
 		i++;
 	}
-	free_strsplit(&que);
+	ft_memdel((void**)que);
 	// ft_printf(BG_WHITE BLACK"RETURN SOLVE"RESET);
 	// ft_putchar('\n');
+	ft_printf(BG_CYAN BLACK"FINAL FULL PREV ARRAY IN SOLVE BEF RETURN:"RESET);
+	ft_putchar('\n');
+	int j = 0;
+	while (j < lem->room_nb)
+	{
+		ft_printf(CYAN"%s (%p) "RESET, prev[j] ? prev[j]->name : NULL, prev[j]);
+		j++;
+	}
+	ft_putchar('\n');
 	return (prev);
 }
 
-static char **reconstruct_path(t_room *start, t_room* end, char **prev, t_lem *lem)
+static t_room	**reconstruct_path(t_room ***prev, t_lem *lem)
 {
-	char	**path;
+	t_room	**path;
 	t_room	*current;
 
-	path = create_arr(lem, -1);
-	current = end;
-	// ft_printf(BG_CYAN WHITE"FULL PREV ARRAY IN RECONSTRUCT_PATH:"RESET);
-	// ft_putchar('\n');
-	// int j = 0;
-	// int s = room_count(lem);
-	// while (j < s)
-	// 	ft_printf(CYAN"%s "RESET, prev[j++]);
+	path = create_room_arr(lem, -1);
+	current = lem->end;
+	ft_printf(BG_CYAN BLACK"FULL PREV ARRAY IN RECONSTRUCT_PATH:"RESET);
+	ft_putchar('\n');
+	int j = 0;
+	while (j < lem->room_nb)
+	{
+		ft_printf(CYAN"prev[%d]: ptr: %p, name: %s\n"RESET, j, (*prev)[j], (*prev)[j] ? (*prev)[j]->name : NULL);
+		j++;
+	}
+	// ft_printf("1. End room id: %d, current id: %d\n", lem->end->id, current->id);
 	// ft_putchar('\n');
 	while (current != NULL)
 	{
-		// ft_printf(CYAN"RECONSTRUCT PATH\t:\tcurrent->name: %s\n"RESET, current->name);
-		push_to_arr(path, current->name);
-		// ft_printf("RECONSTRUCT PATH\t:\tprev[current->id: %d]: %s\n", current->id, prev[current->id]);
-		current = find_room(prev[current->id], lem);
-		// if (current)
-		// 	ft_printf(BLUE"RECONSTRUCT PATH\t:\tnext current->name: %s\n"RESET, current->name);
+		// ft_printf("2. End room id: %d, current id: %d\n", lem->end->id, current->id);
+		ft_printf(CYAN"RECONSTRUCT PATH\t:\tcurrent->name: %s\n"RESET, current->name);
+		push_to_room_arr(path, current);
+		// ft_printf("3. End room id: %d, current id: %d\n", lem->end->id, current->id);
+		ft_printf("RECONSTRUCT PATH\t:\tprev[current->id: %d]: %s\n", current->id, (*prev)[current->id] ? (*prev)[current->id]->name : NULL);
+		// if (prev[current->id])
+		// 	current = find_room(prev[current->id]->name, lem);
 		// else
-		// 	ft_printf(BLUE"CURRENT IS NULL\n"RESET);
+		// 	current = NULL;
+		if ((*prev)[current->id])
+			current = lem->room_table[current->id][(*prev)[current->id]->id];
+		else
+			current = NULL;
+		if (current)
+			ft_printf(BLUE"RECONSTRUCT PATH\t:\tnext current->name: %s\n"RESET, current->name);
+		else
+			ft_printf(BLUE"CURRENT IS NULL\n"RESET);
 	}
-	path = arr_reverse(path);
+	path = room_arr_reverse(path);
 	// ft_printf("PATH: %la\n", path);
-	if (ft_strequ(path[0], start->name))
+	if (ft_strequ(path[0]->name, lem->start->name))
 		return (path);
 	return (NULL);
 }
 
-char	**bfs(t_room *start, t_room *end, t_lem *lem)
+t_room		**bfs(t_lem *lem)
 {
-	char 	**prev;
-	char 	**path;
+	t_room 	**prev;
+	t_room 	**path;
 
 	// clock_t start_1 = clock();
 
-	prev = solve(start, lem);
+	prev = solve(lem);
 
 	// clock_t end_1 = clock();
 	// double elapsed_1 = (double)(end_1 - start_1)/CLOCKS_PER_SEC;
@@ -211,14 +236,14 @@ char	**bfs(t_room *start, t_room *end, t_lem *lem)
 	
 	// clock_t start_2 = clock();
 
-	path = reconstruct_path(start, end, prev, lem);
+	path = reconstruct_path(&prev, lem);
 
 	// clock_t end_2 = clock();
 	// double elapsed_2 = (double)(end_2 - start_2)/CLOCKS_PER_SEC;
 
 	// ft_printf(GREEN"Time measeured for reconstruct path in bfs: %.3f seconds.\n"RESET, elapsed_2);
 
-	free_strsplit(&prev);
+	free(prev);
 	// t_list *pths;
 	// pths = lem->paths_bef_ek;
 	// while (pths)
