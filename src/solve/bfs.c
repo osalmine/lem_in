@@ -6,7 +6,7 @@
 /*   By: osalmine <osalmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/22 16:50:08 by osalmine          #+#    #+#             */
-/*   Updated: 2020/10/29 21:28:38 by osalmine         ###   ########.fr       */
+/*   Updated: 2020/11/29 15:56:21 by osalmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,30 +15,30 @@
 // #include <time.h>
 
 
-static void	reset_path(t_lem *lem, t_path *path)
-{
-	int		i;
-	t_link	*link;
-	t_room	*room;
+// static void	reset_path(t_lem *lem, t_path *path)
+// {
+// 	int		i;
+// 	t_link	*link;
+// 	t_room	*room;
 
-	i = 0;
-	// ft_printf("resetting path\n");
-	while (path->path_arr[i + 1])
-	{
-		if (!(link = find_link(lem, path->path_arr[i], path->path_arr[i + 1])))
-			ft_exit(RED"ERROR: link not found (reset_path)"RESET);
-		// if (ft_strequ(link->room1, node->name))
-		// 	break ;
-		link->flow = INF;
-		if (!(link = find_link(lem, path->path_arr[i + 1], path->path_arr[i])))
-			ft_exit(RED"ERROR: link not found (reset_path)"RESET);
-		link->flow = INF;
-		room = find_room(path->path_arr[i], lem);
-		room->weight = INF - 1;
-		i++;
-	}
-	// ft_printf("resetted path\n");
-}
+// 	i = 0;
+// 	ft_printf("resetting path\n");
+// 	while (path->path_arr[i + 1])
+// 	{
+// 		if (!(link = find_link(lem, path->path_arr[i], path->path_arr[i + 1])))
+// 			ft_exit(RED"ERROR: link not found (reset_path)"RESET);
+// 		// if (ft_strequ(link->room1, node->name))
+// 		// 	break ;
+// 		link->flow = INF;
+// 		if (!(link = find_link(lem, path->path_arr[i + 1], path->path_arr[i])))
+// 			ft_exit(RED"ERROR: link not found (reset_path)"RESET);
+// 		link->flow = INF;
+// 		room = find_room(path->path_arr[i], lem);
+// 		room->weight = INF - 1;
+// 		i++;
+// 	}
+// 	// ft_printf("resetted path\n");
+// }
 
 // static void	remove_path(t_lem *lem, t_path *path)
 // {
@@ -99,7 +99,7 @@ static void	solve_loop(t_lem *lem, char ***prev, char ***que, int i)
 	t_room	*node;
 	t_room	*neighbor;
 	t_list	*tmp;
-	t_path	*path;
+	// t_path	*path;
 
 	if (!(node = find_room((*que)[i], lem)))
 		ft_exit(RED"ERROR: room not found (solve)"RESET);
@@ -119,15 +119,15 @@ static void	solve_loop(t_lem *lem, char ***prev, char ***que, int i)
 			// ft_printf(YELLOW"SOLVE\t\t:\tpushed %s to que: %la\n"RESET, neighbor->name, (*que));
 			neighbor->visited = TRUE;
 			(*prev)[neighbor->id] = ft_strdup(node->name);
-			if (node->type != END && neighbor->type != END && node->weight + 1 < neighbor->weight && (path = find_path(lem->paths_bef_ek, neighbor, lem->end)))
-			{
+			// if (node->type != END && neighbor->type != END && node->weight + 1 < neighbor->weight && (path = find_path(lem->paths_bef_ek, neighbor, lem->end)))
+			// {
 				// ft_printf("current->name: %s, next->name: %s\n", node->name, neighbor->name);
 				// ft_printf(REVERSED"PATH RETURNED FROM FIND_PATH: %la\n"RESET, path->path_arr);
-				reset_path(lem, path);
+				// reset_path(lem, path);
 				// remove_path(lem, path);
-				path->in_use = FALSE;
+				// path->in_use = FALSE;
 				// ft_printf("Removed a path\n");
-			}
+			// }
 			// ft_printf(BLUE"Pushed %s to prev at id: %d : %s\n"RESET, node->name, neighbor->id, (*prev)[neighbor->id]);
 			// ft_printf(BG_CYAN WHITE"FULL PREV ARRAY IN SOLVE:"RESET);
 			// ft_putchar('\n');
