@@ -6,7 +6,7 @@
 /*   By: osalmine <osalmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/07 14:27:56 by osalmine          #+#    #+#             */
-/*   Updated: 2020/09/07 14:31:16 by osalmine         ###   ########.fr       */
+/*   Updated: 2020/11/30 14:30:24 by osalmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,10 +36,13 @@ char    **create_arr(t_lem *lem, ssize_t size)
 		size = room_count(lem) + 1;
 	if (!(que = (char**)malloc(sizeof(char*) * size)))
 		ft_exit(RED"Malloc error"RESET);
-	que[size - 1] = NULL;
+	// que[size - 1] = NULL;
 	i = 0;
 	while (i < size)
 		que[i++] = NULL;
+	// i = -1;
+	// while (++i < size)
+	// 	ft_printf("CREATE ARR: que[%d]: %p\n", i, que[i]);
 	return (que);
 }
 

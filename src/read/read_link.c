@@ -6,7 +6,7 @@
 /*   By: osalmine <osalmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/22 16:23:58 by osalmine          #+#    #+#             */
-/*   Updated: 2020/10/22 19:17:55 by osalmine         ###   ########.fr       */
+/*   Updated: 2020/11/30 12:07:53 by osalmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,15 +38,16 @@ static int	check_link_dups(t_lem *lem, char **links)
 
 static void add_link(t_lem *lem, t_room *room, char **room_links, int i)
 {
-	t_link	*path;
+	t_link	path;
 
-    if (!(path = (t_link*)malloc(sizeof(t_link))))
-        ft_exit(RED"Malloc error"RESET);
-    path->room1 = ft_strdup(room->name);
-    path->room2 = ft_strdup(room_links[i ? 0 : 1]);
-    path->flow = INF;
-    ft_lstaddlast(&room->links, ft_lstnew(path, (sizeof(t_link))));
-    ft_lstaddlast(&lem->link_list, ft_lstnew(path, (sizeof(t_link))));
+    // if (!(path = (t_link*)malloc(sizeof(t_link))))
+    //     ft_exit(RED"Malloc error"RESET);
+    path.room1 = ft_strdup(room->name);
+    path.room2 = ft_strdup(room_links[i ? 0 : 1]);
+    path.flow = INF;
+    ft_lstaddlast(&room->links, ft_lstnew(&path, (sizeof(t_link))));
+    ft_lstaddlast(&lem->link_list, ft_lstnew(&path, (sizeof(t_link))));
+	// free (path);
 }
 
 void	    read_link(t_lem *lem, char *line)

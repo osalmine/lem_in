@@ -6,7 +6,7 @@
 /*   By: osalmine <osalmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/24 20:17:58 by osalmine          #+#    #+#             */
-/*   Updated: 2020/10/21 19:15:09 by osalmine         ###   ########.fr       */
+/*   Updated: 2020/11/30 15:04:36 by osalmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,11 @@ static char	**ek_find_path(t_lem *lem)
 	// ft_printf("path[arr_size(path) - 1]: %s, lem->end->name: %s\n", path[arr_size(path) - 1], lem->end->name);
 	if (!check_for_dup_path_size_1(lem, path) && ft_strequ(path[arr_size(path) - 1], lem->end->name))
 		return (path);
+	i = room_count(lem);
+	while (i--)
+		if (path && path[i])
+			ft_strdel(&path[i]);
+	free (path);
 	return (NULL);
 }
 

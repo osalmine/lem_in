@@ -6,7 +6,7 @@
 /*   By: osalmine <osalmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/29 00:13:34 by osalmine          #+#    #+#             */
-/*   Updated: 2020/10/13 21:30:58 by osalmine         ###   ########.fr       */
+/*   Updated: 2020/11/30 17:40:04 by osalmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ static void	turn_loop(t_lem *lem, t_room *end)
 	t_room	*next_room;
 	
 	i = 0;
+	// while (1) ;
 	ant_list = lem->ants;
 	// ft_printf(BG_RED"NEW TURN"RESET);
 	// write(1, "\n", 1);
@@ -120,6 +121,7 @@ void		guide_ants(t_lem *lem)
 {
 	find_paths(lem, lem->start, lem->end);
 	assign_paths(lem);
+	// int i = 0;
 	while (lem->end->has_ant != lem->ant_nb)
 	{
 		// t_list	*tmp;
@@ -141,6 +143,10 @@ void		guide_ants(t_lem *lem)
 			// tmp_ant = tmp_ant->next;
 		// }
 		turn_loop(lem, lem->end);
+		// while (1) ;
 		// ft_printf("%send node %sant amount: %d, ant amount: %d\n"RESET, RED, BLUE, end->has_ant, lem->ant_nb);
+		// if (i == 0)
+		// 	while (1) ;
+		// i++;
 	}
 }

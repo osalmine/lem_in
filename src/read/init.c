@@ -6,7 +6,7 @@
 /*   By: osalmine <osalmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/30 18:33:54 by osalmine          #+#    #+#             */
-/*   Updated: 2020/10/29 21:28:48 by osalmine         ###   ########.fr       */
+/*   Updated: 2020/11/30 12:12:07 by osalmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ t_lem	*lem_init(int ac, char **av)
 	lem->paths_bef_ek = NULL;
 	lem->moves_count = 0;
 	if (!(lem->opts = (t_opts*)malloc(sizeof(t_opts))))
-		ft_exit(RED"Malloc error"RESET);
+		ft_exit(RED"Malloc error"RESET);	
 	lem_flags(lem, ac, av);
 	lem_read(lem);
 	add_room_id(lem);

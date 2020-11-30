@@ -6,7 +6,7 @@
 /*   By: osalmine <osalmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/22 16:50:08 by osalmine          #+#    #+#             */
-/*   Updated: 2020/11/29 15:56:21 by osalmine         ###   ########.fr       */
+/*   Updated: 2020/11/30 14:58:41 by osalmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -163,11 +163,14 @@ static char	**solve(t_room *start, t_lem *lem)
 	return (prev);
 }
 
-static char **reconstruct_path(t_room *start, t_room* end, char **prev, t_lem *lem)
+static char **reconstruct_path(t_room* end, char **prev, t_lem *lem)
 {
 	char	**path;
 	t_room	*current;
+	int		i;
 
+	// if (!prev[0])
+	// 	return (NULL);
 	path = create_arr(lem, -1);
 	current = end;
 	// ft_printf(BG_CYAN WHITE"FULL PREV ARRAY IN RECONSTRUCT_PATH:"RESET);
@@ -188,10 +191,17 @@ static char **reconstruct_path(t_room *start, t_room* end, char **prev, t_lem *l
 		// else
 		// 	ft_printf(BLUE"CURRENT IS NULL\n"RESET);
 	}
-	path = arr_reverse(path);
 	// ft_printf("PATH: %la\n", path);
-	if (ft_strequ(path[0], start->name))
+	if (path[0] && ft_strequ(path[0], end->name))
+	{
+		path = arr_reverse(path);
 		return (path);
+	}
+	i = room_count(lem);
+	while (i--)
+		if (path[i])
+			ft_strdel(&path[i]);
+	free (path);
 	return (NULL);
 }
 
@@ -199,6 +209,7 @@ char	**bfs(t_room *start, t_room *end, t_lem *lem)
 {
 	char 	**prev;
 	char 	**path;
+	int		i;
 
 	// clock_t start_1 = clock();
 
@@ -211,14 +222,22 @@ char	**bfs(t_room *start, t_room *end, t_lem *lem)
 	
 	// clock_t start_2 = clock();
 
-	path = reconstruct_path(start, end, prev, lem);
+	path = reconstruct_path(end, prev, lem);
 
 	// clock_t end_2 = clock();
 	// double elapsed_2 = (double)(end_2 - start_2)/CLOCKS_PER_SEC;
 
 	// ft_printf(GREEN"Time measeured for reconstruct path in bfs: %.3f seconds.\n"RESET, elapsed_2);
 
-	free_strsplit(&prev);
+	// free_strsplit(&prev);
+
+	i = room_count(lem);
+	while (i--)
+		if (prev[i])
+			ft_strdel(&prev[i]);
+	free (prev);
+	// while (1) ;
+
 	// t_list *pths;
 	// pths = lem->paths_bef_ek;
 	// while (pths)

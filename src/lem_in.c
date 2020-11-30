@@ -6,7 +6,7 @@
 /*   By: osalmine <osalmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/19 19:01:44 by osalmine          #+#    #+#             */
-/*   Updated: 2020/10/29 21:30:24 by osalmine         ###   ########.fr       */
+/*   Updated: 2020/11/30 17:40:23 by osalmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,9 +56,10 @@ int	main(int argc, char **argv)
 		write(1, "\n\n\n", 3);
 	}
 	guide_ants(lem);
+	// while (1) ;
 	if (lem->opts->lines)
 		ft_printf(GREEN BOLD"lines: %d\n"RESET, lem->moves_count);
-	free_lem(lem);
+	// free_lem(lem);
 	// clock_t end = clock();
 	// double elapsed = (double)(end - start)/CLOCKS_PER_SEC;
 

@@ -6,7 +6,7 @@
 /*   By: osalmine <osalmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/30 22:20:06 by osalmine          #+#    #+#             */
-/*   Updated: 2020/10/29 15:19:49 by osalmine         ###   ########.fr       */
+/*   Updated: 2020/11/30 11:56:55 by osalmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,4 +75,5 @@ void		lem_read(t_lem *lem)
 		// str_append(&output, ft_dtoa(elapsed, 4));
 	}
 	ft_printf("%s\n", output);
+	free (output);
 }
