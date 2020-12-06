@@ -6,7 +6,7 @@
 /*   By: osalmine <osalmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/22 16:23:58 by osalmine          #+#    #+#             */
-/*   Updated: 2020/11/30 12:07:53 by osalmine         ###   ########.fr       */
+/*   Updated: 2020/12/03 23:09:32 by osalmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,9 @@ static void add_link(t_lem *lem, t_room *room, char **room_links, int i)
     // if (!(path = (t_link*)malloc(sizeof(t_link))))
     //     ft_exit(RED"Malloc error"RESET);
     path.room1 = ft_strdup(room->name);
+	ft_printf("add_link, path.room1: %p\n", path.room1);
     path.room2 = ft_strdup(room_links[i ? 0 : 1]);
+	ft_printf("add_link, path.room2: %p\n", path.room2);
     path.flow = INF;
     ft_lstaddlast(&room->links, ft_lstnew(&path, (sizeof(t_link))));
     ft_lstaddlast(&lem->link_list, ft_lstnew(&path, (sizeof(t_link))));

@@ -6,7 +6,7 @@
 /*   By: osalmine <osalmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/19 19:01:44 by osalmine          #+#    #+#             */
-/*   Updated: 2020/11/30 17:40:23 by osalmine         ###   ########.fr       */
+/*   Updated: 2020/12/04 00:09:34 by osalmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,6 @@ int	main(int argc, char **argv)
 	// double elapsed = (double)(end - start)/CLOCKS_PER_SEC;
 
 	// ft_printf("Time measeured for whole program: %.3f seconds.\n", elapsed);
-	// while (1) ;
+	while (1) ;
 	return (0);
 }

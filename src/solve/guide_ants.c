@@ -6,7 +6,7 @@
 /*   By: osalmine <osalmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/29 00:13:34 by osalmine          #+#    #+#             */
-/*   Updated: 2020/11/30 17:40:04 by osalmine         ###   ########.fr       */
+/*   Updated: 2020/12/03 23:50:18 by osalmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ static void	reset_turn(t_lem *lem)
 	}
 }
 
-static void	turn_loop(t_lem *lem, t_room *end)
+static void	turn_loop(t_lem *lem)
 {
 	int		i;
 	t_ant	*cur_ant;
@@ -81,7 +81,7 @@ static void	turn_loop(t_lem *lem, t_room *end)
 					{
 						// ft_printf(BG_CYAN BLACK"ANT %d REACHED END"RESET, cur_ant->id);
 						// write(1, "\n", 1);
-						end->has_ant++;
+						lem->end->has_ant++;
 					}
 				}
 			}
@@ -142,7 +142,7 @@ void		guide_ants(t_lem *lem)
 			// ft_printf(CYAN"Ant id: %d\n"RESET, ((t_ant*)tmp_ant->content)->id);
 			// tmp_ant = tmp_ant->next;
 		// }
-		turn_loop(lem, lem->end);
+		turn_loop(lem);
 		// while (1) ;
 		// ft_printf("%send node %sant amount: %d, ant amount: %d\n"RESET, RED, BLUE, end->has_ant, lem->ant_nb);
 		// if (i == 0)

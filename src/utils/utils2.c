@@ -6,7 +6,7 @@
 /*   By: osalmine <osalmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/24 20:11:08 by osalmine          #+#    #+#             */
-/*   Updated: 2020/11/30 10:45:04 by osalmine         ###   ########.fr       */
+/*   Updated: 2020/12/03 23:12:56 by osalmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,15 @@ char	**ft_2dstrdup(char **str)
 	i = arr_size(str);
 	if (!(new_str = (char**)malloc(sizeof(char*) * (i + 1))))
 		ft_exit(RED"ERROR: Malloc error"RESET);
+	ft_printf("ft_2dstrdup, new_str: %p\n", new_str);
+	if (sizeof(char*) * (i + 1) == 16)
+			ft_printf(RED"ft_2dstrdup: sizeof(char*) * (i + 1) IS 16 alloced mem addr: %p\n"RESET, new_str);
 	new_str[i] = NULL;
 	i = 0;
 	while (str[i])
 	{
 		new_str[i] = ft_strdup(str[i]);
+		ft_printf("ft_2dstrdup, new_str[%d]: %p\n", i, new_str[i]);
 		i++;
 	}
 	return (new_str);

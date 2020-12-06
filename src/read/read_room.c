@@ -6,7 +6,7 @@
 /*   By: osalmine <osalmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/22 17:41:33 by osalmine          #+#    #+#             */
-/*   Updated: 2020/11/30 12:06:43 by osalmine         ###   ########.fr       */
+/*   Updated: 2020/12/03 23:09:53 by osalmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ static t_room	init_room(t_lem *lem, char **room_arr, int room_type)
 	t_room room;
 	
 	room.name = ft_strdup(room_arr[0]);
+	ft_printf("init_room, room.name: %p\n", room.name);
 	if (!ft_isdigit(room_arr[1][0]) || !ft_isdigit(room_arr[2][0]))
 		ft_exit(RED"ERROR: room coordinate is not a number"RESET);
 	room.x = ft_atoi(room_arr[1]);

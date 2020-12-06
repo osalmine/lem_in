@@ -6,7 +6,7 @@
 /*   By: osalmine <osalmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/30 18:33:54 by osalmine          #+#    #+#             */
-/*   Updated: 2020/11/30 12:12:07 by osalmine         ###   ########.fr       */
+/*   Updated: 2020/12/03 22:55:33 by osalmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,9 @@ t_lem	*lem_init(int ac, char **av)
 
 	if (!(lem = (t_lem*)malloc(sizeof(t_lem))))
 		ft_exit(RED"Malloc error"RESET);
+	ft_printf("lem_init, lem: %p\n", lem);
+	if (sizeof(t_lem) == 16)
+		ft_printf(RED"lem_init: SIZEOF T_LEM IS 16\n"RESET);
 	lem->ants = NULL;
 	lem->link_list = NULL;
 	lem->room_list = NULL;
@@ -47,6 +50,9 @@ t_lem	*lem_init(int ac, char **av)
 	lem->moves_count = 0;
 	if (!(lem->opts = (t_opts*)malloc(sizeof(t_opts))))
 		ft_exit(RED"Malloc error"RESET);	
+	ft_printf("lem_init, lem->opts: %p\n", lem->opts);
+	if (sizeof(t_opts) == 16)
+		ft_printf(RED"lem_init: SIZEOF T_OPTS IS 16\n"RESET);
 	lem_flags(lem, ac, av);
 	lem_read(lem);
 	add_room_id(lem);
