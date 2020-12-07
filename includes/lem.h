@@ -6,7 +6,7 @@
 /*   By: osalmine <osalmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/19 19:01:54 by osalmine          #+#    #+#             */
-/*   Updated: 2020/10/26 12:52:29 by osalmine         ###   ########.fr       */
+/*   Updated: 2020/12/06 21:23:59 by osalmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -151,6 +151,7 @@ typedef struct	s_lem
 	t_room	*start;
 	t_room	*end;
 	int		max_flow;
+	int		room_count;
 }				t_lem;
 
 /*

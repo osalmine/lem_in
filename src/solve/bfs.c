@@ -6,7 +6,7 @@
 /*   By: osalmine <osalmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/22 16:50:08 by osalmine          #+#    #+#             */
-/*   Updated: 2020/12/03 22:12:43 by osalmine         ###   ########.fr       */
+/*   Updated: 2020/12/06 21:23:57 by osalmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -194,12 +194,12 @@ static char **reconstruct_path(t_room* end, char **prev, t_lem *lem)
 	// ft_printf("PATH: %la\n", path);
 	if (path[0] && ft_strequ(path[0], end->name))
 	{
-		ft_printf("CALLING arr_reverse in reconstruct_path for path: %la\n", path);
+		// ft_printf("CALLING arr_reverse in reconstruct_path for path: %la\n", path);
 		path = arr_reverse(path);
-		ft_printf("Reversed path %p\n", path);
+		// ft_printf("Reversed path %p\n", path);
 		return (path);
 	}
-	i = room_count(lem);
+	i = lem->room_count;
 	while (i--)
 		if (path[i])
 			ft_strdel(&path[i]);
@@ -233,7 +233,7 @@ char	**bfs(t_room *start, t_room *end, t_lem *lem)
 
 	// free_strsplit(&prev);
 
-	i = room_count(lem);
+	i = lem->room_count;
 	while (i--)
 		if (prev[i])
 			ft_strdel(&prev[i]);

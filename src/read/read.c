@@ -6,7 +6,7 @@
 /*   By: osalmine <osalmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/30 22:20:06 by osalmine          #+#    #+#             */
-/*   Updated: 2020/12/03 23:10:58 by osalmine         ###   ########.fr       */
+/*   Updated: 2020/12/06 21:02:14 by osalmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,19 +21,19 @@ static void str_append(char **output, char *append)
 	tmp = ft_strjoin(append, "\n");
 	ft_memdel((void**)&append);
 	append = ft_strdup(tmp);
-	ft_printf("str_append, append: %p\n", append);
+	// ft_printf("str_append, append: %p\n", append);
 	ft_memdel((void**)&tmp);
 	if (*output)
 		tmp = ft_strjoin(*output, append);
 	else
 	{
 		tmp = ft_strdup(append);
-		ft_printf("str_append, tmp: %p\n", tmp);
+		// ft_printf("str_append, tmp: %p\n", tmp);
 	}
 	ft_memdel((void**)output);
 	ft_memdel((void**)&append);
 	*output = ft_strdup(tmp);
-	ft_printf("str_append, output: %p\n", output);
+	// ft_printf("str_append, output: %p\n", output);
 	ft_memdel((void**)&tmp);
 }
 

@@ -6,7 +6,7 @@
 /*   By: osalmine <osalmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/18 22:39:15 by osalmine          #+#    #+#             */
-/*   Updated: 2020/12/03 23:49:24 by osalmine         ###   ########.fr       */
+/*   Updated: 2020/12/06 21:14:28 by osalmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,12 @@ t_room  *find_room(char *name, t_lem *lem)
     t_list *tmp;
 
     tmp = lem->room_list;
-	ft_printf("find_room: tmp %p, name: %p\n", tmp, name);
+	// ft_printf("find_room: tmp %p, name: %p\n", tmp, name);
 	// ft_printf("sizeof t_list: %d (%p), sizeof tmp->content: %d (%p), sizeof t_room: %d (%p), sizeof name: %d (%p)\n", sizeof(t_list), tmp, sizeof(tmp->content), tmp->content, sizeof(t_room), (t_room*)tmp->content, sizeof(name), name);
     while (tmp && name)
     {
         current_room = (t_room*)tmp->content;
-		ft_printf("find_room: current_room %p\n", current_room);
+		// ft_printf("find_room: current_room %p\n", current_room);
         if (ft_strequ(current_room->name, name))
             return (current_room);
         tmp = tmp->next;

@@ -6,7 +6,7 @@
 /*   By: osalmine <osalmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/07 14:27:56 by osalmine          #+#    #+#             */
-/*   Updated: 2020/12/03 23:12:25 by osalmine         ###   ########.fr       */
+/*   Updated: 2020/12/06 21:14:45 by osalmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,12 +33,12 @@ char    **create_arr(t_lem *lem, ssize_t size)
 	int		i;
 
 	if (size == -1)
-		size = room_count(lem) + 1;
+		size = lem->room_count + 1;
 	if (!(que = (char**)malloc(sizeof(char*) * size)))
 		ft_exit(RED"ERROR: Malloc error"RESET);
-	ft_printf("create_arr, que: %p\n", que);
-	if (sizeof(char*) * size == 16)
-			ft_printf(RED"create_arr: sizeof(char*) * size IS 16\n"RESET);
+	// ft_printf("create_arr, que: %p\n", que);
+	// if (sizeof(char*) * size == 16)
+	// 		ft_printf(RED"create_arr: sizeof(char*) * size IS 16\n"RESET);
 	// que[size - 1] = NULL;
 	i = 0;
 	while (i < size)
@@ -57,7 +57,7 @@ void	push_to_arr(char **que, char *room)
 	while (que[i])
 		i++;
 	que[i] = ft_strdup(room);
-	ft_printf("push_to_arr, que[%d]: %p\n", i, que[i]);
+	// ft_printf("push_to_arr, que[%d]: %p\n", i, que[i]);
 }
 
 char    **arr_reverse(char **arr)
@@ -72,14 +72,14 @@ char    **arr_reverse(char **arr)
 		count++;
 	if (!(new_arr = (char**)malloc(sizeof(char*) * (count + 1))))
 		ft_exit(RED"Malloc error"RESET);
-	ft_printf("arr_reverse, new_arr: %p\n", new_arr);
-	if (sizeof(char*) * (count + 1) == 16)
-			ft_printf(RED"arr_reverse: sizeof(char*) * (count + 1) IS 16\n"RESET);
+	// ft_printf("arr_reverse, new_arr: %p\n", new_arr);
+	// if (sizeof(char*) * (count + 1) == 16)
+	// 		ft_printf(RED"arr_reverse: sizeof(char*) * (count + 1) IS 16\n"RESET);
 	new_arr[count] = NULL;
 	while (count)
 	{
 		new_arr[start] = ft_strdup(arr[(count--) - 1]);
-		ft_printf("arr_reverse, new_arr[%d]: %p\n", start, new_arr[start]);
+		// ft_printf("arr_reverse, new_arr[%d]: %p\n", start, new_arr[start]);
 		start++;
 	}
 	free_strsplit(&arr);

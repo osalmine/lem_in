@@ -6,7 +6,7 @@
 /*   By: osalmine <osalmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/26 23:36:24 by osalmine          #+#    #+#             */
-/*   Updated: 2020/12/03 23:59:53 by osalmine         ###   ########.fr       */
+/*   Updated: 2020/12/06 21:13:47 by osalmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,9 +87,9 @@ static int	*get_steps(t_lem *lem, int *total)
 
 	if (!(steps = (int*)malloc(sizeof(int) * lem->max_flow)))
 		ft_exit(RED"ERROR: malloc error"RESET);
-	ft_printf("get_steps, steps: %p\n", steps);
-	if (sizeof(int) * lem->max_flow == 16)
-		ft_printf(RED"get_steps: SIZEOF sizeof(int) * lem->max_flow IS 16\n"RESET);
+	// ft_printf("get_steps, steps: %p\n", steps);
+	// if (sizeof(int) * lem->max_flow == 16)
+	// 	ft_printf(RED"get_steps: SIZEOF sizeof(int) * lem->max_flow IS 16\n"RESET);
 	paths = lem->paths_list;
 	i = 0;
 	while (paths && i < lem->max_flow)
@@ -269,9 +269,9 @@ void    	assign_paths(t_lem *lem)
 		total = 0;
 		if (!(tmp_div = (int*)malloc(sizeof(int) * i)))
 			ft_exit(RED"ERROR: malloc error"RESET);
-		ft_printf("assign_paths, tmp_div: %p\n", tmp_div);
-		if (sizeof(int) * i == 16)
-			ft_printf(RED"assign_paths: sizeof(int) * i IS 16\n"RESET);
+		// ft_printf("assign_paths, tmp_div: %p\n", tmp_div);
+		// if (sizeof(int) * i == 16)
+		// 	ft_printf(RED"assign_paths: sizeof(int) * i IS 16\n"RESET);
 		steps = get_steps(lem, &total);
 		tmp_div = calc_div(lem, tmp_div, total, steps);
 		// for (int j = 0; j < i; j++)
