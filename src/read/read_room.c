@@ -6,11 +6,15 @@
 /*   By: osalmine <osalmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/22 17:41:33 by osalmine          #+#    #+#             */
-/*   Updated: 2020/10/26 09:54:39 by osalmine         ###   ########.fr       */
+/*   Updated: 2020/12/09 22:05:15 by osalmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem.h"
+
+
+#include <time.h>
+
 
 static void  check_room_dups(t_lem *lem, char **room_arr)
 {
@@ -50,6 +54,9 @@ void	    read_room(t_lem *lem, char *line, int *room_type, int format_check)
 	char	**room_arr;
 	t_room	*room;
 
+	// clock_t start = clock();
+	// clock_t end;
+
 	if (format_check == 2)
 		ft_exit(RED"ERROR: input format error"RESET);
 	room_arr = ft_strsplit(line, ' ');
@@ -62,4 +69,9 @@ void	    read_room(t_lem *lem, char *line, int *room_type, int format_check)
 	*room_type = NORMAL;
 	free_strsplit(&room_arr);
 	ft_lstaddlast(&lem->room_list, ft_lstnew(room, sizeof(t_room)));
+	// end = clock();
+	// double elapsed = (double)(end - start)/CLOCKS_PER_SEC;
+
+	// ft_printf("Time measeured for one room read: %.3f seconds.\n", elapsed);
+	// while (1) ;
 }

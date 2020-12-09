@@ -6,7 +6,7 @@
 /*   By: osalmine <osalmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/30 18:33:54 by osalmine          #+#    #+#             */
-/*   Updated: 2020/12/07 19:02:34 by osalmine         ###   ########.fr       */
+/*   Updated: 2020/12/09 22:42:06 by osalmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,11 @@ t_lem	*lem_init(int ac, char **av)
 	if (!(lem->opts = (t_opts*)malloc(sizeof(t_opts))))
 		ft_exit(RED"Malloc error"RESET);
 	lem_flags(lem, ac, av);
+	// clock_t end = clock();
+	// double elapsed = (double)(end - start)/CLOCKS_PER_SEC;
+
+	// ft_printf("Time measeured for init: %.3f seconds.\n", elapsed);
+	// while (1) ;
 	lem_read(lem);
 	if (!(lem->start = find_room_by_type(START, lem)))
 		ft_exit(RED"ERROR: starting room not found"RESET);

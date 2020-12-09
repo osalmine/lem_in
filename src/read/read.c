@@ -6,13 +6,13 @@
 /*   By: osalmine <osalmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/30 22:20:06 by osalmine          #+#    #+#             */
-/*   Updated: 2020/10/29 15:19:49 by osalmine         ###   ########.fr       */
+/*   Updated: 2020/12/09 22:41:44 by osalmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/lem.h"
 
-#include <time.h>
+// #include <time.h>
 
 static void str_append(char **output, char *append)
 {
@@ -73,6 +73,10 @@ void		lem_read(t_lem *lem)
 		// end = clock();
 		// double elapsed = (double)(end - start)/CLOCKS_PER_SEC;
 		// str_append(&output, ft_dtoa(elapsed, 4));
+		// end = clock();
+		// double elapsed = (double)(end - start)/CLOCKS_PER_SEC;
+
+		// ft_printf("Time measeured for one read loop: %.3f seconds.\n", elapsed);
 	}
 	ft_printf("%s\n", output);
 }
