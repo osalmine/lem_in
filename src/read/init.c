@@ -6,7 +6,7 @@
 /*   By: osalmine <osalmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/30 18:33:54 by osalmine          #+#    #+#             */
-/*   Updated: 2020/12/06 21:10:47 by osalmine         ###   ########.fr       */
+/*   Updated: 2020/12/09 22:56:41 by osalmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,8 +54,12 @@ t_lem	*lem_init(int ac, char **av)
 	// if (sizeof(t_opts) == 16)
 	// 	ft_printf(RED"lem_init: SIZEOF T_OPTS IS 16\n"RESET);
 	lem_flags(lem, ac, av);
+	// clock_t end = clock();
+	// double elapsed = (double)(end - start)/CLOCKS_PER_SEC;
+
+	// ft_printf("Time measeured for init: %.3f seconds.\n", elapsed);
+	// while (1) ;
 	lem_read(lem);
-	add_room_id(lem);
 	if (!(lem->start = find_room_by_type(START, lem)))
 		ft_exit(RED"ERROR: starting room not found"RESET);
 	if (!(lem->end = find_room_by_type(END, lem)))
@@ -63,6 +67,10 @@ t_lem	*lem_init(int ac, char **av)
 	init_ants(lem);
 	lem->room_count = room_count(lem);
 	// remove_dead_ends(lem);
+	add_room_id(lem);
+	// lem->room_nb = room_count(lem);
+	create_room_table(lem);
+	create_link_table(lem);
 
 	// clock_t end = clock();
 	// double elapsed = (double)(end - start)/CLOCKS_PER_SEC;

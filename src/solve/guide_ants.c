@@ -6,7 +6,7 @@
 /*   By: osalmine <osalmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/29 00:13:34 by osalmine          #+#    #+#             */
-/*   Updated: 2020/12/03 23:50:18 by osalmine         ###   ########.fr       */
+/*   Updated: 2020/12/09 23:16:59 by osalmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ static void	turn_loop(t_lem *lem)
 			// 	ft_printf(BLUE"SHORTEST PATH: %la\n"RESET, cur_ant->path);
 			if (cur_ant->path != NULL)
 			{
-				if (!(next_room = find_room(cur_ant->path->path_arr[cur_ant->move_nb + 1], lem)))
+				if (!cur_ant->path->path_arr[cur_ant->move_nb + 1] || !cur_ant->path->path_arr[cur_ant->move_nb + 1]->name || !(next_room = find_room(cur_ant->path->path_arr[cur_ant->move_nb + 1]->name, lem)))
 					ft_exit(RED"ERROR: room not found (turn_loop)"RESET);
 				if (!next_room->has_ant || next_room->type == END)
 				{
@@ -119,8 +119,9 @@ static void	turn_loop(t_lem *lem)
 
 void		guide_ants(t_lem *lem)
 {
-	find_paths(lem, lem->start, lem->end);
+	find_paths(lem);
 	assign_paths(lem);
+	// while (1) ;
 	// int i = 0;
 	while (lem->end->has_ant != lem->ant_nb)
 	{
@@ -142,6 +143,7 @@ void		guide_ants(t_lem *lem)
 			// ft_printf(CYAN"Ant id: %d\n"RESET, ((t_ant*)tmp_ant->content)->id);
 			// tmp_ant = tmp_ant->next;
 		// }
+		// while (1) ;
 		turn_loop(lem);
 		// while (1) ;
 		// ft_printf("%send node %sant amount: %d, ant amount: %d\n"RESET, RED, BLUE, end->has_ant, lem->ant_nb);

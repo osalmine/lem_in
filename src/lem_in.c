@@ -6,7 +6,7 @@
 /*   By: osalmine <osalmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/19 19:01:44 by osalmine          #+#    #+#             */
-/*   Updated: 2020/12/06 20:05:54 by osalmine         ###   ########.fr       */
+/*   Updated: 2020/12/09 23:17:30 by osalmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,14 +33,15 @@ int	main(int argc, char **argv)
 		{
 			t_room *new_room;
 			new_room = (t_room*)tmp_rooms->content;
-			ft_printf("Room name: %s, id: %d, room type: %d, x: %d, y: %d, visited: %d, has_ant: %d\n", new_room->name, new_room->id, new_room->type, new_room->x, new_room->y, new_room->visited, new_room->has_ant);
+			ft_printf("Size of room struct: %d, room name addr: %p, size %d\n", sizeof(t_room), new_room->name, sizeof(new_room->name));
+			ft_printf("Room name: %s, ptr: %p, id: %d, room type: %d, x: %d, y: %d, visited: %d, has_ant: %d\n", new_room->name, new_room, new_room->id, new_room->type, new_room->x, new_room->y, new_room->visited, new_room->has_ant);
 			t_list *tmp;
 
 			tmp = new_room->links;
 			while (tmp)
 			{
 				link = (t_link*)tmp->content;
-				ft_printf(BLUE"Link room1: %s, room2: %s\n"RESET, link->room1, link->room2);
+				ft_printf(BLUE"Link room1: %s, ptr: %p, room2: %s, ptr: %p\n"RESET, link->room1->name, link->room1, link->room2->name, link->room2);
 				tmp = tmp->next;
 			}
 			tmp_rooms = tmp_rooms->next;
@@ -50,7 +51,7 @@ int	main(int argc, char **argv)
 		while (tmp_rooms)
 		{
 			link = (t_link*)tmp_rooms->content;
-			ft_printf("Link room1: %s, room2: %s\n", link->room1, link->room2);
+			ft_printf("Link room1: %s, ptr: %p, room2: %s, ptr: %p\n", link->room1->name, link->room1, link->room2->name, link->room2);
 			tmp_rooms = tmp_rooms->next;
 		}
 		write(1, "\n\n\n", 3);

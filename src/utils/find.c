@@ -6,7 +6,7 @@
 /*   By: osalmine <osalmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/18 22:39:15 by osalmine          #+#    #+#             */
-/*   Updated: 2020/12/06 21:14:28 by osalmine         ###   ########.fr       */
+/*   Updated: 2020/12/09 22:55:18 by osalmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,14 +47,14 @@ t_room  *find_room_by_type(int type, t_lem *lem)
     return (NULL);
 }
 
-int     find_from_que(char **que, char *name)
+int     find_from_que(t_room **que, t_room *room)
 {
     int i;
 
     i = 0;
     while (que[i])
     {
-        if (ft_strequ(que[i], name))
+        if (que[i] == room)
             return (1);
         i++;
     }
@@ -65,7 +65,7 @@ int		find_in_path(t_list *list, t_room *room, t_room *end)
 {
     t_list	*paths;
 	t_path	*cur_path;
-	char	**tmp;
+	t_room	**tmp;
 	int		i;
 
 	paths = list;
@@ -78,7 +78,7 @@ int		find_in_path(t_list *list, t_room *room, t_room *end)
 		tmp = cur_path->path_arr;
 		while (tmp && tmp[i])
 		{
-			if (ft_strequ(tmp[i], room->name))
+			if (tmp[i] == room)
 				return (1);
 			i++;
 		}
@@ -91,7 +91,7 @@ t_path  *find_path(t_list *list, t_room *room, t_room *end)
 {
     t_list	*paths;
 	t_path	*cur_path;
-	char	**tmp;
+	t_room	**tmp;
 	int		i;
 
 	paths = list;
@@ -104,7 +104,7 @@ t_path  *find_path(t_list *list, t_room *room, t_room *end)
 		tmp = cur_path->path_arr;
 		while (tmp && tmp[i])
 		{
-			if (ft_strequ(tmp[i], room->name))
+			if (tmp[i] == room)
 				return (cur_path);
 			i++;
 		}
@@ -123,7 +123,7 @@ t_link	*find_link(t_lem *lem, char *room1, char *room2)
 	while (link_list)
 	{
 		link = (t_link*)link_list->content;
-		if (ft_strequ(room1, link->room1) && ft_strequ(room2, link->room2))
+		if (ft_strequ(room1, link->room1->name) && ft_strequ(room2, link->room2->name))
 			return (link);
 		link_list = link_list->next;
 	}

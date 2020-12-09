@@ -6,7 +6,7 @@
 /*   By: osalmine <osalmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/22 16:23:58 by osalmine          #+#    #+#             */
-/*   Updated: 2020/12/06 21:13:29 by osalmine         ###   ########.fr       */
+/*   Updated: 2020/12/09 22:49:09 by osalmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ static int	check_link_dups(t_lem *lem, char **links)
 	while (link_list)
 	{
 		cur_link = (t_link*)link_list->content;
-		if (ft_strequ(links[0], cur_link->room1) && ft_strequ(links[1], cur_link->room2))
+		if (ft_strequ(links[0], cur_link->room1->name) && ft_strequ(links[1], cur_link->room2->name))
 			return (1);
 		link_list = link_list->next;
 	}
@@ -39,16 +39,22 @@ static int	check_link_dups(t_lem *lem, char **links)
 static void add_link(t_lem *lem, t_room *room, char **room_links, int i)
 {
 	t_link	path;
+	t_list	*list;
 
     // if (!(path = (t_link*)malloc(sizeof(t_link))))
     //     ft_exit(RED"Malloc error"RESET);
-    path.room1 = ft_strdup(room->name);
+    path.room1 = room;
 	// ft_printf("add_link, path.room1: %p\n", path.room1);
-    path.room2 = ft_strdup(room_links[i ? 0 : 1]);
+    path.room2 = find_room(room_links[i ? 0 : 1], lem);
 	// ft_printf("add_link, path.room2: %p\n", path.room2);
     path.flow = INF;
-    ft_lstaddlast(&room->links, ft_lstnew(&path, (sizeof(t_link))));
-    ft_lstaddlast(&lem->link_list, ft_lstnew(&path, (sizeof(t_link))));
+    ft_lstadd(&room->links, ft_lstnew(&path, (sizeof(t_link))));
+    if (!(list = (t_list *)malloc(sizeof(t_list))))
+		ft_exit(RED"ERROR: malloc error"RESET);
+	list->content = room->links->content;
+	list->content_size = room->links->content_size;
+	list->next = NULL;
+	ft_lstaddlast(&lem->link_list, list);
 	// free (path);
 }
 

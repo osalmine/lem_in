@@ -6,13 +6,13 @@
 /*   By: osalmine <osalmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/24 20:16:35 by osalmine          #+#    #+#             */
-/*   Updated: 2020/10/21 18:53:50 by osalmine         ###   ########.fr       */
+/*   Updated: 2020/11/02 14:03:11 by osalmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/lem.h"
 
-void	assign_weights(t_lem *lem, char **path)
+void	assign_weights(t_lem *lem, t_room **path)
 {
 	int		i;
 	t_room	*room;
@@ -21,7 +21,7 @@ void	assign_weights(t_lem *lem, char **path)
 	// ft_printf("PATH IN ASSIGN_WEIGHTS: %la\n", path);
 	while (path[i])
 	{
-		if (!(room = find_room(path[i], lem)))
+		if (!(room = find_room(path[i]->name, lem)))
 			ft_exit(RED"ERROR: room not found"RESET);
 		// ft_printf("ASSIGN WEIGHTS ROOM: %s", room->name);
 		if (room->type == END)
@@ -35,7 +35,7 @@ void	assign_weights(t_lem *lem, char **path)
 	}
 }
 
-void	assign_flows(t_lem *lem, char **path)
+void	assign_flows(t_lem *lem, t_room **path)
 {
 	int		i;
 	t_link	*link;
@@ -45,22 +45,22 @@ void	assign_flows(t_lem *lem, char **path)
 	while (path[i + 1])
 	{
 		// ft_printf("path[%d]: %s, path[%d + 1]: %s\n", i, path[i], i, path[i + 1]);
-		if (!(link = find_link(lem, path[i], path[i + 1])))
+		if (!(link = find_link(lem, path[i]->name, path[i + 1]->name)))
 			ft_exit(RED"ERROR: couldn't find link\n"RESET);
-		// ft_printf("Link (%s-%s) flow prev assign: %d\n", link->room1, link->room2, link->flow);
+		// ft_printf("Link (%s-%s) flow prev assign: %d, ptr: %p\n", link->room1->name, link->room2->name, link->flow, link);
 		if (link->flow == INF)
 			link->flow = 1;
 		else
 			link->flow++;
-		// ft_printf("Link (%s-%s) flow after assign: %d\n", link->room1, link->room2, link->flow);
-		if (!(link = find_link(lem, path[i + 1], path[i])))
+		// ft_printf("Link (%s-%s) flow after assign: %d\n", link->room1->name, link->room2->name, link->flow);
+		if (!(link = find_link(lem, path[i + 1]->name, path[i]->name)))
 			ft_exit(RED"ERROR: couldn't find link\n"RESET);
-		// ft_printf("Link (%s-%s) flow prev assign: %d\n", link->room1, link->room2, link->flow);
+		// ft_printf("Link (%s-%s) flow prev assign: %d, ptr: %p\n", link->room1->name, link->room2->name, link->flow, link);
 		if (link->flow == INF)
 			link->flow = -1;
 		else
 			link->flow--;
-		// ft_printf("Link (%s-%s) flow after assign: %d\n", link->room1, link->room2, link->flow);
+		// ft_printf("Link (%s-%s) flow after assign: %d\n", link->room1->name, link->room2->name, link->flow);
 		i++;
 	}
 }

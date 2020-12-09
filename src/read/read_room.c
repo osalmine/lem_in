@@ -6,7 +6,7 @@
 /*   By: osalmine <osalmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/22 17:41:33 by osalmine          #+#    #+#             */
-/*   Updated: 2020/12/06 21:13:34 by osalmine         ###   ########.fr       */
+/*   Updated: 2020/12/09 22:50:26 by osalmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,9 @@ void	    	read_room(t_lem *lem, char *line, int *room_type, int format_check)
 {
 	char	**room_arr;
 	t_room	room;
+
+	// clock_t start = clock();
+	// clock_t end;
 
 	if (format_check == 2)
 		ft_exit(RED"ERROR: input format error"RESET);
