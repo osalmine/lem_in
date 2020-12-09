@@ -6,7 +6,7 @@
 /*   By: osalmine <osalmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/07 14:27:56 by osalmine          #+#    #+#             */
-/*   Updated: 2020/11/29 14:07:08 by osalmine         ###   ########.fr       */
+/*   Updated: 2020/12/07 21:15:51 by osalmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ t_room	**create_room_arr(t_lem *lem, ssize_t size)
 
 	if (size == -1)
 		size = lem->room_nb + 1;
-	ft_printf(YELLOW"CREATE_ROOM_ARR: malloced size: %d\n"RESET, size);
+	// ft_printf(YELLOW"CREATE_ROOM_ARR: malloced size: %d\n"RESET, size);
 	if (!(que = (t_room**)malloc(sizeof(t_room*) * size)))
 		ft_exit(RED"Malloc error"RESET);
 	que[size - 1] = NULL;
@@ -58,9 +58,9 @@ t_room	**create_room_arr(t_lem *lem, ssize_t size)
 	while (i < size)
 		que[i++] = NULL;
 	i = -1;
-	while (++i <= size)
-		ft_printf("que[%d]: %p\n", i, que[i]);
-	ft_printf("Que start addr: %p, size: %d\n", que, sizeof(que) * sizeof(t_room*));
+	// while (++i <= size)
+	// 	ft_printf("que[%d]: %p\n", i, que[i]);
+	// ft_printf("Que start addr: %p, size: %d\n", que, sizeof(que) * sizeof(t_room*));
 	return (que);
 }
 
@@ -69,14 +69,14 @@ void	push_to_room_arr(t_room **arr, t_room *room)
 	int i;
 
 	i = 0;
-	ft_printf("Room to push: %s, %p\n", room->name, room);
+	// ft_printf("Room to push: %s, %p\n", room->name, room);
 	while (arr[i] && arr[i]->name)
 	{
-		ft_printf("push_to_room_arr: room[%d]->name: %s (%p)\n", i, arr[i]->name, arr[i]);
+		// ft_printf("push_to_room_arr: room[%d]->name: %s (%p)\n", i, arr[i]->name, arr[i]);
 		i++;
 	}
 	arr[i] = room;
-	ft_printf("arr[%d]: %s, %p\n", i, room->name, room);
+	// ft_printf("arr[%d]: %s, %p\n", i, room->name, room);
 }
 
 void	push_to_arr(char **que, char *room)

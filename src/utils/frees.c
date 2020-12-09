@@ -6,7 +6,7 @@
 /*   By: osalmine <osalmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/01 09:45:19 by osalmine          #+#    #+#             */
-/*   Updated: 2020/11/02 14:25:11 by osalmine         ###   ########.fr       */
+/*   Updated: 2020/12/09 21:14:31 by osalmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,6 @@ void	free_a_path(t_path **path, size_t size)
 static void	free_path(void *path, size_t size)
 {
 	size = 0;
-	free(path);
 	if (((t_path*)path)->colour)
 		ft_strdel(&((t_path*)path)->colour);
 	ft_memdel(&path);

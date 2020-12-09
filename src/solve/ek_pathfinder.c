@@ -6,7 +6,7 @@
 /*   By: osalmine <osalmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/24 20:17:58 by osalmine          #+#    #+#             */
-/*   Updated: 2020/11/02 14:23:06 by osalmine         ###   ########.fr       */
+/*   Updated: 2020/12/09 21:17:23 by osalmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,18 +27,21 @@ static t_room	**ek_find_path(t_lem *lem)
 	current = lem->start;
 	push_to_room_arr(path, current);
 	current->visited = TRUE;
-	// t_list *paths;
-	// paths = lem->paths_bef_ek;
-	// while (paths)
-	// {
-	// 	ft_printf("%la, len: %d, in use: %d\n", ((t_path*)(paths->content))->path_arr, ((t_path*)(paths->content))->len, ((t_path*)(paths->content))->in_use);
-	// 	paths = paths->next;
-	// }
+	t_list *paths;
+	paths = lem->paths_bef_ek;
+	while (paths)
+	{
+		// ft_printf("PATH IN PATHS_BEF_EK: ");
+		// for (int i = 0; ((t_path*)paths->content)->path_arr[i]; i++)
+		// 	ft_printf(YELLOW"%s "RESET, ((t_path*)paths->content)->path_arr[i]->name);
+		// ft_printf("IN USE: %d\n", ((t_path*)paths->content)->in_use);
+		paths = paths->next;
+	}
 	push_to = NULL;
 	while (path[i] && lem->end != path[i])
 	{
 		reset_rooms(lem);
-		// ft_printf("path[%d]: %s\n", i, path[i]);
+		// ft_printf("path[%d]: %s\n", i, path[i]->name);
 		links = current->links;
 		while (links)
 		{
@@ -62,8 +65,8 @@ static t_room	**ek_find_path(t_lem *lem)
 		}
 		if (push_to)
 		{
-			// ft_printf(YELLOW"PUSHING: %s TO ARR\n"RESET, push_to);
-			// ft_printf(CYAN"Finind link between %s and %s\n"RESET, path[i], push_to);
+			// ft_printf(YELLOW"PUSHING: %s TO ARR\n"RESET, push_to->name);
+			// ft_printf(CYAN"Finind link between %s and %s\n"RESET, path[i]->name, push_to->name);
 			find_link(lem, path[i]->name, push_to->name)->flow = INF;
 			push_to_room_arr(path, push_to);
 			push_to = NULL;
@@ -72,10 +75,20 @@ static t_room	**ek_find_path(t_lem *lem)
 		// if (!path[i])
 		// 	ft_printf("PATH LIST ENDS, i : %d\n", i);
 	}
-	// ft_printf(BLUE"PATH: %la\n"RESET, path);
-	// ft_printf("path[arr_size(path) - 1]: %s, lem->end->name: %s\n", path[arr_size(path) - 1], lem->end->name);
-	if (!check_for_dup_path_size_1(lem, path) && path[room_arr_size(path) - 1] == lem->end)
+	// ft_printf("!check_for_dup_path_size_1(lem, path): %s, path[room_arr_size(path) - 1] == lem->end: %s\n", !check_for_dup_path_size_1(lem, path) ? "TRUE" : "FALSE", path[room_arr_size(path) - 1] == lem->end ? "TRUE" : "FALSE");
+	if (path[room_arr_size(path) - 1] == lem->end && !check_for_dup_path_size_1(lem, path))
+	{
+		// ft_printf(BLUE"PATH: "RESET);
+		// for (int i = 0; path[i]; i++)
+		// 		ft_printf(GREEN"%s "RESET, path[i]->name);
+		// ft_printf("path[arr_size(path) - 1]: %s, lem->end->name: %s\n", path[room_arr_size(path) - 1]->name, lem->end->name);
 		return (path);
+	}
+	// ft_printf(RED"RETURNING NULL FROM EK_FIND_PATH\n"RESET);
+	// ft_printf(BLUE"PATH: "RESET);
+	// for (int i = 0; path[i]; i++)
+	// 		ft_printf(GREEN"%s "RESET, path[i]->name);
+	// ft_printf("path[arr_size(path) - 1]: %s, lem->end->name: %s\n", path[room_arr_size(path) - 1]->name, lem->end->name);
 	return (NULL);
 }
 
@@ -95,13 +108,36 @@ void	flows_pathfinder(t_lem *lem)
     // }
 	i = 0;
 	lem->max_flow = max_flow(lem);
+	// t_list *pths;
 	while ((path = ek_find_path(lem)) || i++ < lem->max_flow)
 	{
 		// ft_printf(BOLD RED"NEW EK LOOP, i: %d\n"RESET, i);
+		// pths = lem->paths_list;
+		// ft_printf(REVERSED"PATH IN PATHS_LIST IN FLOWS_PATHFINDER:%s %s", RESET, !pths ? RED"NO PATHS\n"RESET : "\n");
+		// while (pths)
+		// {
+		// 	for (int i = 0; ((t_path*)pths->content)->path_arr[i]; i++)
+		// 		ft_printf(YELLOW"%s "RESET, ((t_path*)pths->content)->path_arr[i]->name);
+		// 	ft_printf("\n");
+		// 	pths = pths->next;
+		// }
 		if (path)
 		{
+			// ft_printf(CYAN"PATH RETURNED: "RESET);
+			// for (int i = 0; path[i]; i++)
+			// 	ft_printf(GREEN"%s "RESET, path[i]->name);
+			// ft_printf("\n");
 			add_path(lem, path, &(lem->paths_list));
-			free(path);
+			// ft_printf(BOLD BLUE"Paths after add_path:\n"RESET);
+			// pths = lem->paths_list;
+			// while (pths)
+			// {
+			// 	for (int i = 0; ((t_path*)pths->content)->path_arr[i]; i++)
+			// 		ft_printf(YELLOW"%s "RESET, ((t_path*)pths->content)->path_arr[i]->name);
+			// 	ft_printf("\n");
+			// 	pths = pths->next;
+			// }
 		}
+		// free(path);
 	}
 }

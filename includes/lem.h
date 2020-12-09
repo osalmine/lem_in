@@ -6,7 +6,7 @@
 /*   By: osalmine <osalmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/19 19:01:54 by osalmine          #+#    #+#             */
-/*   Updated: 2020/11/28 21:55:05 by osalmine         ###   ########.fr       */
+/*   Updated: 2020/12/07 20:29:59 by osalmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,6 +136,8 @@ typedef struct	s_ant
 **	start:			start room
 **	end:			end room
 **	max_flow:		maximum flow of the graph
+**	room_arr:		array of the rooms for a faster search with an index
+**	room_links_arr:	array of links to rooms: -1 if no link, else the number is the index in room_arr that the room connects to
 */
 
 typedef struct	s_lem
@@ -152,7 +154,8 @@ typedef struct	s_lem
 	t_room	*start;
 	t_room	*end;
 	int		max_flow;
-	t_room	***room_table;
+	t_room	**room_arr;
+	int		**room_links_arr;
 }				t_lem;
 
 /*
@@ -168,6 +171,7 @@ void	read_room(t_lem *lem, char *line, int *room_type, int format_check);
 int		read_command(t_lem *lem, char *line, int room_type);
 // void	remove_dead_ends(t_lem *lem);
 void	create_room_table(t_lem *lem);
+void	create_link_table(t_lem *lem);
 
 /*
 **	Finding functions
