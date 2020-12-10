@@ -6,7 +6,7 @@
 /*   By: osalmine <osalmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/31 14:46:24 by osalmine          #+#    #+#             */
-/*   Updated: 2020/12/09 22:57:14 by osalmine         ###   ########.fr       */
+/*   Updated: 2020/12/10 19:43:20 by osalmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ void			create_room_table(t_lem *lem)
 		ft_exit(RED"ERROR: malloc error"RESET);
 	assign_rooms_to_table(room_arr, lem);
 	lem->room_arr = room_arr;
+	// ft_printf(BLUE UNDERLINE"\nCREATE_ROOM_TABLE\n\n"RESET);
 	// for (int i = 0; i < lem->room_count; i++)
 	// 	ft_printf("room_table[%d]->name: %s, ->id: %d, ptr: %p\n", i, room_arr[i] ? room_arr[i]->name : NULL, room_arr[i] ? room_arr[i]->id : -1, room_arr[i]);
 }
@@ -92,6 +93,7 @@ void		create_link_table(t_lem *lem)
 	room_links = alloc_room_links(lem);
 	get_links(lem, room_links);
 	lem->room_links_arr = room_links;
+	// ft_printf(YELLOW UNDERLINE"\nCREATE_LINK_TABLE\n\n"RESET);
 	// for (int i = 0; i < lem->room_count; i++)
 	// 	for (int j = 0; j < lem->room_count; j++)
 	// 		ft_printf("room_links[%d][%d]: %d\n", i, j, room_links[i][j]);

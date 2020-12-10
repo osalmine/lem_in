@@ -6,7 +6,7 @@
 /*   By: osalmine <osalmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/24 20:17:58 by osalmine          #+#    #+#             */
-/*   Updated: 2020/12/09 23:08:09 by osalmine         ###   ########.fr       */
+/*   Updated: 2020/12/10 19:55:41 by osalmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ static t_room	**ek_find_path(t_lem *lem)
 		{
 			// ft_printf(YELLOW"PUSHING: %s TO ARR\n"RESET, push_to->name);
 			// ft_printf(CYAN"Finind link between %s and %s\n"RESET, path[i]->name, push_to->name);
-			find_link(lem, path[i]->name, push_to->name)->flow = INF;
+			find_link(path[i], push_to)->flow = INF;
 			push_to_room_arr(path, push_to);
 			push_to = NULL;
 		}

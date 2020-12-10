@@ -6,7 +6,7 @@
 /*   By: osalmine <osalmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/30 18:33:54 by osalmine          #+#    #+#             */
-/*   Updated: 2020/12/09 22:56:41 by osalmine         ###   ########.fr       */
+/*   Updated: 2020/12/10 01:01:12 by osalmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,7 @@ t_lem	*lem_init(int ac, char **av)
 	// lem->room_nb = room_count(lem);
 	create_room_table(lem);
 	create_link_table(lem);
+
 
 	// clock_t end = clock();
 	// double elapsed = (double)(end - start)/CLOCKS_PER_SEC;

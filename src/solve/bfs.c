@@ -6,7 +6,7 @@
 /*   By: osalmine <osalmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/22 16:50:08 by osalmine          #+#    #+#             */
-/*   Updated: 2020/12/09 23:16:02 by osalmine         ###   ########.fr       */
+/*   Updated: 2020/12/10 19:55:57 by osalmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,14 +69,15 @@
 // 	// ft_printf("path address: %p\n", path);
 // }
 
-static int	check_for_flow_weight(t_lem *lem, t_room *current, t_room *next)
+static int	check_for_flow_weight(t_room *current, t_room *next)
 {
 	int		check;
 	t_link	*link;
 
 	check = 0;
-	if (!(link = find_link(lem, current->name, next->name)))
-		// ft_exit(RED"ERROR: can't find link (check_for_flow)"RESET);
+	if (!(link = find_link(current, next)))
+		ft_exit(RED"ERROR: can't find link (check_for_flow)"RESET);
+	
 	if ((link->flow == INF || link->flow == -1) && ((next->weight == INF - 1 && next->type != END) || current->weight + 1 < next->weight))
 	{
 		check = 1;
@@ -101,15 +102,14 @@ static void	solve_loop(t_lem *lem, t_room ***prev, t_room ***que, int i)
 	t_list	*tmp;
 	// t_path	*path;
 
-	if (!(node = find_room((*que)[i]->name, lem)))
-		ft_exit(RED"ERROR: room not found (solve)"RESET);
+	node = (*que)[i];
 	tmp = node->links;
 	while (tmp)
 	{
 		neighbor = ((t_link*)tmp->content)->room2;
 		// ft_printf(MAGENTA"SOLVE\t\t:\tinspecting neighbor: %s (%p), visited: %s, found from que: %s, ", neighbor->name, neighbor, (neighbor->visited ? "TRUE" : "FALSE"), (find_from_que((*que), neighbor) ? "TRUE" : "FALSE"));
 		// ft_printf("found from path: %s\n"RESET, (find_in_path(lem->paths_bef_ek, neighbor, lem->end) ? "TRUE" : "FALSE"));
-		can_use_link = check_for_flow_weight(lem, node, neighbor);
+		can_use_link = check_for_flow_weight(node, neighbor);
 		if (!neighbor->visited && !find_from_que(*que, neighbor) \
 			&& ((can_use_link || !find_in_path(lem->paths_bef_ek, neighbor, lem->end)) \
 			&& (!can_use_link ? neighbor->type != END : TRUE)))

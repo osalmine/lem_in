@@ -6,7 +6,7 @@
 /*   By: osalmine <osalmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/25 16:25:46 by osalmine          #+#    #+#             */
-/*   Updated: 2020/12/09 23:16:09 by osalmine         ###   ########.fr       */
+/*   Updated: 2020/12/10 20:42:59 by osalmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void        find_paths(t_lem *lem)
 	// clock_t end_time;
 	while ((path = bfs(lem)))
 	{
-		while (1) ;
+		// while (1) ;
 		// end_time = clock();
 		// double elapsed = (double)(end_time - start_time)/CLOCKS_PER_SEC;
 
@@ -50,17 +50,18 @@ void        find_paths(t_lem *lem)
 		// ft_printf("\n\n");
 		if (!path || check_for_dup_path(lem->paths_bef_ek, path))
 		{
+			ft_printf(RED"Freeing path\n"RESET);
 			if (path)
 				free(path);
 			break ;
 		}
 		assign_weights(lem, path);
-		assign_flows(lem, path);
+		assign_flows(path);
 		if (lem->ant_nb == 1)
 		{
 			add_path(lem, path, &(lem->paths_list));
 			// ft_printf("added path to paths_list, ptr: %p\n", lem->paths_list);
-			free(path);
+			// free(path);
 			break ;
 		}
 		else
@@ -101,17 +102,16 @@ void        find_paths(t_lem *lem)
 
 	// ft_printf("Time measeured for flows_pathfinder: %.3f seconds.\n", elapsed_2);
 	sort_paths(lem);
-	t_list *pths;
-	pths = lem->paths_list;
-	while (pths)
-	{
-		// ft_printf("PATH IN PATHS_BEF_EK: %la, IN USE: %d\n", ((t_path*)pths->content)->path_arr, ((t_path*)pths->content)->in_use);
-		// ft_printf("PATH IN PATHS_LIST: ");
-		// for (int i = 0; ((t_path*)pths->content)->path_arr[i]; i++)
-		// 	ft_printf(YELLOW"%s "RESET, ((t_path*)pths->content)->path_arr[i]->name);
-		// ft_printf("IN USE: %d\n", ((t_path*)pths->content)->in_use);
-		pths = pths->next;
-	}
+	// t_list *pths;
+	// pths = lem->paths_list;
+	// while (pths)
+	// {
+	// 	ft_printf("PATH IN PATHS_LIST: ");
+	// 	for (int i = 0; ((t_path*)pths->content)->path_arr[i]; i++)
+	// 		ft_printf(YELLOW"%s "RESET, ((t_path*)pths->content)->path_arr[i]->name);
+	// 	ft_printf("IN USE: %d\n", ((t_path*)pths->content)->in_use);
+	// 	pths = pths->next;
+	// }
 	// ft_printf(RED BOLD UNDERLINE"FOUND ALL PATHS\n"RESET);
 	if (!lem->paths_list)
 		ft_exit(RED"ERROR: No paths found"RESET);

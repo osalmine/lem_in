@@ -6,7 +6,7 @@
 /*   By: osalmine <osalmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/22 16:23:58 by osalmine          #+#    #+#             */
-/*   Updated: 2020/12/09 22:49:09 by osalmine         ###   ########.fr       */
+/*   Updated: 2020/12/10 00:59:52 by osalmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,21 +14,22 @@
 
 static int	check_link_dups(t_lem *lem, char **links)
 {
-	t_room *room1;
-	t_room *room2;
+	// t_room *room1;
+	// t_room *room2;
 	t_list *link_list;
 	t_link *cur_link;
 
     if (!links[0] || !links[1])
         return (1);
-	if (!(room1 = find_room(links[0], lem)))
-		ft_exit(RED"ERROR: room not found"RESET);
-	if (!(room2 = find_room(links[1], lem)))
-		ft_exit(RED"ERROR: room not found"RESET);
+	// if (!(room1 = find_room(links[0], lem)))
+	// 	ft_exit(RED"ERROR: room not found"RESET);
+	// if (!(room2 = find_room(links[1], lem)))
+	// 	ft_exit(RED"ERROR: room not found"RESET);
 	link_list = lem->link_list;
 	while (link_list)
 	{
 		cur_link = (t_link*)link_list->content;
+		// ft_printf("link[0]: %s, cur_link->room1->name: %s, links[1]: %s, cur_link->room2->name: %s\n", links[0], cur_link->room1->name, links[1], cur_link->room2->name);
 		if (ft_strequ(links[0], cur_link->room1->name) && ft_strequ(links[1], cur_link->room2->name))
 			return (1);
 		link_list = link_list->next;

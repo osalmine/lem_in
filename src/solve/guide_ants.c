@@ -6,7 +6,7 @@
 /*   By: osalmine <osalmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/29 00:13:34 by osalmine          #+#    #+#             */
-/*   Updated: 2020/12/09 23:16:59 by osalmine         ###   ########.fr       */
+/*   Updated: 2020/12/10 20:34:57 by osalmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,6 +123,7 @@ void		guide_ants(t_lem *lem)
 	assign_paths(lem);
 	// while (1) ;
 	// int i = 0;
+
 	while (lem->end->has_ant != lem->ant_nb)
 	{
 		// t_list	*tmp;

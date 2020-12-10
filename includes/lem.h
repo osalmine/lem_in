@@ -6,7 +6,7 @@
 /*   By: osalmine <osalmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/19 19:01:54 by osalmine          #+#    #+#             */
-/*   Updated: 2020/12/09 23:13:11 by osalmine         ###   ########.fr       */
+/*   Updated: 2020/12/10 19:57:12 by osalmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -182,7 +182,7 @@ t_room	*find_room(char *name, t_lem *lem);
 t_room  *find_room_by_type(int type, t_lem *lem);
 int     find_from_que(t_room **que, t_room *room);
 int		find_in_path(t_list *list, t_room *room, t_room *end);
-t_link	*find_link(t_lem *lem, char *room1, char *room2);
+t_link	*find_link(t_room *room1, t_room *room2);
 t_path  *find_path(t_list *list, t_room *room, t_room *end);
 
 /*
@@ -231,7 +231,7 @@ void	add_path(t_lem *lem, t_room **path, t_list **path_list);
 int     check_for_dup_path_size_1(t_lem *lem, t_room **path);
 int     check_for_dup_path(t_list *paths_lst, t_room **path);
 void	assign_weights(t_lem *lem, t_room **path);
-void	assign_flows(t_lem *lem, t_room **path);
+void	assign_flows(t_room **path);
 void	reset_rooms(t_lem *lem);
 int		min_3(int x, int y, int z);
 int		max_flow(t_lem *lem);
