@@ -6,7 +6,7 @@
 /*   By: osalmine <osalmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/26 23:36:24 by osalmine          #+#    #+#             */
-/*   Updated: 2020/12/06 21:13:47 by osalmine         ###   ########.fr       */
+/*   Updated: 2020/12/12 18:40:25 by osalmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -241,6 +241,7 @@ void    	assign_paths(t_lem *lem)
 	int total;
 	int longest;
 	int i;
+	// int j;
 	int	div_sum;
 	int max;
 	int	assign_max;
@@ -249,7 +250,7 @@ void    	assign_paths(t_lem *lem)
 
 	// lem->max_flow = max;
 	max = max_flow(lem);
-	// ft_printf("max flow for graph: %d\n", max);
+	ft_printf("max flow for graph: %d\n", max);
 	i = 0;
 	division = NULL;
 	div_sum = 0;
@@ -266,6 +267,7 @@ void    	assign_paths(t_lem *lem)
 	while (i++ < max)
 	{
 		lem->max_flow = i;
+		// ft_printf(REVERSED"NEW ROUND MAX FLOW: %d\n"RESET, i);
 		total = 0;
 		if (!(tmp_div = (int*)malloc(sizeof(int) * i)))
 			ft_exit(RED"ERROR: malloc error"RESET);
@@ -291,8 +293,13 @@ void    	assign_paths(t_lem *lem)
 				total += tmp_div[longest];
 		// ft_printf(BLUE"THIS ROUND TOTAL: %d\n"RESET, total);
 		// ft_printf(YELLOW"DIV_SUM: %d, ANT NB: %d\n"RESET, div_sum, lem->ant_nb);
-		// ft_printf(RED"FT_ABS(ant_nb - div_sum) + 3 = %d, FT_ABS(ant_nb - total) = %d\n"RESET, ft_abs(lem->ant_nb - div_sum) + 3, ft_abs(lem->ant_nb - total));
-		if (division == NULL || ft_abs(lem->ant_nb - div_sum) + 3 >= ft_abs(lem->ant_nb - total))
+		// ft_printf(RED"FT_ABS(div_sum - lem->ant_nb) + 3 = %d, FT_ABS(total - lem->ant_nb) = %d\n"RESET, ft_abs(div_sum - lem->ant_nb) + 3, ft_abs(total - lem->ant_nb));
+		// if (division == NULL || ft_abs(div_sum - lem->ant_nb) + 3 >= ft_abs(total - lem->ant_nb))
+		// j = 0;
+		// while (tmp_div[j])
+		// 	j++;
+		// ft_printf(RED"tmp_div[%d]: %d\n"RESET, i - 1, tmp_div[i - 1]);
+		if (division == NULL || tmp_div[i - 1] >= 0)
 		{
 			ft_memdel((void*)&division);
 			// ft_printf(CYAN"ASSIGN NEW DIVISION\n"RESET);
