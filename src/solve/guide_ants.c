@@ -6,7 +6,7 @@
 /*   By: osalmine <osalmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/29 00:13:34 by osalmine          #+#    #+#             */
-/*   Updated: 2020/12/15 01:36:09 by osalmine         ###   ########.fr       */
+/*   Updated: 2020/12/15 16:23:33 by osalmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,9 @@ static void	turn_loop(t_lem *lem)
 			// 	ft_printf(BLUE"SHORTEST PATH: %la\n"RESET, cur_ant->path);
 			if (cur_ant->path != NULL)
 			{
-				if (!cur_ant->path->path_arr[cur_ant->move_nb + 1] || !cur_ant->path->path_arr[cur_ant->move_nb + 1]->name || !(next_room = find_room(cur_ant->path->path_arr[cur_ant->move_nb + 1]->name, lem)))
+				if (!cur_ant->path->path_arr[cur_ant->move_nb + 1] \
+					|| !cur_ant->path->path_arr[cur_ant->move_nb + 1]->name \
+					|| (lem->room_links_arr[cur_ant->path->path_arr[cur_ant->move_nb]->id][cur_ant->path->path_arr[cur_ant->move_nb + 1]->id] != -1 && !(next_room = lem->room_arr[lem->room_links_arr[cur_ant->path->path_arr[cur_ant->move_nb]->id][cur_ant->path->path_arr[cur_ant->move_nb + 1]->id]])))
 					ft_exit(RED"ERROR: room not found (turn_loop)"RESET);
 				if (!next_room->has_ant || next_room->type == END)
 				{
