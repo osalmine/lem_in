@@ -6,7 +6,7 @@
 /*   By: osalmine <osalmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/24 20:16:35 by osalmine          #+#    #+#             */
-/*   Updated: 2020/12/10 19:56:43 by osalmine         ###   ########.fr       */
+/*   Updated: 2020/12/14 11:40:56 by osalmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,10 +41,10 @@ void	assign_flows(t_room **path)
 	t_link	*link;
 
 	i = 0;
-	// ft_printf(RED BOLD"NEW ASSIGN\n"RESET);
+	// ft_printf(RED BOLD"NEW FLOW ASSIGN\n"RESET);
 	while (path[i + 1])
 	{
-		// ft_printf("path[%d]: %s, path[%d + 1]: %s\n", i, path[i], i, path[i + 1]);
+		// ft_printf("path[%d]: %s, path[%d + 1]: %s\n", i, path[i]->name, i, path[i + 1]->name);
 		if (!(link = find_link(path[i], path[i + 1])))
 			ft_exit(RED"ERROR: couldn't find link\n"RESET);
 		// ft_printf("Link (%s-%s) flow prev assign: %d, ptr: %p\n", link->room1->name, link->room2->name, link->flow, link);

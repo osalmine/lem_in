@@ -6,7 +6,7 @@
 /*   By: osalmine <osalmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/26 23:36:24 by osalmine          #+#    #+#             */
-/*   Updated: 2020/12/12 18:40:25 by osalmine         ###   ########.fr       */
+/*   Updated: 2020/12/15 14:01:28 by osalmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -215,6 +215,7 @@ static void	paths_to_ants(t_lem *lem, int *division, int max)
 		if (!(paths = paths->next) || i == 0)
 			paths = lem->paths_list;
 	}
+	ft_memdel((void*)&division);
 }
 
 // static int	*ft_intarrcpy(int *src, int size)
@@ -250,7 +251,7 @@ void    	assign_paths(t_lem *lem)
 
 	// lem->max_flow = max;
 	max = max_flow(lem);
-	ft_printf("max flow for graph: %d\n", max);
+	// ft_printf("max flow for graph: %d\n", max);
 	i = 0;
 	division = NULL;
 	div_sum = 0;
@@ -301,17 +302,24 @@ void    	assign_paths(t_lem *lem)
 		// ft_printf(RED"tmp_div[%d]: %d\n"RESET, i - 1, tmp_div[i - 1]);
 		if (division == NULL || tmp_div[i - 1] >= 0)
 		{
-			ft_memdel((void*)&division);
 			// ft_printf(CYAN"ASSIGN NEW DIVISION\n"RESET);
 			// division = ft_intarrcpy(tmp_div, i);
 			// free(tmp_div);
+			if (division != NULL)
+				ft_memdel((void*)&division);
 			division = tmp_div;
 			div_sum = total;
 			assign_max = i;
 		}
 		else
-			free(tmp_div);
+		{
+			ft_memdel((void*)&tmp_div);
+			ft_memdel((void*)&steps);
+			break ;
+		}
 		ft_memdel((void*)&steps);
 	}
+	// if (tmp_div)
+	// ft_memdel((void*)&tmp_div);
 	paths_to_ants(lem, division, assign_max);
 }

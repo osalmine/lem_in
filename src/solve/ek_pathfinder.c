@@ -6,7 +6,7 @@
 /*   By: osalmine <osalmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/24 20:17:58 by osalmine          #+#    #+#             */
-/*   Updated: 2020/12/10 19:55:41 by osalmine         ###   ########.fr       */
+/*   Updated: 2020/12/14 12:54:58 by osalmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,16 +27,16 @@ static t_room	**ek_find_path(t_lem *lem)
 	current = lem->start;
 	push_to_room_arr(path, current);
 	current->visited = TRUE;
-	t_list *paths;
-	paths = lem->paths_bef_ek;
-	while (paths)
-	{
+	// t_list *paths;
+	// paths = lem->paths_bef_ek;
+	// while (paths)
+	// {
 		// ft_printf("PATH IN PATHS_BEF_EK: ");
 		// for (int i = 0; ((t_path*)paths->content)->path_arr[i]; i++)
 		// 	ft_printf(YELLOW"%s "RESET, ((t_path*)paths->content)->path_arr[i]->name);
 		// ft_printf("IN USE: %d\n", ((t_path*)paths->content)->in_use);
-		paths = paths->next;
-	}
+	// 	paths = paths->next;
+	// }
 	push_to = NULL;
 	while (path[i] && lem->end != path[i])
 	{

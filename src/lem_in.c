@@ -6,7 +6,7 @@
 /*   By: osalmine <osalmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/19 19:01:44 by osalmine          #+#    #+#             */
-/*   Updated: 2020/12/09 23:37:07 by osalmine         ###   ########.fr       */
+/*   Updated: 2020/12/15 14:02:17 by osalmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,11 +60,14 @@ int	main(int argc, char **argv)
 	// while (1) ;
 	if (lem->opts->lines)
 		ft_printf(GREEN BOLD"lines: %d\n"RESET, lem->moves_count);
+
+
 	// free_lem(lem);
+
+
 	// clock_t end = clock();
 	// double elapsed = (double)(end - start)/CLOCKS_PER_SEC;
 
 	// ft_printf("Time measeured for whole program: %.3f seconds.\n", elapsed);
-	// while (1) ;
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: osalmine <osalmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/25 16:25:46 by osalmine          #+#    #+#             */
-/*   Updated: 2020/12/10 20:42:59 by osalmine         ###   ########.fr       */
+/*   Updated: 2020/12/14 12:55:57 by osalmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ void        find_paths(t_lem *lem)
 		// ft_printf("\n\n");
 		if (!path || check_for_dup_path(lem->paths_bef_ek, path))
 		{
+			// ft_printf("check_for_dup_path: %d\n", check_for_dup_path(lem->paths_bef_ek, path));
 			ft_printf(RED"Freeing path\n"RESET);
 			if (path)
 				free(path);
@@ -65,9 +66,7 @@ void        find_paths(t_lem *lem)
 			break ;
 		}
 		else
-		{
 			add_path(lem, path, &(lem->paths_bef_ek));
-		}
 		// free(path);
 		// while (1) ;
 		// t_list *pths;
