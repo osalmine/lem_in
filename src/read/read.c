@@ -6,7 +6,7 @@
 /*   By: osalmine <osalmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/30 22:20:06 by osalmine          #+#    #+#             */
-/*   Updated: 2020/12/10 00:50:55 by osalmine         ###   ########.fr       */
+/*   Updated: 2020/12/15 16:04:20 by osalmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,9 @@ void		lem_read(t_lem *lem)
 	room_type = NORMAL;
 	while ((ret = get_next_line(0, &line)))
 	{
-		if ((int)line[0] != 0 && i == 0 && (i = 1))
+		if ((int)line[0] == 0)
+			ft_exit(RED"ERROR: emtpy line in map"RESET);
+		if (i == 0 && (i = 1))
 			lem->ant_nb = read_ant(line);
 		else if (line[0] == '#')
 			room_type = read_command(lem, line, room_type);
