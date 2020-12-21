@@ -6,7 +6,7 @@
 /*   By: osalmine <osalmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/19 19:01:54 by osalmine          #+#    #+#             */
-/*   Updated: 2020/12/12 21:58:35 by osalmine         ###   ########.fr       */
+/*   Updated: 2020/12/21 12:18:27 by osalmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,6 @@
 # define LEM_H
 
 # include "../libft/libft.h"
-# include <string.h>
-# include <stdio.h>
 
 # ifndef TRUE_FALSE
 #  define TRUE_FALSE
@@ -59,7 +57,7 @@ typedef struct	s_options
 **	type:		room's type. START (=1) if room is starting room,
 **				END (=2) if room is goal room, else NORMAL (=0)
 **	weight:		distance from starting node
-**	path:		list of connections to the room
+**	links:		list of connections to the room
 */
 
 typedef struct	s_room
@@ -91,7 +89,7 @@ typedef struct	s_link
 
 /*
 **	Struct for each path
-**	path_arr:	names of the rooms on the path in order
+**	path_arr:	rooms on the path in order
 **	len:		path's lenght
 **	colour:		the colour of the path (debugging and prettiness)
 **	in_use:		if the path can be used
@@ -111,7 +109,8 @@ typedef struct	s_path
 **	has_moved:	TRUE (=1) if ant has moved that turn, else FALSE (=0)
 **	room:		ant's current room
 **	path:		ant's path
-**	move_nb:	how many times has the ant moved (to keep track where it is relative to the path)
+**	move_nb:	how many times has the ant moved
+**				(to keep track where it is relative to the path)
 */
 
 typedef struct	s_ant
@@ -138,7 +137,9 @@ typedef struct	s_ant
 **	max_flow:		maximum flow of the graph
 **	room_count:		how many rooms is there
 **	room_arr:		array of the rooms for a faster search with an index
-**	room_links_arr:	array of links to rooms: -1 if no link, else the number is the index in room_arr that the room connects to
+**	room_links_arr:	array of links to rooms: -1 if no link,
+**					else the number is the index in room_arr
+**					that the room connects to
 */
 
 typedef struct	s_lem
@@ -163,77 +164,79 @@ typedef struct	s_lem
 **	Init and read functions
 */
 
-t_lem	*lem_init(int ac, char **av);
-void	lem_flags(t_lem *lem, int ac, char **av);
-void	lem_read(t_lem *lem);
-void	init_ants(t_lem *lem);
-void	read_link(t_lem *lem, char *line);
-void	read_room(t_lem *lem, char *line, int *room_type, int format_check);
-int		read_command(t_lem *lem, char *line, int room_type);
-// void	remove_dead_ends(t_lem *lem);
-void	create_room_table(t_lem *lem);
-void	create_link_table(t_lem *lem);
+t_lem			*lem_init(int ac, char **av);
+void			lem_flags(t_lem *lem, int ac, char **av);
+void			lem_read(t_lem *lem);
+void			init_ants(t_lem *lem);
+void			read_link(t_lem *lem, char *line);
+void			read_room(t_lem *lem, char *line, \
+					int *room_type, int format_check);
+int				read_command(t_lem *lem, char *line, int room_type);
+void			create_room_table(t_lem *lem);
+void			create_link_table(t_lem *lem);
 
 /*
 **	Finding functions
 */
 
-t_room	*find_room(char *name, t_lem *lem);
-t_room  *find_room_by_type(int type, t_lem *lem);
-int     find_from_que(t_room **que, t_room *room);
-int		find_in_path(t_list *list, t_room *room, t_room *end);
-t_link	*find_link(t_room *room1, t_room *room2);
-t_path  *find_path(t_list *list, t_room *room, t_room *end);
+t_room			*find_room(char *name, t_lem *lem);
+t_room			*find_room_by_type(int type, t_lem *lem);
+int				find_from_que(t_room **que, t_room *room);
+int				find_in_path(t_list *list, t_room *room, t_room *end);
+t_link			*find_link(t_room *room1, t_room *room2);
+t_path			*find_path(t_list *list, t_room *room, t_room *end);
 
 /*
 **	Pathfinding functions
 */
 
-void	guide_ants(t_lem *lem);
-void    find_paths(t_lem *lem);
-void    assign_paths(t_lem *lem);
-t_room	**bfs(t_lem *lem);
-void	flows_pathfinder(t_lem *lem);
+void			guide_ants(t_lem *lem);
+void			find_paths(t_lem *lem);
+void			assign_paths(t_lem *lem);
+t_room			**bfs(t_lem *lem);
+void			flows_pathfinder(t_lem *lem);
 
 /*
 **	Print and debug functions
 */
 
-void    print_paths(t_lem *lem);
+void			print_paths(t_lem *lem);
+void			debug_out(t_lem *lem);
 
 /*
 **	Free functions
 */
 
-void	free_lem(t_lem *lem);
-void	free_strsplit(char ***str);
-// void	free_path(void *path, size_t size);
-void	free_a_path(t_path **path, size_t size);
-void	free_room(void *room, size_t size);
-void	free_link(void *link, size_t size);
+void			free_lem(t_lem *lem);
+void			free_strsplit(char ***str);
+void			free_room(void *room, size_t size);
+void			free_link(void *link, size_t size);
 
 /*
 **	Utility functions
 */
 
-int 	room_count(t_lem* lem);
-char	**create_arr(t_lem *lem, ssize_t size);
-t_room	**create_room_arr(t_lem *lem, ssize_t size);
-void	push_to_arr(char **que, char *room);
-void	push_to_room_arr(t_room **arr, t_room *room);
-char	**arr_reverse(char **arr);
-t_room	**room_arr_reverse(t_room **arr);
-int		arr_size(char **arr);
-int		room_arr_size(t_room **arr);
-void	sort_paths(t_lem *lem);
-char	**ft_2dstrdup(char **str);
-void	add_path(t_lem *lem, t_room **path, t_list **path_list);
-int     check_for_dup_path_size_1(t_lem *lem, t_room **path);
-int     check_for_dup_path(t_list *paths_lst, t_room **path);
-void	assign_weights(t_lem *lem, t_room **path);
-void	assign_flows(t_room **path);
-void	reset_rooms(t_lem *lem);
-int		min_3(int x, int y, int z);
-int		max_flow(t_lem *lem);
+int				room_count(t_lem *lem);
+t_room			**create_room_arr(t_lem *lem, ssize_t size);
+void			push_to_room_arr(t_room **arr, t_room *room);
+t_room			**room_arr_reverse(t_room **arr);
+int				arr_size(char **arr);
+int				room_arr_size(t_room **arr);
+void			sort_paths(t_lem *lem);
+char			**ft_2dstrdup(char **str);
+void			add_path(t_lem *lem, t_room **path, t_list **path_list);
+int				check_for_dup_path_size_1(t_lem *lem, t_room **path);
+int				check_for_dup_path(t_list *paths_lst, t_room **path);
+void			assign_weights(t_lem *lem, t_room **path);
+void			assign_flows(t_room **path);
+void			reset_rooms(t_lem *lem);
+int				min_3(int x, int y, int z);
+int				max_flow(t_lem *lem);
+int				*get_steps(t_lem *lem, int *total);
+int				*calc_div(t_lem *lem, int *divide, int total, int *steps);
+int				find_longest(int *division, int *steps, int max);
+int				*split_remainder(int *ant_division, int remainder, \
+					t_lem *lem, int **longest);
+void			paths_to_ants(t_lem *lem, int *division, int max);
 
 #endif

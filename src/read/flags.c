@@ -6,7 +6,7 @@
 /*   By: osalmine <osalmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/30 22:36:00 by osalmine          #+#    #+#             */
-/*   Updated: 2020/10/29 15:10:31 by osalmine         ###   ########.fr       */
+/*   Updated: 2020/12/19 18:16:54 by osalmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,12 @@
 
 static void	display_help(void)
 {
-	ft_exit("Help message for lem-in. -d (--debug) flag is for debug, -l (--lines) is to see output line count, -p (--paths) to see the paths, -c (--colours, --colors) to see paths in colours, -h (--help) is to see this.");
+	ft_exit("Example usages:\n\\t./lem-in < big.map\n\t./lem-in -plc < test.map\
+\n\techo map | ./lem-in -dl\n\nMore info in GitHub repo\
+\nFlags:\n\t-d (--debug) \
+flag is for debug\n\t-l (--lines) is to see output line count\n\t\
+-p (--paths) to see the paths\n\t-c (--colours, --colors) \
+to see paths in colours\n\t-h (--help) is to see this\n");
 }
 
 static void	dash_flags(t_lem *lem, char **av, int i)
@@ -36,8 +41,9 @@ static void	dash_flags(t_lem *lem, char **av, int i)
 			display_help();
 		else
 		{
-			ft_fprintf(2, "Unknown option %s, please refer to %s -h for help\n", \
-																av[i], av[0]);
+			ft_fprintf(2, "Unknown option %s, please \
+refer to %s -h for help\n", \
+							av[i], av[0]);
 			exit(1);
 		}
 		j++;
@@ -67,12 +73,6 @@ void		lem_flags(t_lem *lem, int ac, char **av)
 			lem->opts->colours = TRUE;
 		else if (av[i][0] == '-')
 			dash_flags(lem, av, i);
-		// else
-		// {
-		// 	ft_fprintf(2, "Unknown option %s, please refer to %s -h for help\n", \
-		// 														av[i], av[0]);
-		// 	exit(1);
-		// }
 		i++;
 	}
 }

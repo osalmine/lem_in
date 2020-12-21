@@ -6,13 +6,13 @@
 /*   By: osalmine <osalmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/31 14:46:24 by osalmine          #+#    #+#             */
-/*   Updated: 2020/12/10 19:43:20 by osalmine         ###   ########.fr       */
+/*   Updated: 2020/12/19 18:09:16 by osalmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem.h"
 
-static void		assign_rooms_to_table(t_room **room_table, t_lem *lem)
+static void	assign_rooms_to_table(t_room **room_table, t_lem *lem)
 {
 	t_list	*rooms;
 	int		i;
@@ -29,7 +29,7 @@ static void		assign_rooms_to_table(t_room **room_table, t_lem *lem)
 	}
 }
 
-void			create_room_table(t_lem *lem)
+void		create_room_table(t_lem *lem)
 {
 	t_room	**room_arr;
 
@@ -37,12 +37,9 @@ void			create_room_table(t_lem *lem)
 		ft_exit(RED"ERROR: malloc error"RESET);
 	assign_rooms_to_table(room_arr, lem);
 	lem->room_arr = room_arr;
-	// ft_printf(BLUE UNDERLINE"\nCREATE_ROOM_TABLE\n\n"RESET);
-	// for (int i = 0; i < lem->room_count; i++)
-	// 	ft_printf("room_table[%d]->name: %s, ->id: %d, ptr: %p\n", i, room_arr[i] ? room_arr[i]->name : NULL, room_arr[i] ? room_arr[i]->id : -1, room_arr[i]);
 }
 
-static int		**alloc_room_links(t_lem *lem)
+static int	**alloc_room_links(t_lem *lem)
 {
 	int	**room_links;
 	int i;
@@ -67,18 +64,17 @@ static void	get_links(t_lem *lem, int **room_links)
 {
 	t_list	*rooms;
 	t_list	*links;
-	int 	i;
-	int 	j;
+	int		i;
 
 	rooms = lem->room_list;
 	i = 0;
-	j = 0;
 	while (rooms)
 	{
 		links = ((t_room*)rooms->content)->links;
 		while (links)
 		{
-			room_links[i][((t_link*)links->content)->room2->id] = ((t_link*)links->content)->room2->id;
+			room_links[i][((t_link*)links->content)->room2->id] = \
+				((t_link*)links->content)->room2->id;
 			links = links->next;
 		}
 		i++;
@@ -93,8 +89,4 @@ void		create_link_table(t_lem *lem)
 	room_links = alloc_room_links(lem);
 	get_links(lem, room_links);
 	lem->room_links_arr = room_links;
-	// ft_printf(YELLOW UNDERLINE"\nCREATE_LINK_TABLE\n\n"RESET);
-	// for (int i = 0; i < lem->room_count; i++)
-	// 	for (int j = 0; j < lem->room_count; j++)
-	// 		ft_printf("room_links[%d][%d]: %d\n", i, j, room_links[i][j]);
 }

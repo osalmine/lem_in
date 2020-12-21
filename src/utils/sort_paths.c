@@ -6,13 +6,13 @@
 /*   By: osalmine <osalmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/22 16:45:46 by osalmine          #+#    #+#             */
-/*   Updated: 2020/09/22 16:46:12 by osalmine         ###   ########.fr       */
+/*   Updated: 2020/12/21 11:42:59 by osalmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/lem.h"
 
-static void		swap(t_list *a, t_list *b)
+static void	swap(t_list *a, t_list *b)
 {
 	void	*content;
 	size_t	content_size;
@@ -25,7 +25,7 @@ static void		swap(t_list *a, t_list *b)
 	b->content_size = content_size;
 }
 
-void	sort_paths(t_lem *lem)
+void		sort_paths(t_lem *lem)
 {
 	t_list *lst;
 	t_list *next;

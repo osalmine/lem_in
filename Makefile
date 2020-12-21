@@ -6,7 +6,7 @@
 #    By: osalmine <osalmine@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/03/19 19:13:02 by osalmine          #+#    #+#              #
-#    Updated: 2020/12/07 20:25:57 by osalmine         ###   ########.fr        #
+#    Updated: 2020/12/21 12:15:26 by osalmine         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,11 +20,12 @@ SOURCES_SUBDIR_SOLVE = solve/
 SOURCES_SUBDIR_UTILS = utils/
 
 READ_DIR_SOURCES	= 	init.c read.c flags.c init_ants.c read_link.c read_room.c \
-						read_command.c optimize_graph.c create_room_and_link_table.c
+						read_command.c create_room_and_link_table.c
 SOLVE_DIR_SOURCES	= 	guide_ants.c find_paths.c assign_paths.c \
-						bfs.c ek_pathfinder.c
+						bfs.c ek_pathfinder.c assign_paths_util.c
 UTILS_DIR_SOURCES	= 	frees.c find.c print_paths.c utils.c \
-						sort_paths.c utils2.c add_path.c assign_flows_weights.c
+						sort_paths.c utils2.c add_path.c assign_flows_weights.c \
+						room_arr.c debug_output.c
 SOURCE_FILE_NAMES	=	lem_in.c $(READ_DIR_SOURCES) $(SOLVE_DIR_SOURCES) $(UTILS_DIR_SOURCES)
 SOURCE_FILES		=	lem_in.c $(addprefix $(SOURCES_SUBDIR_READ), $(READ_DIR_SOURCES)) \
 						$(addprefix $(SOURCES_SUBDIR_SOLVE), $(SOLVE_DIR_SOURCES)) \
