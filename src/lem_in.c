@@ -22,6 +22,5 @@ int	main(int argc, char **argv)
 	guide_ants(lem);
 	if (lem->opts->lines)
 		ft_printf("%s%slines: %d\n"RESET, BOLD, GREEN, lem->moves_count);
-	free_lem(lem);
 	return (0);
 }
