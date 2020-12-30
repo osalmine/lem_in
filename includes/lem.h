@@ -6,7 +6,7 @@
 /*   By: osalmine <osalmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/19 19:01:54 by osalmine          #+#    #+#             */
-/*   Updated: 2020/12/21 12:18:27 by osalmine         ###   ########.fr       */
+/*   Updated: 2020/12/31 00:41:43 by osalmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,13 @@
 
 #  define TRUE	1
 #  define FALSE	0
+
+# endif
+
+# ifndef BUFF
+#  define BUFF
+
+#  define BUFF_SIZE 32000
 
 # endif
 
@@ -149,7 +156,7 @@ typedef struct	s_lem
 	t_list	*room_list;
 	t_list	*link_list;
 	t_list	*paths_list;
-	t_opts	*opts;
+	t_opts	opts;
 	t_list	*paths_bef_ek;
 	int		moves_count;
 	t_room	*start;
@@ -158,6 +165,7 @@ typedef struct	s_lem
 	int		room_count;
 	t_room	**room_arr;
 	int		**room_links_arr;
+	t_list	**room_hash_table;
 }				t_lem;
 
 /*
@@ -171,7 +179,7 @@ void			init_ants(t_lem *lem);
 void			read_link(t_lem *lem, char *line);
 void			read_room(t_lem *lem, char *line, \
 					int *room_type, int format_check);
-int				read_command(t_lem *lem, char *line, int room_type);
+int				read_command(t_lem *lem, char *line);
 void			create_room_table(t_lem *lem);
 void			create_link_table(t_lem *lem);
 
@@ -179,6 +187,7 @@ void			create_link_table(t_lem *lem);
 **	Finding functions
 */
 
+t_room			*find_hashed_room(t_lem *lem, char *name);
 t_room			*find_room(char *name, t_lem *lem);
 t_room			*find_room_by_type(int type, t_lem *lem);
 int				find_from_que(t_room **que, t_room *room);
@@ -238,5 +247,6 @@ int				find_longest(int *division, int *steps, int max);
 int				*split_remainder(int *ant_division, int remainder, \
 					t_lem *lem, int **longest);
 void			paths_to_ants(t_lem *lem, int *division, int max);
+unsigned		int hash(char *str, int size);
 
 #endif

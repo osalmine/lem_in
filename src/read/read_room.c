@@ -6,7 +6,7 @@
 /*   By: osalmine <osalmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/22 17:41:33 by osalmine          #+#    #+#             */
-/*   Updated: 2020/12/19 18:26:45 by osalmine         ###   ########.fr       */
+/*   Updated: 2020/12/31 00:50:27 by osalmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,10 @@ static void		check_room_dups(t_lem *lem, char **room_arr)
 		if (((t_room*)rooms->content)->x == ft_atoi(room_arr[1]) && \
 			((t_room*)rooms->content)->y == ft_atoi(room_arr[2]))
 			ft_exit(RED"ERROR: duplicated coordinates"RESET);
+		if (ft_strequ(((t_room*)rooms->content)->name, room_arr[0]))
+			ft_exit(RED"ERROR: duplicated room name"RESET);
 		rooms = rooms->next;
 	}
-	if (lem->room_list && find_room(room_arr[0], lem))
-		ft_exit(RED"ERROR: duplicated room name"RESET);
 }
 
 static t_room	init_room(t_lem *lem, char **room_arr, int room_type)
@@ -53,6 +53,7 @@ void			read_room(t_lem *lem, char *line, \
 {
 	char	**room_arr;
 	t_room	room;
+	t_list	*list;
 
 	if (format_check == 2)
 		ft_exit(RED"ERROR: input format error"RESET);
@@ -63,5 +64,20 @@ void			read_room(t_lem *lem, char *line, \
 	room = init_room(lem, room_arr, *room_type);
 	*room_type = NORMAL;
 	free_strsplit(&room_arr);
-	ft_lstaddlast(&lem->room_list, ft_lstnew(&room, sizeof(t_room)));
+	ft_lstadd(&lem->room_list, ft_lstnew(&room, sizeof(t_room)));
+	if (!(list = (t_list *)malloc(sizeof(t_list))))
+		ft_exit(RED"ERROR: malloc error"RESET);
+	list->content = lem->room_list->content;
+	list->content_size = lem->room_list->content_size;
+	list->next = NULL;
+	// ft_lstaddlast(&lem->link_list, list);
+	ft_lstaddlast(&lem->room_hash_table[hash(room.name, lem->room_count * 1.5)], list);
+
+	// ft_lstadd(&room->links, ft_lstnew(&path, (sizeof(t_link))));
+	// if (!(list = (t_list *)malloc(sizeof(t_list))))
+	// 	ft_exit(RED"ERROR: malloc error"RESET);
+	// list->content = room->links->content;
+	// list->content_size = room->links->content_size;
+	// list->next = NULL;
+	// ft_lstaddlast(&lem->link_list, list);
 }

@@ -6,7 +6,7 @@
 /*   By: osalmine <osalmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/29 16:15:05 by osalmine          #+#    #+#             */
-/*   Updated: 2020/12/21 11:42:38 by osalmine         ###   ########.fr       */
+/*   Updated: 2020/12/30 12:44:58 by osalmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	print_paths(t_lem *lem)
 	{
 		i = 0;
 		path = (t_path*)paths->content;
-		if (lem->opts->colours)
+		if (lem->opts.colours)
 			ft_putstr(path->colour);
 		while (i <= path->len)
 		{

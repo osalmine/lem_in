@@ -6,7 +6,7 @@
 /*   By: osalmine <osalmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/29 00:13:34 by osalmine          #+#    #+#             */
-/*   Updated: 2020/12/21 11:32:15 by osalmine         ###   ########.fr       */
+/*   Updated: 2020/12/30 16:21:56 by osalmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ static void		move_ant(t_lem *lem, t_ant *cur_ant)
 	{
 		cur_ant->room->has_ant = FALSE;
 		cur_ant->room = next_room;
-		if (lem->opts->colours)
+		if (lem->opts.colours)
 			ft_printf("%sL%d-%s "RESET, cur_ant->path->colour, \
 						cur_ant->id, cur_ant->room->name);
 		else

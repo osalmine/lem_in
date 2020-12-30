@@ -6,7 +6,7 @@
 /*   By: osalmine <osalmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/31 13:30:58 by osalmine          #+#    #+#             */
-/*   Updated: 2020/02/05 11:10:27 by osalmine         ###   ########.fr       */
+/*   Updated: 2020/12/30 16:00:50 by osalmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,13 @@
 # include <unistd.h>
 
 # define FD_MAX 4620
-# define BUFF_SIZE 32
+
+# ifndef BUFF
+#  define BUFF
+
+# define BUFF_SIZE 32000
+
+# endif
 
 int	get_next_line(const int fd, char **line);
 

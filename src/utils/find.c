@@ -6,11 +6,27 @@
 /*   By: osalmine <osalmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/18 22:39:15 by osalmine          #+#    #+#             */
-/*   Updated: 2020/12/21 11:37:05 by osalmine         ###   ########.fr       */
+/*   Updated: 2020/12/31 00:41:26 by osalmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/lem.h"
+
+t_room	*find_hashed_room(t_lem *lem, char *name)
+{
+	t_list			*room_lst;
+	unsigned int	place;
+
+	place = hash(name, lem->room_count * 1.5);
+	room_lst = lem->room_hash_table[place];
+	while (room_lst)
+	{
+		if (ft_strequ(((t_room*)room_lst->content)->name, name))
+			return (((t_room*)room_lst->content));
+		room_lst = room_lst->next;
+	}
+	return (NULL);	
+}
 
 t_room	*find_room(char *name, t_lem *lem)
 {

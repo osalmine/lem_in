@@ -6,7 +6,7 @@
 /*   By: osalmine <osalmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/24 20:12:01 by osalmine          #+#    #+#             */
-/*   Updated: 2020/12/21 11:33:30 by osalmine         ###   ########.fr       */
+/*   Updated: 2020/12/30 12:44:47 by osalmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ void		add_path(t_lem *lem, t_room **path, t_list **path_list)
 	path_struct.len = room_arr_size(path) - 1;
 	path_struct.path_arr = path;
 	path_struct.in_use = TRUE;
-	if (lem->opts->colours)
+	if (lem->opts.colours)
 		path_struct.colour = assign_colour(lem);
 	else
 		path_struct.colour = NULL;

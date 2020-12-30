@@ -6,27 +6,30 @@
 /*   By: osalmine <osalmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/30 22:20:06 by osalmine          #+#    #+#             */
-/*   Updated: 2020/12/22 11:58:26 by osalmine         ###   ########.fr       */
+/*   Updated: 2020/12/31 00:51:52 by osalmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/lem.h"
 
-static void	str_append(char **output, char *append)
+#include <time.h>
+
+
+static void	str_append(char **lines, char *append)
 {
 	char *tmp;
 
-	tmp = ft_strjoin(append, "\n");
-	ft_memdel((void**)&append);
-	append = ft_strdup(tmp);
-	ft_memdel((void**)&tmp);
-	if (*output)
-		tmp = ft_strjoin(*output, append);
+	// tmp = ft_strjoin(append, "\n");
+	// ft_memdel((void**)&append);
+	// append = ft_strdup(tmp);
+	// ft_memdel((void**)&tmp);
+	if (*lines)
+		tmp = ft_strjoin(*lines, append);
 	else
 		tmp = ft_strdup(append);
-	ft_memdel((void**)output);
-	ft_memdel((void**)&append);
-	*output = ft_strdup(tmp);
+	// ft_memdel((void**)lines);
+	// ft_memdel((void**)&append);
+	*lines = ft_strdup(tmp);
 	ft_memdel((void**)&tmp);
 }
 
@@ -40,39 +43,90 @@ static int	read_ant(char *line)
 	return (ants);
 }
 
-static void	read_line(t_lem *lem, char *line, int *room_type, int *i)
+static t_list	**create_hash_list(t_lem *lem)
 {
-	if ((int)line[0] == 0)
-		ft_exit(RED"ERROR: emtpy line in map"RESET);
-	if (*i == 0 && (*i = 1))
-		lem->ant_nb = read_ant(line);
-	else if (line[0] == '#')
-		*room_type = read_command(lem, line, *room_type);
-	else if ((int)line[0] != 0)
+	t_list	**room_hash_table;
+	int		i;
+
+	if (!(room_hash_table = (t_list**)malloc(sizeof(t_list*) * ((int)lem->room_count * 1.5))))
+		ft_exit("ERROR: create_hash_list malloc error");
+	i = 0;
+	while (i < ((int)lem->room_count * 1.5))
+		room_hash_table[i++] = NULL;
+	return (room_hash_table);
+}
+
+static void	read_input(t_lem *lem, char *lines)
+{
+	char	**input;
+	int		j;
+	int		jj;
+	int		i;
+	int		room_type;
+	
+	i = 0;
+	room_type = NORMAL;
+	input = ft_strsplit(lines, '\n');
+	j = 0;
+	lem->room_count = 0;
+	while (input[j])
 	{
-		if (ft_strchr(line, ' '))
-			read_room(lem, line, room_type, *i);
-		else if ((*i = 2))
-			read_link(lem, line);
+		if ((int)input[j][0] == 0)
+			ft_exit(RED"ERROR: emtpy line in map"RESET);
+		else if (i == 0 && (i = 1) && (jj = j + 1))
+			lem->ant_nb = read_ant(input[j]);
+		else if (ft_strchr(input[j], ' '))
+			lem->room_count++;
+		else if (input[j][0] != '#')
+			break ;
+		j++;
 	}
+	// ft_printf("Room count: %d\n", lem->room_count);
+	lem->room_hash_table = create_hash_list(lem);
+	j = jj;
+	while (input[j])
+	{
+		if (input[j][0] == '#')
+			room_type = read_command(lem, input[j]);
+		else if ((int)input[j][0] != 0)
+		{
+			if (ft_strchr(input[j], ' '))
+				read_room(lem, input[j], &room_type, i);
+			else if ((i = 2))
+				read_link(lem, input[j]);
+		}
+		j++;
+	}
+	free_strsplit(&input);
 }
 
 void		lem_read(t_lem *lem)
 {
 	int		ret;
-	int		room_type;
-	char	*line;
-	char	*output;
-	int		i;
+	char	line[BUFF_SIZE];
+	char	*lines;
 
-	i = 0;
-	output = NULL;
-	room_type = NORMAL;
-	while ((ret = get_next_line(0, &line)))
+	// clock_t begin;
+	// clock_t end;
+	// double time;
+	lines = NULL;
+	// begin = clock();
+	while ((ret = read(0, line, BUFF_SIZE)))
 	{
-		read_line(lem, line, &room_type, &i);
-		str_append(&output, line);
+		line[ret] = '\0';
+		str_append(&lines, line);
 	}
-	ft_printf("%s\n", output);
-	free(output);
+	if (ret < 0)
+		ft_exit("ERROR: read error");
+	// end = clock();
+	// time = (double)(end - begin) / CLOCKS_PER_SEC;
+	// ft_printf(RED"INPUT READ TIME: %lf\n"RESET, time);
+	// begin = clock();
+	read_input(lem, lines);
+	// end = clock();
+	// time = (double)(end - begin) / CLOCKS_PER_SEC;
+	// ft_printf(RED"INPUT PROCESS TIME: %lf\n"RESET, time);
+	// while (1);
+	ft_printf("%s\n", lines);
+	free(lines);
 }

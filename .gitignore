@@ -11,5 +11,7 @@ lem-in_test/
 Lem-in-Checker/
 *.map
 .vscode/
+*.sh
+*.txt
 
 .DS_Store

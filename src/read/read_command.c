@@ -6,13 +6,13 @@
 /*   By: osalmine <osalmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/22 17:42:41 by osalmine          #+#    #+#             */
-/*   Updated: 2020/12/19 18:18:32 by osalmine         ###   ########.fr       */
+/*   Updated: 2020/12/30 16:29:17 by osalmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem.h"
 
-int	read_command(t_lem *lem, char *line, int room_type)
+int	read_command(t_lem *lem, char *line)
 {
 	t_list *rooms;
 
@@ -38,5 +38,5 @@ int	read_command(t_lem *lem, char *line, int room_type)
 		}
 		return (END);
 	}
-	return (room_type);
+	return (NORMAL);
 }

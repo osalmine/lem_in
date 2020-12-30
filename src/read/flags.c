@@ -6,7 +6,7 @@
 /*   By: osalmine <osalmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/30 22:36:00 by osalmine          #+#    #+#             */
-/*   Updated: 2020/12/19 18:16:54 by osalmine         ###   ########.fr       */
+/*   Updated: 2020/12/30 12:44:18 by osalmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,13 +30,13 @@ static void	dash_flags(t_lem *lem, char **av, int i)
 	while (av[i][j] && !ft_isblank(av[i][j]))
 	{
 		if (av[i][j] == 'd')
-			lem->opts->debug = TRUE;
+			lem->opts.debug = TRUE;
 		else if (av[i][j] == 'l')
-			lem->opts->lines = TRUE;
+			lem->opts.lines = TRUE;
 		else if (av[i][j] == 'p')
-			lem->opts->paths = TRUE;
+			lem->opts.paths = TRUE;
 		else if (av[i][j] == 'c')
-			lem->opts->colours = TRUE;
+			lem->opts.colours = TRUE;
 		else if (av[i][j] == 'h')
 			display_help();
 		else
@@ -54,23 +54,23 @@ void		lem_flags(t_lem *lem, int ac, char **av)
 {
 	int i;
 
-	lem->opts->debug = FALSE;
-	lem->opts->lines = FALSE;
-	lem->opts->paths = FALSE;
-	lem->opts->colours = FALSE;
+	lem->opts.debug = FALSE;
+	lem->opts.lines = FALSE;
+	lem->opts.paths = FALSE;
+	lem->opts.colours = FALSE;
 	i = 1;
 	while (--ac > 0)
 	{
 		if (ft_strequ(av[i], "--help"))
 			display_help();
 		else if (ft_strequ(av[i], "--debug"))
-			lem->opts->debug = TRUE;
+			lem->opts.debug = TRUE;
 		else if (ft_strequ(av[i], "--lines"))
-			lem->opts->lines = TRUE;
+			lem->opts.lines = TRUE;
 		else if (ft_strequ(av[i], "--paths"))
-			lem->opts->paths = TRUE;
+			lem->opts.paths = TRUE;
 		else if (ft_strequ(av[i], "--colours") || ft_strequ(av[i], "--colors"))
-			lem->opts->colours = TRUE;
+			lem->opts.colours = TRUE;
 		else if (av[i][0] == '-')
 			dash_flags(lem, av, i);
 		i++;

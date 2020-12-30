@@ -6,7 +6,7 @@
 /*   By: osalmine <osalmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/24 20:16:35 by osalmine          #+#    #+#             */
-/*   Updated: 2020/12/21 11:34:03 by osalmine         ###   ########.fr       */
+/*   Updated: 2020/12/31 00:51:21 by osalmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	assign_weights(t_lem *lem, t_room **path)
 	i = 0;
 	while (path[i])
 	{
-		if (!(room = find_room(path[i]->name, lem)))
+		if (!(room = find_hashed_room(lem, path[i]->name)))
 			ft_exit(RED"ERROR: room not found"RESET);
 		if (room->type == END)
 			room->weight = INF;

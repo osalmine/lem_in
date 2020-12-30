@@ -6,25 +6,37 @@
 /*   By: osalmine <osalmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/07 14:27:56 by osalmine          #+#    #+#             */
-/*   Updated: 2020/12/21 11:50:59 by osalmine         ###   ########.fr       */
+/*   Updated: 2020/12/31 00:37:55 by osalmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/lem.h"
 
-int		room_count(t_lem *lem)
-{
-	int		counter;
-	t_list	*tmp;
+// int		room_count(t_lem *lem)
+// {
+// 	int		counter;
+// 	t_list	*tmp;
 
-	counter = 0;
-	tmp = lem->room_list;
-	while (tmp)
-	{
-		counter++;
-		tmp = tmp->next;
-	}
-	return (counter);
+// 	counter = 0;
+// 	tmp = lem->room_list;
+// 	while (tmp)
+// 	{
+// 		counter++;
+// 		tmp = tmp->next;
+// 	}
+// 	return (counter);
+// }
+
+unsigned int hash(char *str, int size)
+{
+	unsigned int hash;
+	int c;
+
+	hash = 0;
+	while ((c = *str++))
+		hash = ((hash << 5) + hash) + c;
+	hash = hash % size;
+	return (hash);
 }
 
 int		arr_size(char **arr)
