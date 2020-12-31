@@ -6,7 +6,7 @@
 /*   By: osalmine <osalmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/30 22:20:06 by osalmine          #+#    #+#             */
-/*   Updated: 2020/12/31 00:51:52 by osalmine         ###   ########.fr       */
+/*   Updated: 2020/12/31 15:29:54 by osalmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,11 +27,33 @@ static void	str_append(char **lines, char *append)
 		tmp = ft_strjoin(*lines, append);
 	else
 		tmp = ft_strdup(append);
-	// ft_memdel((void**)lines);
+	ft_memdel((void**)lines);
 	// ft_memdel((void**)&append);
 	*lines = ft_strdup(tmp);
 	ft_memdel((void**)&tmp);
 }
+
+// static void		check_room_dups(t_lem *lem)
+// {
+// 	t_list *rooms;
+// 	t_list *room;
+
+// 	rooms = lem->room_list;
+// 	while (rooms)
+// 	{
+// 		room = rooms;
+// 		while (room)
+// 		{
+// 			if (((t_room*)room->content)->x == ft_atoi(room_arr[1]) && \
+// 				((t_room*)room->content)->y == ft_atoi(room_arr[2]))
+// 				ft_exit(RED"ERROR: duplicated coordinates"RESET);
+// 			if (ft_strequ(((t_room*)room->content)->name, room_arr[0]))
+// 				ft_exit(RED"ERROR: duplicated room name"RESET);
+// 			room = room->next;
+// 		}
+// 		rooms = rooms->next;
+// 	}
+// }
 
 static int	read_ant(char *line)
 {
@@ -69,6 +91,10 @@ static void	read_input(t_lem *lem, char *lines)
 	input = ft_strsplit(lines, '\n');
 	j = 0;
 	lem->room_count = 0;
+	// clock_t begin;
+	// clock_t end;
+	// double time;
+	// begin = clock();
 	while (input[j])
 	{
 		if ((int)input[j][0] == 0)
@@ -81,8 +107,12 @@ static void	read_input(t_lem *lem, char *lines)
 			break ;
 		j++;
 	}
+	// end = clock();
+	// time = (double)(end - begin) / CLOCKS_PER_SEC;
+	// ft_printf(RED"READ INPUT 1 TIME: %lf\n"RESET, time);
 	// ft_printf("Room count: %d\n", lem->room_count);
 	lem->room_hash_table = create_hash_list(lem);
+	// begin = clock();
 	j = jj;
 	while (input[j])
 	{
@@ -97,6 +127,9 @@ static void	read_input(t_lem *lem, char *lines)
 		}
 		j++;
 	}
+	// end = clock();
+	// time = (double)(end - begin) / CLOCKS_PER_SEC;
+	// ft_printf(RED"READ INPUT 2 TIME: %lf\n"RESET, time);
 	free_strsplit(&input);
 }
 
@@ -114,19 +147,26 @@ void		lem_read(t_lem *lem)
 	while ((ret = read(0, line, BUFF_SIZE)))
 	{
 		line[ret] = '\0';
+		ft_printf("line[%d]: %c\n", ret, line[ret]);
 		str_append(&lines, line);
 	}
+	// ft_putstr(lines);
 	if (ret < 0)
 		ft_exit("ERROR: read error");
+	ft_printf("lines[%d]: %c\n", ret, lines[ret]);
 	// end = clock();
 	// time = (double)(end - begin) / CLOCKS_PER_SEC;
 	// ft_printf(RED"INPUT READ TIME: %lf\n"RESET, time);
 	// begin = clock();
 	read_input(lem, lines);
+	// check_room_dups(lem);
 	// end = clock();
 	// time = (double)(end - begin) / CLOCKS_PER_SEC;
-	// ft_printf(RED"INPUT PROCESS TIME: %lf\n"RESET, time);
 	// while (1);
-	ft_printf("%s\n", lines);
+
+	// ft_printf("%s\n", lines);
+	ft_putendl(lines);
+
+	// ft_printf(RED"INPUT PROCESS TIME: %lf\n"RESET, time);
 	free(lines);
 }

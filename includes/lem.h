@@ -6,7 +6,7 @@
 /*   By: osalmine <osalmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/19 19:01:54 by osalmine          #+#    #+#             */
-/*   Updated: 2020/12/31 00:41:43 by osalmine         ###   ########.fr       */
+/*   Updated: 2020/12/31 15:08:36 by osalmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@
 # ifndef BUFF
 #  define BUFF
 
-#  define BUFF_SIZE 32000
+#  define BUFF_SIZE 1000000
 
 # endif
 
@@ -188,7 +188,7 @@ void			create_link_table(t_lem *lem);
 */
 
 t_room			*find_hashed_room(t_lem *lem, char *name);
-t_room			*find_room(char *name, t_lem *lem);
+// t_room			*find_room(char *name, t_lem *lem);
 t_room			*find_room_by_type(int type, t_lem *lem);
 int				find_from_que(t_room **que, t_room *room);
 int				find_in_path(t_list *list, t_room *room, t_room *end);
@@ -225,7 +225,7 @@ void			free_link(void *link, size_t size);
 **	Utility functions
 */
 
-int				room_count(t_lem *lem);
+// int				room_count(t_lem *lem);
 t_room			**create_room_arr(t_lem *lem, ssize_t size);
 void			push_to_room_arr(t_room **arr, t_room *room);
 t_room			**room_arr_reverse(t_room **arr);

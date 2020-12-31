@@ -6,7 +6,7 @@
 /*   By: osalmine <osalmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/22 16:23:58 by osalmine          #+#    #+#             */
-/*   Updated: 2020/12/31 00:46:06 by osalmine         ###   ########.fr       */
+/*   Updated: 2020/12/31 14:43:01 by osalmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,20 +14,26 @@
 
 static int	check_link_dups(t_lem *lem, char **links)
 {
-	t_list *link_list;
-	t_link *cur_link;
+	// t_list *link_list;
+	// t_link *cur_link;
+	t_room *room1;
+	t_room *room2;
 
 	if (!links[0] || !links[1])
 		return (1);
-	link_list = lem->link_list;
-	while (link_list)
-	{
-		cur_link = (t_link*)link_list->content;
-		if (ft_strequ(links[0], cur_link->room1->name) \
-			&& ft_strequ(links[1], cur_link->room2->name))
-			return (1);
-		link_list = link_list->next;
-	}
+	// link_list = lem->link_list;
+	// while (link_list)
+	// {
+	// 	cur_link = (t_link*)link_list->content;
+	// 	if (ft_strequ(links[0], cur_link->room1->name) \
+	// 		&& ft_strequ(links[1], cur_link->room2->name))
+	// 		return (1);
+	// 	link_list = link_list->next;
+	// }
+	room1 = find_hashed_room(lem, links[0]);
+	room2 = find_hashed_room(lem, links[1]);
+	if (find_link(room1, room2) && find_link(room2, room1))
+		return (1);
 	return (0);
 }
 

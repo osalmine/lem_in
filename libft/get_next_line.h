@@ -6,7 +6,7 @@
 /*   By: osalmine <osalmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/31 13:30:58 by osalmine          #+#    #+#             */
-/*   Updated: 2020/12/30 16:00:50 by osalmine         ###   ########.fr       */
+/*   Updated: 2020/12/31 15:08:34 by osalmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@
 # ifndef BUFF
 #  define BUFF
 
-# define BUFF_SIZE 32000
+# define BUFF_SIZE 1000000
 
 # endif
 

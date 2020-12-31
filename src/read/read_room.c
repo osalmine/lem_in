@@ -6,7 +6,7 @@
 /*   By: osalmine <osalmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/22 17:41:33 by osalmine          #+#    #+#             */
-/*   Updated: 2020/12/31 00:50:27 by osalmine         ###   ########.fr       */
+/*   Updated: 2020/12/31 14:21:21 by osalmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,18 +14,21 @@
 
 static void		check_room_dups(t_lem *lem, char **room_arr)
 {
-	t_list *rooms;
+	// t_list *rooms;
+	t_room *room;
 
-	rooms = lem->room_list;
-	while (rooms)
-	{
-		if (((t_room*)rooms->content)->x == ft_atoi(room_arr[1]) && \
-			((t_room*)rooms->content)->y == ft_atoi(room_arr[2]))
-			ft_exit(RED"ERROR: duplicated coordinates"RESET);
-		if (ft_strequ(((t_room*)rooms->content)->name, room_arr[0]))
-			ft_exit(RED"ERROR: duplicated room name"RESET);
-		rooms = rooms->next;
-	}
+	// rooms = lem->room_list;
+	// while (rooms)
+	// {
+	// 	if (((t_room*)rooms->content)->x == ft_atoi(room_arr[1]) && \
+	// 		((t_room*)rooms->content)->y == ft_atoi(room_arr[2]))
+	// 		ft_exit(RED"ERROR: duplicated coordinates"RESET);
+	// 	if (ft_strequ(((t_room*)rooms->content)->name, room_arr[0]))
+	// 		ft_exit(RED"ERROR: duplicated room name"RESET);
+	// 	rooms = rooms->next;
+	// }
+	if ((room = find_hashed_room(lem, room_arr[0])))
+		ft_exit(RED"ERROR: duplicated room name"RESET);
 }
 
 static t_room	init_room(t_lem *lem, char **room_arr, int room_type)

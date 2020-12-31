@@ -6,7 +6,7 @@
 /*   By: osalmine <osalmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/29 00:13:34 by osalmine          #+#    #+#             */
-/*   Updated: 2020/12/30 16:21:56 by osalmine         ###   ########.fr       */
+/*   Updated: 2020/12/31 14:52:58 by osalmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,10 +54,25 @@ static void		move_ant(t_lem *lem, t_ant *cur_ant)
 		cur_ant->room->has_ant = FALSE;
 		cur_ant->room = next_room;
 		if (lem->opts.colours)
-			ft_printf("%sL%d-%s "RESET, cur_ant->path->colour, \
-						cur_ant->id, cur_ant->room->name);
+		{
+			ft_putstr(cur_ant->path->colour);
+			ft_putchar('L');
+			ft_putnbr(cur_ant->id);
+			ft_putchar('-');
+			ft_putstr(cur_ant->room->name);
+			ft_putchar(' ');
+			// ft_printf("%sL%d-%s "RESET, cur_ant->path->colour, \
+			// 			cur_ant->id, cur_ant->room->name);
+		}
 		else
-			ft_printf("L%d-%s ", cur_ant->id, cur_ant->room->name);
+		{
+			ft_putchar('L');
+			ft_putnbr(cur_ant->id);
+			ft_putchar('-');
+			ft_putstr(cur_ant->room->name);
+			ft_putchar(' ');
+			// ft_printf("L%d-%s ", cur_ant->id, cur_ant->room->name);
+		}
 		if (cur_ant->room->type == NORMAL)
 			cur_ant->room->has_ant = TRUE;
 		cur_ant->has_moved = TRUE;

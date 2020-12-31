@@ -6,7 +6,7 @@
 #    By: osalmine <osalmine@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/10/24 14:46:14 by osalmine          #+#    #+#              #
-#    Updated: 2020/12/15 00:45:31 by osalmine         ###   ########.fr        #
+#    Updated: 2020/12/31 15:02:12 by osalmine         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,7 +27,7 @@ SOURCE = ft_atoi.c ft_bzero.c ft_isalnum.c ft_isalpha.c ft_isascii.c \
 		 ft_itoa_base.c get_next_line.c ft_exit.c ft_lstaddlast.c ft_lstrev.c
 OBJ = $(SOURCE:%.c=%.o)
 INCLUDE = libft.h
-FLAGS = -Wall -Werror -Wextra
+FLAGS = -Wall -Werror -Wextra -g
 
 PRINTF_DIR = ft_printf/
 PRINTF_LIB = libftprintf.a
