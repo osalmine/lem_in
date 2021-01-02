@@ -6,7 +6,7 @@
 /*   By: osalmine <osalmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/24 20:17:58 by osalmine          #+#    #+#             */
-/*   Updated: 2020/12/21 11:06:08 by osalmine         ###   ########.fr       */
+/*   Updated: 2021/01/03 01:46:28 by osalmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ static t_room	**ek_find_path(t_lem *lem)
 	int		i;
 
 	i = 0;
-	path = create_room_arr(lem, -1);
+	path = create_room_arr(lem);
 	current = lem->start;
 	push_to_room_arr(path, current);
 	current->visited = TRUE;

@@ -6,7 +6,7 @@
 /*   By: osalmine <osalmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/22 16:50:08 by osalmine          #+#    #+#             */
-/*   Updated: 2020/12/19 16:36:56 by osalmine         ###   ########.fr       */
+/*   Updated: 2021/01/03 01:46:48 by osalmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,8 +64,8 @@ static t_room	**solve(t_lem *lem)
 	int		i;
 
 	i = 0;
-	que = create_room_arr(lem, -1);
-	prev = create_room_arr(lem, -1);
+	que = create_room_arr(lem);
+	prev = create_room_arr(lem);
 	lem->start->visited = TRUE;
 	push_to_room_arr(que, lem->start);
 	while (que[i] != NULL)
@@ -82,7 +82,7 @@ static t_room	**reconstruct_path(t_room ***prev, t_lem *lem)
 	t_room	**path;
 	t_room	*current;
 
-	path = create_room_arr(lem, -1);
+	path = create_room_arr(lem);
 	current = lem->end;
 	while (current != NULL)
 	{

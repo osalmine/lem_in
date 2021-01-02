@@ -6,7 +6,7 @@
 /*   By: osalmine <osalmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/19 19:01:54 by osalmine          #+#    #+#             */
-/*   Updated: 2020/12/31 15:08:36 by osalmine         ###   ########.fr       */
+/*   Updated: 2021/01/03 01:46:19 by osalmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,7 +113,6 @@ typedef struct	s_path
 /*
 **	Struct for each ant
 **	id:			ant's id
-**	has_moved:	TRUE (=1) if ant has moved that turn, else FALSE (=0)
 **	room:		ant's current room
 **	path:		ant's path
 **	move_nb:	how many times has the ant moved
@@ -123,7 +122,6 @@ typedef struct	s_path
 typedef struct	s_ant
 {
 	int		id;
-	int		has_moved;
 	t_room	*room;
 	t_path	*path;
 	int		move_nb;
@@ -188,7 +186,6 @@ void			create_link_table(t_lem *lem);
 */
 
 t_room			*find_hashed_room(t_lem *lem, char *name);
-// t_room			*find_room(char *name, t_lem *lem);
 t_room			*find_room_by_type(int type, t_lem *lem);
 int				find_from_que(t_room **que, t_room *room);
 int				find_in_path(t_list *list, t_room *room, t_room *end);
@@ -196,7 +193,7 @@ t_link			*find_link(t_room *room1, t_room *room2);
 t_path			*find_path(t_list *list, t_room *room, t_room *end);
 
 /*
-**	Pathfinding functions
+**	Algo functions
 */
 
 void			guide_ants(t_lem *lem);
@@ -204,6 +201,7 @@ void			find_paths(t_lem *lem);
 void			assign_paths(t_lem *lem);
 t_room			**bfs(t_lem *lem);
 void			flows_pathfinder(t_lem *lem);
+void			turn_loop(t_lem *lem);
 
 /*
 **	Print and debug functions
@@ -225,14 +223,12 @@ void			free_link(void *link, size_t size);
 **	Utility functions
 */
 
-// int				room_count(t_lem *lem);
-t_room			**create_room_arr(t_lem *lem, ssize_t size);
+t_room			**create_room_arr(t_lem *lem);
 void			push_to_room_arr(t_room **arr, t_room *room);
 t_room			**room_arr_reverse(t_room **arr);
 int				arr_size(char **arr);
 int				room_arr_size(t_room **arr);
 void			sort_paths(t_lem *lem);
-char			**ft_2dstrdup(char **str);
 void			add_path(t_lem *lem, t_room **path, t_list **path_list);
 int				check_for_dup_path_size_1(t_lem *lem, t_room **path);
 int				check_for_dup_path(t_list *paths_lst, t_room **path);

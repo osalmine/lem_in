@@ -6,29 +6,11 @@
 /*   By: osalmine <osalmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/24 20:11:08 by osalmine          #+#    #+#             */
-/*   Updated: 2020/12/21 11:55:34 by osalmine         ###   ########.fr       */
+/*   Updated: 2021/01/03 01:42:10 by osalmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/lem.h"
-
-char	**ft_2dstrdup(char **str)
-{
-	int		i;
-	char	**new_str;
-
-	i = arr_size(str);
-	if (!(new_str = (char**)malloc(sizeof(char*) * (i + 1))))
-		ft_exit(RED"ERROR: Malloc error"RESET);
-	new_str[i] = NULL;
-	i = 0;
-	while (str[i])
-	{
-		new_str[i] = ft_strdup(str[i]);
-		i++;
-	}
-	return (new_str);
-}
 
 int		check_for_dup_path_size_1(t_lem *lem, t_room **path)
 {

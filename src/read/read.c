@@ -6,7 +6,7 @@
 /*   By: osalmine <osalmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/30 22:20:06 by osalmine          #+#    #+#             */
-/*   Updated: 2020/12/31 15:29:54 by osalmine         ###   ########.fr       */
+/*   Updated: 2021/01/03 01:28:39 by osalmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,13 +147,11 @@ void		lem_read(t_lem *lem)
 	while ((ret = read(0, line, BUFF_SIZE)))
 	{
 		line[ret] = '\0';
-		ft_printf("line[%d]: %c\n", ret, line[ret]);
 		str_append(&lines, line);
 	}
 	// ft_putstr(lines);
 	if (ret < 0)
 		ft_exit("ERROR: read error");
-	ft_printf("lines[%d]: %c\n", ret, lines[ret]);
 	// end = clock();
 	// time = (double)(end - begin) / CLOCKS_PER_SEC;
 	// ft_printf(RED"INPUT READ TIME: %lf\n"RESET, time);

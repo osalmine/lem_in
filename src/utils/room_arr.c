@@ -6,19 +6,19 @@
 /*   By: osalmine <osalmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/21 11:46:45 by osalmine          #+#    #+#             */
-/*   Updated: 2020/12/21 11:47:53 by osalmine         ###   ########.fr       */
+/*   Updated: 2021/01/03 01:46:05 by osalmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/lem.h"
 
-t_room	**create_room_arr(t_lem *lem, ssize_t size)
+t_room	**create_room_arr(t_lem *lem)
 {
 	t_room	**que;
 	int		i;
+	int		size;
 
-	if (size == -1)
-		size = lem->room_count + 1;
+	size = lem->room_count + 1;
 	if (!(que = (t_room**)malloc(sizeof(t_room*) * size)))
 		ft_exit(RED"Malloc error"RESET);
 	que[size - 1] = NULL;

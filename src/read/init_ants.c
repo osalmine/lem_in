@@ -6,7 +6,7 @@
 /*   By: osalmine <osalmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/01 10:30:08 by osalmine          #+#    #+#             */
-/*   Updated: 2020/12/19 18:17:15 by osalmine         ###   ########.fr       */
+/*   Updated: 2021/01/03 01:31:51 by osalmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@ static t_ant	add_ant(int id, t_room *ant_room)
 
 	ant.id = id;
 	ant.room = ant_room;
-	ant.has_moved = FALSE;
 	ant.move_nb = 0;
 	ant.path = NULL;
 	return (ant);

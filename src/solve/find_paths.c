@@ -6,7 +6,7 @@
 /*   By: osalmine <osalmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/25 16:25:46 by osalmine          #+#    #+#             */
-/*   Updated: 2020/12/30 12:44:38 by osalmine         ###   ########.fr       */
+/*   Updated: 2021/01/03 01:38:58 by osalmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,6 @@ static int	bfs_loop(t_lem *lem, t_room **path)
 {
 	if (!path || check_for_dup_path(lem->paths_bef_ek, path))
 	{
-		ft_printf(RED"Freeing path\n"RESET);
 		if (path)
 			free(path);
 		return (1);
@@ -55,10 +54,8 @@ void		find_paths(t_lem *lem)
 
 	lem->start->weight = 0;
 	while ((path = bfs(lem)))
-	{
 		if ((breaking = bfs_loop(lem, path)) == 1)
 			break ;
-	}
 	if (lem->ant_nb != 1)
 		flows_pathfinder(lem);
 	sort_paths(lem);
