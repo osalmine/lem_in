@@ -6,7 +6,7 @@
 /*   By: osalmine <osalmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/28 12:49:41 by osalmine          #+#    #+#             */
-/*   Updated: 2019/10/30 17:34:58 by osalmine         ###   ########.fr       */
+/*   Updated: 2021/01/08 11:20:58 by osalmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,12 +27,12 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	if (!(str = (char *)malloc(sizeof(char) * (ft_strlen(temp1)
 						+ ft_strlen(temp2)) + 1)))
 		return (NULL);
-	while (temp1[i])
+	while (temp1 && temp1[i])
 	{
 		str[i] = temp1[i];
 		i++;
 	}
-	while (temp2[j])
+	while (temp2 && temp2[j])
 	{
 		str[i++] = temp2[j];
 		j++;

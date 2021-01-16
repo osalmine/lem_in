@@ -6,7 +6,7 @@
 /*   By: osalmine <osalmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/19 19:01:44 by osalmine          #+#    #+#             */
-/*   Updated: 2021/01/03 00:53:46 by osalmine         ###   ########.fr       */
+/*   Updated: 2021/01/08 11:30:51 by osalmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ int	main(int argc, char **argv)
 	// clock_t end;
 	// double time;
 	lem = lem_init(argc, argv);
+	// while (1);
 	if (lem->opts.debug)
 		debug_out(lem);
 	// begin = clock();

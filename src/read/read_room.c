@@ -6,7 +6,7 @@
 /*   By: osalmine <osalmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/22 17:41:33 by osalmine          #+#    #+#             */
-/*   Updated: 2020/12/31 14:21:21 by osalmine         ###   ########.fr       */
+/*   Updated: 2021/01/14 18:16:07 by osalmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,13 +41,15 @@ static t_room	init_room(t_lem *lem, char **room_arr, int room_type)
 	room.x = ft_atoi(room_arr[1]);
 	room.y = ft_atoi(room_arr[2]);
 	room.visited = FALSE;
+	room.visited_ek = FALSE;
 	if (room_type == START)
 		room.has_ant = lem->ant_nb;
 	else
 		room.has_ant = FALSE;
 	room.type = room_type;
 	room.links = NULL;
-	room.weight = INF - 1;
+	// room.weight = INF - 1;
+	room.in_path = FALSE;
 	return (room);
 }
 

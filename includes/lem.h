@@ -6,7 +6,7 @@
 /*   By: osalmine <osalmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/19 19:01:54 by osalmine          #+#    #+#             */
-/*   Updated: 2021/01/03 01:46:19 by osalmine         ###   ########.fr       */
+/*   Updated: 2021/01/16 11:41:36 by osalmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@
 # ifndef BUFF
 #  define BUFF
 
-#  define BUFF_SIZE 1000000
+#  define BUFF_SIZE 1000
 
 # endif
 
@@ -64,6 +64,7 @@ typedef struct	s_options
 **	type:		room's type. START (=1) if room is starting room,
 **				END (=2) if room is goal room, else NORMAL (=0)
 **	weight:		distance from starting node
+**	in_path:	TRUE if room is in a path, else FALSE
 **	links:		list of connections to the room
 */
 
@@ -72,11 +73,13 @@ typedef struct	s_room
 	char	*name;
 	int		id;
 	int		visited;
+	int		visited_ek;
 	int		x;
 	int		y;
 	int		has_ant;
 	int		type;
-	int		weight;
+	// int		weight;
+	int		in_path;
 	t_list	*links;
 }				t_room;
 
@@ -128,6 +131,18 @@ typedef struct	s_ant
 }				t_ant;
 
 /*
+**
+*/
+
+typedef struct	s_set
+{
+	int		cost;
+	int		len;
+	int		flow;
+	t_list	*paths;
+}				t_set;
+
+/*
 **	t_lem is the main struct
 **	ant_nb:			total ant amount
 **	ants:			list of all ants
@@ -153,14 +168,20 @@ typedef struct	s_lem
 	t_list	*ants;
 	t_list	*room_list;
 	t_list	*link_list;
-	t_list	*paths_list;
+	// t_list	*paths_list;
+	// t_list	*paths_list2;
+	t_set	*best_set;
+	t_set	*cur_set;
+	t_set	*ek_set;
+	// t_list	*sets_list;
 	t_opts	opts;
-	t_list	*paths_bef_ek;
+	// t_list	*paths_bef_ek;
 	int		moves_count;
 	t_room	*start;
 	t_room	*end;
 	int		max_flow;
 	int		room_count;
+	int		path_amount;
 	t_room	**room_arr;
 	int		**room_links_arr;
 	t_list	**room_hash_table;
@@ -180,6 +201,7 @@ void			read_room(t_lem *lem, char *line, \
 int				read_command(t_lem *lem, char *line);
 void			create_room_table(t_lem *lem);
 void			create_link_table(t_lem *lem);
+t_set			*init_set();
 
 /*
 **	Finding functions
@@ -197,9 +219,9 @@ t_path			*find_path(t_list *list, t_room *room, t_room *end);
 */
 
 void			guide_ants(t_lem *lem);
-void			find_paths(t_lem *lem);
+void			find_paths(t_lem *lem, int nb);
 void			assign_paths(t_lem *lem);
-t_room			**bfs(t_lem *lem);
+t_room			**bfs(t_lem *lem, int nb);
 void			flows_pathfinder(t_lem *lem);
 void			turn_loop(t_lem *lem);
 
@@ -207,7 +229,7 @@ void			turn_loop(t_lem *lem);
 **	Print and debug functions
 */
 
-void			print_paths(t_lem *lem);
+void			print_paths(t_lem *lem, t_list *lem_paths);
 void			debug_out(t_lem *lem);
 
 /*
@@ -228,13 +250,14 @@ void			push_to_room_arr(t_room **arr, t_room *room);
 t_room			**room_arr_reverse(t_room **arr);
 int				arr_size(char **arr);
 int				room_arr_size(t_room **arr);
-void			sort_paths(t_lem *lem);
-void			add_path(t_lem *lem, t_room **path, t_list **path_list);
-int				check_for_dup_path_size_1(t_lem *lem, t_room **path);
-int				check_for_dup_path(t_list *paths_lst, t_room **path);
-void			assign_weights(t_lem *lem, t_room **path);
+void			sort_paths(t_list *paths);
+void			add_path(t_lem *lem, t_room **path, t_list **path_list, t_set **set);
+// int				check_for_dup_path_size_1(t_lem *lem, t_room **path);
+// int				check_for_dup_path(t_list *paths_lst, t_room **path);
+// void			assign_weights(t_lem *lem, t_room **path);
 void			assign_flows(t_room **path);
-void			reset_rooms(t_lem *lem);
+void			reset_rooms_bfs(t_lem *lem);
+void			reset_rooms_ek(t_lem *lem);
 int				min_3(int x, int y, int z);
 int				max_flow(t_lem *lem);
 int				*get_steps(t_lem *lem, int *total);
@@ -243,6 +266,8 @@ int				find_longest(int *division, int *steps, int max);
 int				*split_remainder(int *ant_division, int remainder, \
 					t_lem *lem, int **longest);
 void			paths_to_ants(t_lem *lem, int *division, int max);
-unsigned		int hash(char *str, int size);
+unsigned int	hash(char *str, int size);
+int				get_max(t_lem *lem, t_list *lst);
+int				get_set_flow(t_set *set);
 
 #endif

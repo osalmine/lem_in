@@ -6,7 +6,7 @@
 /*   By: osalmine <osalmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/26 23:36:24 by osalmine          #+#    #+#             */
-/*   Updated: 2020/12/21 11:55:01 by osalmine         ###   ########.fr       */
+/*   Updated: 2021/01/13 16:02:27 by osalmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,14 +30,14 @@ static int	*check_total(int *division, t_lem *lem, int *longest)
 	return (division);
 }
 
-static int	get_max(t_lem *lem)
+int	get_max(t_lem *lem, t_list *lst)
 {
 	int		max;
 	t_list	*paths;
 	int		paths_count;
 
 	max = max_flow(lem);
-	paths = lem->paths_list;
+	paths = lst;
 	paths_count = 0;
 	while (paths)
 	{
@@ -95,7 +95,7 @@ void		assign_paths(t_lem *lem)
 	i = 0;
 	division = NULL;
 	assign_max = 0;
-	max = get_max(lem);
+	max = get_max(lem, lem->best_set->paths);
 	while (i++ < max)
 	{
 		lem->max_flow = i;

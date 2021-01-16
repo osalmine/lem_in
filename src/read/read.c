@@ -6,7 +6,7 @@
 /*   By: osalmine <osalmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/30 22:20:06 by osalmine          #+#    #+#             */
-/*   Updated: 2021/01/03 01:28:39 by osalmine         ###   ########.fr       */
+/*   Updated: 2021/01/14 12:09:34 by osalmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,14 +19,11 @@ static void	str_append(char **lines, char *append)
 {
 	char *tmp;
 
-	// tmp = ft_strjoin(append, "\n");
-	// ft_memdel((void**)&append);
-	// append = ft_strdup(tmp);
-	// ft_memdel((void**)&tmp);
-	if (*lines)
-		tmp = ft_strjoin(*lines, append);
-	else
-		tmp = ft_strdup(append);
+	// if (*lines)
+	// 	tmp = ft_strjoin(*lines, append);
+	// else
+	// 	tmp = ft_strdup(append);
+	tmp = ft_strjoin(*lines, append);
 	ft_memdel((void**)lines);
 	// ft_memdel((void**)&append);
 	*lines = ft_strdup(tmp);
@@ -136,13 +133,15 @@ static void	read_input(t_lem *lem, char *lines)
 void		lem_read(t_lem *lem)
 {
 	int		ret;
-	char	line[BUFF_SIZE];
+	char	line[BUFF_SIZE + 1];
 	char	*lines;
+	char	*tmp;
 
 	// clock_t begin;
 	// clock_t end;
 	// double time;
 	lines = NULL;
+	tmp = NULL;
 	// begin = clock();
 	while ((ret = read(0, line, BUFF_SIZE)))
 	{
@@ -152,6 +151,15 @@ void		lem_read(t_lem *lem)
 	// ft_putstr(lines);
 	if (ret < 0)
 		ft_exit("ERROR: read error");
+	if (!lines)
+		ft_exit(RED"ERROR: No input"RESET);
+	if (lines[ft_strlen(lines) - 1] != '\n')
+	{
+		tmp = ft_strjoin(lines, "\n");
+		ft_strdel(&lines);
+		lines = ft_strdup(tmp);
+		ft_strdel(&tmp);
+	}
 	// end = clock();
 	// time = (double)(end - begin) / CLOCKS_PER_SEC;
 	// ft_printf(RED"INPUT READ TIME: %lf\n"RESET, time);
@@ -166,5 +174,7 @@ void		lem_read(t_lem *lem)
 	ft_putendl(lines);
 
 	// ft_printf(RED"INPUT PROCESS TIME: %lf\n"RESET, time);
-	free(lines);
+	// free(lines);
+	ft_strdel(&lines);
+	// while (1);
 }

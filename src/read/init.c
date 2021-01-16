@@ -6,7 +6,7 @@
 /*   By: osalmine <osalmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/30 18:33:54 by osalmine          #+#    #+#             */
-/*   Updated: 2020/12/31 00:05:36 by osalmine         ###   ########.fr       */
+/*   Updated: 2021/01/14 15:41:03 by osalmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 #include <time.h>
 
 
-static void	add_room_id(t_lem *lem)
+static void	add_room_ids(t_lem *lem)
 {
 	int		id;
 	t_list	*tmp;
@@ -44,9 +44,14 @@ t_lem		*lem_init(int ac, char **av)
 	lem->ants = NULL;
 	lem->link_list = NULL;
 	lem->room_list = NULL;
-	lem->paths_list = NULL;
-	lem->paths_bef_ek = NULL;
+	// lem->paths_list = NULL;
+	// lem->paths_list2 = NULL;
+	lem->best_set = NULL;
+	lem->cur_set = NULL;
+	lem->ek_set = NULL;
+	// lem->paths_bef_ek = NULL;
 	lem->moves_count = 0;
+	lem->path_amount = 0;
 	lem_flags(lem, ac, av);
 	lem_read(lem);
 	// begin = clock();
@@ -56,7 +61,7 @@ t_lem		*lem_init(int ac, char **av)
 		ft_exit(RED"ERROR: end room not found"RESET);
 	init_ants(lem);
 	// lem->room_count = room_count(lem);
-	add_room_id(lem);
+	add_room_ids(lem);
 	create_room_table(lem);
 	create_link_table(lem);
 	// end = clock();

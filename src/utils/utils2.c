@@ -6,57 +6,57 @@
 /*   By: osalmine <osalmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/24 20:11:08 by osalmine          #+#    #+#             */
-/*   Updated: 2021/01/03 01:42:10 by osalmine         ###   ########.fr       */
+/*   Updated: 2021/01/14 15:40:20 by osalmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/lem.h"
 
-int		check_for_dup_path_size_1(t_lem *lem, t_room **path)
-{
-	t_list	*paths;
-	int		i;
-	int		path_len;
+// int		check_for_dup_path_size_1(t_lem *lem, t_room **path)
+// {
+// 	t_list	*paths;
+// 	int		i;
+// 	int		path_len;
 
-	paths = lem->paths_list;
-	path_len = room_arr_size(path) - 1;
-	while (paths && path_len == 1)
-	{
-		i = 0;
-		if (((t_path*)paths->content)->len == path_len)
-		{
-			while (path[i] && ((t_path*)paths->content)->path_arr[i] == path[i])
-				i++;
-			if (i == path_len + 1)
-				return (1);
-		}
-		paths = paths->next;
-	}
-	return (0);
-}
+// 	paths = lem->cur_set->paths;
+// 	path_len = room_arr_size(path) - 1;
+// 	while (paths && path_len == 1)
+// 	{
+// 		i = 0;
+// 		if (((t_path*)paths->content)->len == path_len)
+// 		{
+// 			while (path[i] && ((t_path*)paths->content)->path_arr[i] == path[i])
+// 				i++;
+// 			if (i == path_len + 1)
+// 				return (1);
+// 		}
+// 		paths = paths->next;
+// 	}
+// 	return (0);
+// }
 
-int		check_for_dup_path(t_list *paths_lst, t_room **path)
-{
-	t_list	*paths;
-	int		i;
-	int		path_len;
+// int		check_for_dup_path(t_list *paths_lst, t_room **path)
+// {
+// 	t_list	*paths;
+// 	int		i;
+// 	int		path_len;
 
-	paths = paths_lst;
-	path_len = room_arr_size(path) - 1;
-	while (paths)
-	{
-		i = 0;
-		if (((t_path*)paths->content)->len == path_len)
-		{
-			while (path[i] && ((t_path*)paths->content)->path_arr[i] == path[i])
-				i++;
-			if (i == path_len + 1)
-				return (1);
-		}
-		paths = paths->next;
-	}
-	return (0);
-}
+// 	paths = paths_lst;
+// 	path_len = room_arr_size(path) - 1;
+// 	while (paths)
+// 	{
+// 		i = 0;
+// 		if (((t_path*)paths->content)->len == path_len)
+// 		{
+// 			while (path[i] && ((t_path*)paths->content)->path_arr[i] == path[i])
+// 				i++;
+// 			if (i == path_len + 1)
+// 				return (1);
+// 		}
+// 		paths = paths->next;
+// 	}
+// 	return (0);
+// }
 
 int		min_3(int x, int y, int z)
 {

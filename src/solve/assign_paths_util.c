@@ -6,7 +6,7 @@
 /*   By: osalmine <osalmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/20 14:42:58 by osalmine          #+#    #+#             */
-/*   Updated: 2020/12/20 21:32:25 by osalmine         ###   ########.fr       */
+/*   Updated: 2021/01/13 16:04:02 by osalmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int		*get_steps(t_lem *lem, int *total)
 
 	if (!(steps = (int*)malloc(sizeof(int) * lem->max_flow)))
 		ft_exit(RED"ERROR: malloc error"RESET);
-	paths = lem->paths_list;
+	paths = lem->best_set->paths;
 	i = 0;
 	while (paths && i < lem->max_flow)
 	{
@@ -98,9 +98,11 @@ void	paths_to_ants(t_lem *lem, int *division, int max)
 	t_list	*ants;
 	int		i;
 
-	paths = lem->paths_list;
+	paths = lem->best_set->paths;
 	ants = lem->ants;
 	i = 0;
+	if (!paths || !division)
+		ft_exit(RED"ERROR: no paths or division"RESET);
 	while (ants)
 	{
 		if (division[i] > 0)
@@ -112,7 +114,7 @@ void	paths_to_ants(t_lem *lem, int *division, int max)
 		if (++i >= max)
 			i = 0;
 		if (!(paths = paths->next) || i == 0)
-			paths = lem->paths_list;
+			paths = lem->best_set->paths;
 	}
 	ft_memdel((void*)&division);
 }

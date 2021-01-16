@@ -6,7 +6,7 @@
 /*   By: osalmine <osalmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/18 22:39:15 by osalmine          #+#    #+#             */
-/*   Updated: 2020/12/31 14:41:46 by osalmine         ###   ########.fr       */
+/*   Updated: 2021/01/03 17:16:12 by osalmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,6 +118,8 @@ t_link	*find_link(t_room *room1, t_room *room2)
 	t_list	*link_list;
 
 	link = NULL;
+	if (!room1 || !room2)
+		return (NULL);
 	link_list = room1->links;
 	while (link_list)
 	{
