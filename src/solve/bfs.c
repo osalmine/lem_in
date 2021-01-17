@@ -6,20 +6,18 @@
 /*   By: osalmine <osalmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/22 16:50:08 by osalmine          #+#    #+#             */
-/*   Updated: 2021/01/14 15:41:53 by osalmine         ###   ########.fr       */
+/*   Updated: 2021/01/17 13:22:24 by osalmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/lem.h"
 
-static int		check_for_flow_weight(t_lem *lem, t_room *current, t_room *next, int nb, t_room ***prev)
+static int		check_for_flow_weight(t_lem *lem, t_room *current, t_room *next, t_room ***prev)
 {
 	int		check;
 	int		limit;
 	t_link	*link;
 	t_room	*parent;
-
-	nb = 0;
 
 	check = 0;
 	limit = 1;
@@ -76,7 +74,7 @@ static int		check_for_flow_weight(t_lem *lem, t_room *current, t_room *next, int
 	return (check);
 }
 
-static void		solve_loop(t_lem *lem, t_room ***prev, t_room ***que, int i, int nb)
+static void		solve_loop(t_lem *lem, t_room ***prev, t_room ***que, int i)
 {
 	int		can_use_link;
 	t_room	*node;
@@ -90,7 +88,7 @@ static void		solve_loop(t_lem *lem, t_room ***prev, t_room ***que, int i, int nb
 		neighbor = ((t_link*)tmp->content)->room2;
 		// if (nb == 2)
 			// ft_printf(MAGENTA"SOLVE\t\t:\tNode: %s, visited: %s, can_use_link: %s\n"RESET, neighbor->name, neighbor->visited ? "TRUE" : "FALSE", can_use_link ? "TRUE" : "FALSE");
-		can_use_link = check_for_flow_weight(lem, node, neighbor, nb, prev);
+		can_use_link = check_for_flow_weight(lem, node, neighbor, prev);
 		if (!neighbor->visited && can_use_link)
 		{
 			push_to_room_arr(*que, neighbor);
@@ -108,7 +106,7 @@ static void		solve_loop(t_lem *lem, t_room ***prev, t_room ***que, int i, int nb
 	}
 }
 
-static t_room	**solve(t_lem *lem, int nb)
+static t_room	**solve(t_lem *lem)
 {
 	t_room	**prev;
 	t_room	**que;
@@ -126,7 +124,7 @@ static t_room	**solve(t_lem *lem, int nb)
 	{
 		// if (nb == 2)
 			// ft_printf(CYAN"Parent node: %s\n"RESET, que[i]->name);
-		solve_loop(lem, &prev, &que, i, nb);
+		solve_loop(lem, &prev, &que, i);
 		i++;
 	}
 	// ft_printf("SOLVE LOOP ITERATIONS: %d\n", i);
@@ -196,16 +194,14 @@ static t_room	**reconstruct_path(t_room ***prev, t_lem *lem)
 	return (NULL);
 }
 
-t_room			**bfs(t_lem *lem, int nb)
+t_room			**bfs(t_lem *lem)
 {
 	t_room	**prev;
 	t_room	**path;
 	int		i;
 
 	// ft_printf(BOLD RED"\nNEW BFS ROUND\n\n"RESET);
-	prev = solve(lem, nb);
-	// for (int i = 0; prev[i]; i++)
-	// 	ft_printf(BOLD YELLOW"%s "RESET, path[i]->name);
+	prev = solve(lem);
 	path = reconstruct_path(&prev, lem);
 	free(prev);
 	i = -1;

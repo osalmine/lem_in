@@ -6,7 +6,7 @@
 /*   By: osalmine <osalmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/19 19:01:54 by osalmine          #+#    #+#             */
-/*   Updated: 2021/01/16 11:41:36 by osalmine         ###   ########.fr       */
+/*   Updated: 2021/01/17 13:19:51 by osalmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -219,9 +219,9 @@ t_path			*find_path(t_list *list, t_room *room, t_room *end);
 */
 
 void			guide_ants(t_lem *lem);
-void			find_paths(t_lem *lem, int nb);
+void			find_paths(t_lem *lem);
 void			assign_paths(t_lem *lem);
-t_room			**bfs(t_lem *lem, int nb);
+t_room			**bfs(t_lem *lem);
 void			flows_pathfinder(t_lem *lem);
 void			turn_loop(t_lem *lem);
 
@@ -236,10 +236,11 @@ void			debug_out(t_lem *lem);
 **	Free functions
 */
 
-void			free_lem(t_lem *lem);
+// void			free_lem(t_lem *lem);
 void			free_strsplit(char ***str);
-void			free_room(void *room, size_t size);
-void			free_link(void *link, size_t size);
+// void			free_room(void *room, size_t size);
+// void			free_link(void *link, size_t size);
+void			free_set(t_set **set);
 
 /*
 **	Utility functions
@@ -268,6 +269,5 @@ int				*split_remainder(int *ant_division, int remainder, \
 void			paths_to_ants(t_lem *lem, int *division, int max);
 unsigned int	hash(char *str, int size);
 int				get_max(t_lem *lem, t_list *lst);
-int				get_set_flow(t_set *set);
 
 #endif

@@ -6,7 +6,7 @@
 #    By: osalmine <osalmine@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/03/19 19:13:02 by osalmine          #+#    #+#              #
-#    Updated: 2021/01/11 20:16:20 by osalmine         ###   ########.fr        #
+#    Updated: 2021/01/16 13:05:58 by osalmine         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,7 +25,7 @@ SOLVE_DIR_SOURCES	= 	guide_ants.c find_paths.c assign_paths.c \
 						bfs.c ek_pathfinder.c assign_paths_util.c move_ants.c
 UTILS_DIR_SOURCES	= 	find.c print_paths.c utils.c \
 						sort_paths.c utils2.c add_path.c assign_flows_weights.c \
-						room_arr.c debug_output.c
+						room_arr.c debug_output.c frees.c
 SOURCE_FILE_NAMES	=	lem_in.c $(READ_DIR_SOURCES) $(SOLVE_DIR_SOURCES) $(UTILS_DIR_SOURCES)
 SOURCE_FILES		=	lem_in.c $(addprefix $(SOURCES_SUBDIR_READ), $(READ_DIR_SOURCES)) \
 						$(addprefix $(SOURCES_SUBDIR_SOLVE), $(SOLVE_DIR_SOURCES)) \

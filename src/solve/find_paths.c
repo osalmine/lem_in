@@ -6,7 +6,7 @@
 /*   By: osalmine <osalmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/25 16:25:46 by osalmine          #+#    #+#             */
-/*   Updated: 2021/01/16 11:45:49 by osalmine         ###   ########.fr       */
+/*   Updated: 2021/01/17 21:22:23 by osalmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,23 +40,39 @@ void		reset_rooms_ek(t_lem *lem)
 	}
 }
 
+// static t_list	*copy_paths(t_list *paths)
+// {
+// 	t_list *new_paths;
+// 	t_list *tmp;
+
+// 	new_paths = NULL;
+// 	tmp = paths;
+// 	while (tmp)
+// 	{
+
+// 		tmp = tmp->next;
+// 	}
+// 	return (new_paths);
+// }
+
 static void	new_best_set(t_lem *lem)
 {
+	// ft_printf("New best set\n");
 	if (lem->best_set)
-		ft_memdel((void**)&lem->best_set);
-	if (!(lem->best_set = (t_set*)malloc(sizeof(t_set))))
-		ft_exit("ERROR: malloc error");
+		// ft_memdel((void**)&lem->best_set);
+		free_set(&lem->best_set);
+	lem->best_set = init_set();
 	lem->best_set->cost = lem->ek_set->cost;
 	// ft_printf("Setting best_set flow from ek_set\n");
 	lem->best_set->flow = lem->ek_set->flow;
 	lem->best_set->len = lem->ek_set->len;
 	lem->best_set->paths = lem->ek_set->paths;
+	// lem->best_set->paths = copy_paths(lem->ek_set->paths);
 	// ft_printf("lem->best_set->paths: %p\n", lem->best_set->paths);
 }
 
 static int	bfs_loop(t_lem *lem, t_room **path)
 {
-	lem->path_amount++;
 	// ft_printf(RED"BFS_LOOP\n"RESET);
 	// int i;
 	// for (i = 0; path && path[i]; i++)
@@ -66,7 +82,7 @@ static int	bfs_loop(t_lem *lem, t_room **path)
 
 	if (!path)
 		return (1);
-	// assign_weights(lem, path);
+	lem->path_amount++;
 	assign_flows(path);
 	// t_list *links;
 	// links = lem->link_list;
@@ -75,11 +91,11 @@ static int	bfs_loop(t_lem *lem, t_room **path)
 	// 	ft_printf("link: %s-%s flow: %d\n", ((t_link*)links->content)->room1->name, ((t_link*)links->content)->room2->name, ((t_link*)links->content)->flow);
 	// 	links = links->next;
 	// }
-	if (!lem->cur_set)
-		lem->cur_set = init_set();
+	// if (!lem->cur_set)
+	// 	lem->cur_set = init_set();
 	// if (lem->ant_nb == 1)
 	// {
-		add_path(lem, path, &(lem->cur_set->paths), &lem->cur_set);
+		// add_path(lem, path, &(lem->cur_set->paths), &lem->cur_set);
 	// 	return (1);
 	// }
 	// t_list *cur_lst;
@@ -92,8 +108,7 @@ static int	bfs_loop(t_lem *lem, t_room **path)
 	// 	ft_printf("\n\n");
 	// 	cur_lst = cur_lst->next;
 	// }
-	// if (lem->ant_nb != 1)
-		flows_pathfinder(lem);
+	flows_pathfinder(lem);
 	if (lem->ek_set->paths)
 	{
 		sort_paths(lem->ek_set->paths);
@@ -122,30 +137,32 @@ static int	bfs_loop(t_lem *lem, t_room **path)
 			// ft_printf("\n");
 			new_best_set(lem);
 		}
+		else
+			free_set(&lem->ek_set);
 	}
 	// ft_printf("\n\n");
 	reset_rooms_bfs(lem);
-	ft_memdel((void**)&lem->ek_set);
-	// ft_memdel((void**)&path);
+	// if (lem->ek_set)
+	// 	free_set(&lem->ek_set);
+	ft_memdel((void**)&path);
 	// ft_printf("Returning 0\n");
 	return (0);
 }
 
-void		find_paths(t_lem *lem, int nb)
+void		find_paths(t_lem *lem)
 {
 	t_room	**path;
-	int		breaking;
 
 	// lem->start->weight = 0;
-	while ((path = bfs(lem, nb)) || TRUE)
-		if ((breaking = bfs_loop(lem, path)) == 1)
+	while ((path = bfs(lem)) || TRUE)
+		if (bfs_loop(lem, path) == 1)
 			break ;
 	// if (nb == 1)
 	// else
 	// 	sort_paths(lem->paths_list2);
 	if (!lem->best_set)
 		ft_exit(RED"ERROR: No paths found"RESET);
-	if (lem->opts.paths && nb == 1)
+	if (lem->opts.paths)
 		print_paths(lem, lem->best_set->paths);
 	// if (lem->opts.paths && nb == 2)
 	// {

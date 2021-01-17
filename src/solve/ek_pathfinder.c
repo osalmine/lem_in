@@ -6,7 +6,7 @@
 /*   By: osalmine <osalmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/24 20:17:58 by osalmine          #+#    #+#             */
-/*   Updated: 2021/01/16 11:44:50 by osalmine         ###   ########.fr       */
+/*   Updated: 2021/01/17 15:06:19 by osalmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,10 +108,11 @@ void			flows_pathfinder(t_lem *lem)
 	// lem->max_flow = max_flow(lem);
 	// ft_printf("max_flow: %d\n", lem->max_flow);
 	ft_memdel((void**)&lem->ek_set);
+	// if (lem->ek_set)
+	// 	free_set(&lem->ek_set);
 	reset_rooms_ek(lem);
-	// if (!lem->ek_set)
-	*(&lem->ek_set) = init_set();
-	// while ((path = ek_find_path(lem, nb)) || i++ < lem->max_flow)
+	if (!lem->ek_set)
+		*(&lem->ek_set) = init_set();
 	while ((path = ek_find_path(lem)) || i++ < lem->path_amount)
 	{
 		if (path)
@@ -121,10 +122,5 @@ void			flows_pathfinder(t_lem *lem)
 			lem->ek_set->flow++;
 			// ft_printf("lem->ek_set->flow incresed to %d\n", lem->ek_set->flow);
 		}
-		// if (path && nb == 2)
-		// {
-		// 	// ft_printf("ASSIGNING TO PATH2\n");
-		// 	add_path(lem, path, &(lem->paths_list2), nb);
-		// }
 	}
 }

@@ -1,22 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   guide_ants.c                                       :+:      :+:    :+:   */
+/*   frees.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: osalmine <osalmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/06/29 00:13:34 by osalmine          #+#    #+#             */
-/*   Updated: 2021/01/17 13:20:55 by osalmine         ###   ########.fr       */
+/*   Created: 2021/01/16 13:04:20 by osalmine          #+#    #+#             */
+/*   Updated: 2021/01/17 13:18:36 by osalmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/lem.h"
 
-void			guide_ants(t_lem *lem)
+static void	free_path(void *path, size_t size)
 {
-	// init_sets_list(lem);
-	find_paths(lem);
-	assign_paths(lem);
-	while (lem->end->has_ant != lem->ant_nb)
-		turn_loop(lem);
+	size = 0;
+	ft_memdel((void**)(&((t_path*)path)->path_arr));
+	ft_strdel(&((t_path*)path)->colour);
+	ft_memdel((void**)&path);
+}
+
+void		free_set(t_set **set)
+{
+	if ((*set)->paths)
+	{
+		ft_lstdel(&(*set)->paths, free_path);
+		ft_memdel((void**)&(*set)->paths);
+	}
+	ft_memdel((void**)&(*set));
 }
