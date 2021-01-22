@@ -6,7 +6,7 @@
 /*   By: osalmine <osalmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/25 16:25:46 by osalmine          #+#    #+#             */
-/*   Updated: 2021/01/22 16:34:20 by osalmine         ###   ########.fr       */
+/*   Updated: 2021/01/22 17:49:29 by osalmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,8 +112,8 @@ static int	bfs_loop(t_lem *lem, t_room **path)
 			// ft_printf("\n");
 			new_best_set(lem);
 		}
-		// else
-		// 	free_set(&lem->ek_set);
+		else
+			free_set(&lem->ek_set);
 		// ft_lstaddlast(&lem->sets_list, ft_lstnew(lem->ek_set, sizeof(t_set)));
 	}
 	// ft_printf("\n\n");
