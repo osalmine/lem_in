@@ -6,13 +6,13 @@
 /*   By: osalmine <osalmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/22 16:50:08 by osalmine          #+#    #+#             */
-/*   Updated: 2021/01/17 13:22:24 by osalmine         ###   ########.fr       */
+/*   Updated: 2021/01/22 16:30:01 by osalmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/lem.h"
 
-static int		check_for_flow_weight(t_lem *lem, t_room *current, t_room *next, t_room ***prev)
+static int		check_flow(t_lem *lem, t_room *current, t_room *next, t_room ***prev)
 {
 	int		check;
 	int		limit;
@@ -34,7 +34,8 @@ static int		check_for_flow_weight(t_lem *lem, t_room *current, t_room *next, t_r
 		limit = INF;
 	// if (nb == 1 && ((link->flow == INF || link->flow == -1) && ((next->weight == INF - 1 \
 	// 	&& next->type != END) || current->weight + 1 < next->weight)))
-	if (link->flow != 1 && link->flow != limit)
+	// if (link->flow != 1 && link->flow != limit )
+	if ((link->flow == -1 || link->flow == INF) && link->flow != limit)
 	{
 		check = 1;
 		// ft_printf(MAGENTA"FLOW ASSIGNS CHECK TO 1\n"RESET);
@@ -67,8 +68,8 @@ static int		check_for_flow_weight(t_lem *lem, t_room *current, t_room *next, t_r
 	// 	check = 1;
 	// 	// ft_printf(YELLOW"WEIGHT ASSIGNS CHECK TO 1\n"RESET);
 	// }
-	if (next->type == END && link->flow != 1)
-		check = 1;
+	// if (next->type == END && link->flow != 1)
+	// 	check = 1;
 	// if (nb == 2)
 		// ft_printf(GREEN"room1: %s, room2: %s, flow: %d, cur weight + 1: %d, next weight: %d, check: %d\n"RESET, link->room1->name, link->room2->name, link->flow, current->weight + 1, next->weight, check);
 	return (check);
@@ -86,19 +87,15 @@ static void		solve_loop(t_lem *lem, t_room ***prev, t_room ***que, int i)
 	while (tmp)
 	{
 		neighbor = ((t_link*)tmp->content)->room2;
-		// if (nb == 2)
-			// ft_printf(MAGENTA"SOLVE\t\t:\tNode: %s, visited: %s, can_use_link: %s\n"RESET, neighbor->name, neighbor->visited ? "TRUE" : "FALSE", can_use_link ? "TRUE" : "FALSE");
-		can_use_link = check_for_flow_weight(lem, node, neighbor, prev);
+		// ft_printf(MAGENTA"SOLVE\t\t:\tNode: %s, visited: %s, in_path: %s, can_use_link: %s\n"RESET, neighbor->name, neighbor->visited ? "TRUE" : "FALSE", neighbor->in_path ? "TRUE" : "FALSE", can_use_link ? "TRUE" : "FALSE");
+		can_use_link = check_flow(lem, node, neighbor, prev);
 		if (!neighbor->visited && can_use_link)
 		{
 			push_to_room_arr(*que, neighbor);
-			// if (nb == 2)
-			// {
-				// ft_printf(YELLOW"SOLVE\t\t:\tpushed %s to que from parent %s: ", neighbor->name, node->name);
-				// for (int i = 0; (*que)[i]; i++)
-				// 	ft_printf("%s, ", (*que)[i] ? (*que)[i]->name : NULL);
-				// ft_printf("\n"RESET);
-			// }
+			// ft_printf(YELLOW"SOLVE\t\t:\tpushed %s to que from parent %s: ", neighbor->name, node->name);
+			// for (int i = 0; (*que)[i]; i++)
+			// 	ft_printf("%s, ", (*que)[i] ? (*que)[i]->name : NULL);
+			// ft_printf("\n"RESET);
 			neighbor->visited = TRUE;
 			(*prev)[neighbor->id] = node;
 		}
@@ -116,7 +113,7 @@ static t_room	**solve(t_lem *lem)
 	que = create_room_arr(lem);
 	prev = create_room_arr(lem);
 	lem->start->visited = TRUE;
-	lem->start->in_path = TRUE;
+	// lem->start->in_path = TRUE;
 	push_to_room_arr(que, lem->start);
 	// ft_printf(RED"START\n"RESET);
 	// ft_printf("NB: %d\n", nb);
@@ -198,14 +195,19 @@ t_room			**bfs(t_lem *lem)
 {
 	t_room	**prev;
 	t_room	**path;
-	int		i;
+	// int		i;
 
 	// ft_printf(BOLD RED"\nNEW BFS ROUND\n\n"RESET);
 	prev = solve(lem);
 	path = reconstruct_path(&prev, lem);
 	free(prev);
-	i = -1;
-	while (path && path[++i])
-		path[i]->in_path = TRUE;
+	// i = -1;
+	// while (path && path[++i])
+	// 	path[i]->in_path = TRUE;
 	return (path);
 }
+
+//  Wyx3 H_n1 Dyi4 Qdr3 Ftn3 Yvf0 Kvf1 Hqk2 Mjc0 Men0 Bll9 Twm9 Fhe4 Vg_5 Sq_7 Dd_0 Rml1 LEN: 16
+//  Wyx3 Brj1 Yxd2 Hf_0 Sag7 Uco2 Gky4 Hbh8 Cee9 Psr5 Sdv1 Vp_7 Woz9 Zhx1 Rty3 I_e5 Ihp3 Baj2 Rml1 LEN: 18
+//  Wyx3 A_b1 Mbc5 Dfb5 E_i2 Vfi5 Oet5 Wp_1 Mfx0 Txm0 Zkz6 Hsw8 Hve5 Vqz3 Scy8 Ojs9 E_w3 Ead3 Yz_9 Iwy3 Xlf2 Ge_9 Uur0 Rml1 LEN: 23
+//  Wyx3 O_t3 Bxc4 Qoa7 Yph6 Bzo8 T_c8 Smb7 Ywb7 Dh_3 Ucq4 Qfd1 Unx9 Xl_8 Jwj5 Xtq8 Tnv7 Gtt1 Y_x4 Xrp8 Fya1 Wmi7 Gus1 Uur0 Ois2 Wzk0 Rml1 LEN: 26

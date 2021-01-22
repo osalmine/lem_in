@@ -6,12 +6,12 @@
 /*   By: osalmine <osalmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/19 19:01:44 by osalmine          #+#    #+#             */
-/*   Updated: 2021/01/17 21:24:15 by osalmine         ###   ########.fr       */
+/*   Updated: 2021/01/18 10:03:34 by osalmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/lem.h"
-#include <time.h>
+// #include <time.h>
 
 
 int	main(int argc, char **argv)

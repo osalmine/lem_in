@@ -6,7 +6,7 @@
 /*   By: osalmine <osalmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/30 22:20:06 by osalmine          #+#    #+#             */
-/*   Updated: 2021/01/14 12:09:34 by osalmine         ###   ########.fr       */
+/*   Updated: 2021/01/22 17:25:00 by osalmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,9 @@ static void	read_input(t_lem *lem, char *lines)
 	i = 0;
 	room_type = NORMAL;
 	input = ft_strsplit(lines, '\n');
+	// ft_printf("lines: %a\n", input);
+	if (ft_strstr(lines, "\n\n"))
+		ft_exit(RED"ERROR: emtpy line in map"RESET);
 	j = 0;
 	lem->room_count = 0;
 	// clock_t begin;
@@ -94,9 +97,7 @@ static void	read_input(t_lem *lem, char *lines)
 	// begin = clock();
 	while (input[j])
 	{
-		if ((int)input[j][0] == 0)
-			ft_exit(RED"ERROR: emtpy line in map"RESET);
-		else if (i == 0 && (i = 1) && (jj = j + 1))
+		if (i == 0 && (i = 1) && (jj = j + 1))
 			lem->ant_nb = read_ant(input[j]);
 		else if (ft_strchr(input[j], ' '))
 			lem->room_count++;
@@ -143,7 +144,7 @@ void		lem_read(t_lem *lem)
 	lines = NULL;
 	tmp = NULL;
 	// begin = clock();
-	while ((ret = read(0, line, BUFF_SIZE)))
+	while ((ret = read(0, line, BUFF_SIZE)) > 0)
 	{
 		line[ret] = '\0';
 		str_append(&lines, line);

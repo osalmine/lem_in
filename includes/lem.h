@@ -6,7 +6,7 @@
 /*   By: osalmine <osalmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/19 19:01:54 by osalmine          #+#    #+#             */
-/*   Updated: 2021/01/17 13:19:51 by osalmine         ###   ########.fr       */
+/*   Updated: 2021/01/22 15:30:26 by osalmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -168,7 +168,7 @@ typedef struct	s_lem
 	t_list	*ants;
 	t_list	*room_list;
 	t_list	*link_list;
-	// t_list	*paths_list;
+	t_list	*sets_list;
 	// t_list	*paths_list2;
 	t_set	*best_set;
 	t_set	*cur_set;

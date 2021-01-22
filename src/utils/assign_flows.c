@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   assign_flows_weights.c                             :+:      :+:    :+:   */
+/*   assign_flows.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: osalmine <osalmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/24 20:16:35 by osalmine          #+#    #+#             */
-/*   Updated: 2021/01/17 13:23:25 by osalmine         ###   ########.fr       */
+/*   Updated: 2021/01/22 16:30:48 by osalmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,12 +26,22 @@ void	assign_flows(t_room **path)
 			link->flow = 1;
 		else
 			link->flow++;
+		// if (link->flow == INF)
+		// 	link->flow = 1;
+		// else if (link->flow == -1)
+		// 	link->flow = INF;
+		// ft_printf("%s-%s: %d\n", link->room1->name, link->room2->name, link->flow);
 		if (!(link = find_link(path[i + 1], path[i])))
 			ft_exit(RED"ERROR: couldn't find link\n"RESET);
 		if (link->flow == INF)
 			link->flow = -1;
 		else
 			link->flow--;
+		// if (link->flow == INF)
+		// 	link->flow = -1;
+		// else if (link->flow == -1)
+		// 	link->flow = INF;
+		// ft_printf("%s-%s: %d\n", link->room1->name, link->room2->name, link->flow);
 		i++;
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: osalmine <osalmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/25 16:25:46 by osalmine          #+#    #+#             */
-/*   Updated: 2021/01/17 21:22:23 by osalmine         ###   ########.fr       */
+/*   Updated: 2021/01/22 16:34:20 by osalmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,26 +40,10 @@ void		reset_rooms_ek(t_lem *lem)
 	}
 }
 
-// static t_list	*copy_paths(t_list *paths)
-// {
-// 	t_list *new_paths;
-// 	t_list *tmp;
-
-// 	new_paths = NULL;
-// 	tmp = paths;
-// 	while (tmp)
-// 	{
-
-// 		tmp = tmp->next;
-// 	}
-// 	return (new_paths);
-// }
-
 static void	new_best_set(t_lem *lem)
 {
 	// ft_printf("New best set\n");
 	if (lem->best_set)
-		// ft_memdel((void**)&lem->best_set);
 		free_set(&lem->best_set);
 	lem->best_set = init_set();
 	lem->best_set->cost = lem->ek_set->cost;
@@ -93,11 +77,7 @@ static int	bfs_loop(t_lem *lem, t_room **path)
 	// }
 	// if (!lem->cur_set)
 	// 	lem->cur_set = init_set();
-	// if (lem->ant_nb == 1)
-	// {
-		// add_path(lem, path, &(lem->cur_set->paths), &lem->cur_set);
-	// 	return (1);
-	// }
+	// add_path(lem, path, &(lem->cur_set->paths), &lem->cur_set);
 	// t_list *cur_lst;
 	// cur_lst = lem->cur_set->paths;
 	// ft_printf(BOLD BLUE"ALL FOUND BFS PATHS\n"RESET);
@@ -118,34 +98,27 @@ static int	bfs_loop(t_lem *lem, t_room **path)
 		// {
 		// 	for (int i = 0; ((t_path*)ek_lst->content)->path_arr && ((t_path*)ek_lst->content)->path_arr[i]; i++)
 		// 		ft_printf(BOLD WHITE"%s "RESET, ((t_path*)ek_lst->content)->path_arr[i]->name);
+		// 	ft_printf("LEN: %d", ((t_path*)ek_lst->content)->len);
 		// 	ft_printf("\n\n");
 		// 	ek_lst = ek_lst->next;
 		// }
-		// ft_printf("Getting ek_set flow in bfs_loop\n");
-		// lem->ek_set->flow = lem->path_amount;
 		lem->ek_set->cost = ((lem->ek_set->len + lem->ant_nb) / lem->ek_set->flow) - 1;
-		// else
-		// 	lem->cur_set->cost = ((lem->cur_set->len + lem->ant_nb) / 1) - 1;
 		// if (lem->best_set)
 		// 	ft_printf("Best set cost: %d, flow: %d\n", lem->best_set->cost, lem->best_set->flow);
 		// ft_printf("ek_set cost: %d, flow: %d\n", lem->ek_set->cost, lem->ek_set->flow);
-		// else
-		// 	add_path(lem, path, &(lem->paths_bef_ek));
 		if (lem->best_set == NULL || lem->best_set->cost > lem->ek_set->cost)
 		{
 			// ft_printf(REVERSED"New set assignment"RESET);
 			// ft_printf("\n");
 			new_best_set(lem);
 		}
-		else
-			free_set(&lem->ek_set);
+		// else
+		// 	free_set(&lem->ek_set);
+		// ft_lstaddlast(&lem->sets_list, ft_lstnew(lem->ek_set, sizeof(t_set)));
 	}
 	// ft_printf("\n\n");
 	reset_rooms_bfs(lem);
-	// if (lem->ek_set)
-	// 	free_set(&lem->ek_set);
 	ft_memdel((void**)&path);
-	// ft_printf("Returning 0\n");
 	return (0);
 }
 
@@ -157,6 +130,23 @@ void		find_paths(t_lem *lem)
 	while ((path = bfs(lem)) || TRUE)
 		if (bfs_loop(lem, path) == 1)
 			break ;
+	// t_list *lst;
+	// t_list *ek_lst;
+	// lst = lem->sets_list;
+	// while (lst)
+	// {
+	// 	ft_printf("NEW LIST\n");
+	// 	ek_lst = ((t_set*)lst->content)->paths;
+	// 	while (ek_lst)
+	// 	{
+	// 		for (int i = 0; ((t_path*)ek_lst->content)->path_arr && ((t_path*)ek_lst->content)->path_arr[i]; i++)
+	// 			ft_printf(BOLD WHITE"%s "RESET, ((t_path*)ek_lst->content)->path_arr[i]->name);
+	// 		ft_printf("LEN: %d", ((t_path*)ek_lst->content)->len);
+	// 		ft_printf("\n\n");
+	// 		ek_lst = ek_lst->next;
+	// 	}
+	// 	lst = lst->next;
+	// }
 	// if (nb == 1)
 	// else
 	// 	sort_paths(lem->paths_list2);

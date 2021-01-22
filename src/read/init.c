@@ -6,7 +6,7 @@
 /*   By: osalmine <osalmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/30 18:33:54 by osalmine          #+#    #+#             */
-/*   Updated: 2021/01/14 15:41:03 by osalmine         ###   ########.fr       */
+/*   Updated: 2021/01/22 15:30:35 by osalmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ t_lem		*lem_init(int ac, char **av)
 	lem->ants = NULL;
 	lem->link_list = NULL;
 	lem->room_list = NULL;
-	// lem->paths_list = NULL;
+	lem->sets_list = NULL;
 	// lem->paths_list2 = NULL;
 	lem->best_set = NULL;
 	lem->cur_set = NULL;
