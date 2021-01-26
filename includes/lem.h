@@ -6,7 +6,7 @@
 /*   By: osalmine <osalmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/19 19:01:54 by osalmine          #+#    #+#             */
-/*   Updated: 2021/01/22 15:30:26 by osalmine         ###   ########.fr       */
+/*   Updated: 2021/01/26 13:56:31 by osalmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,12 +58,12 @@ typedef struct	s_options
 **	name:		room's name
 **	id:			unique number id
 **	visited:	if the room has been visited by the search algo that turn
+**	visited_ek:	if the room has been visited by path search
 **	x:			x-coordiante
 **	y:			y-coordinate
 **	has_ant:	TRUE (=1) if room has ant, else FALSE (=0)
 **	type:		room's type. START (=1) if room is starting room,
 **				END (=2) if room is goal room, else NORMAL (=0)
-**	weight:		distance from starting node
 **	in_path:	TRUE if room is in a path, else FALSE
 **	links:		list of connections to the room
 */
@@ -78,7 +78,6 @@ typedef struct	s_room
 	int		y;
 	int		has_ant;
 	int		type;
-	// int		weight;
 	int		in_path;
 	t_list	*links;
 }				t_room;
@@ -100,9 +99,8 @@ typedef struct	s_link
 /*
 **	Struct for each path
 **	path_arr:	rooms on the path in order
-**	len:		path's lenght
+**	len:		path's length
 **	colour:		the colour of the path (debugging and prettiness)
-**	in_use:		if the path can be used
 */
 
 typedef struct	s_path
@@ -110,7 +108,6 @@ typedef struct	s_path
 	t_room	**path_arr;
 	int		len;
 	char	*colour;
-	int		in_use;
 }				t_path;
 
 /*
@@ -131,7 +128,11 @@ typedef struct	s_ant
 }				t_ant;
 
 /*
-**
+**	Set of paths
+**	cost:	cost of the set
+**	len:	combined lenght of the paths
+**	flow:	flow of the set
+**	paths:	all the paths in the set
 */
 
 typedef struct	s_set
@@ -148,18 +149,20 @@ typedef struct	s_set
 **	ants:			list of all ants
 **	room_list:		list of all rooms
 **	link_list:		list of all the links
-**	paths_list:		list of all the paths
+**	best_set:		the best set
+**	ek_set:			the current round's set
 **	opts:			options struct
-**	paths_bef_ek:	paths before running them through edmonds-karp pathfinding
 **	moves_count:	counts the number of turns (lines)
 **	start:			start room
 **	end:			end room
-**	max_flow:		maximum flow of the graph
+**	max_flow:		maximum flow of the graph used in assigning ants
 **	room_count:		how many rooms is there
+**	path_amount:	amount of paths found by bfs
 **	room_arr:		array of the rooms for a faster search with an index
 **	room_links_arr:	array of links to rooms: -1 if no link,
 **					else the number is the index in room_arr
 **					that the room connects to
+**	room_hash_table:list of lists to rooms in hashed indexes
 */
 
 typedef struct	s_lem
@@ -168,14 +171,9 @@ typedef struct	s_lem
 	t_list	*ants;
 	t_list	*room_list;
 	t_list	*link_list;
-	t_list	*sets_list;
-	// t_list	*paths_list2;
 	t_set	*best_set;
-	t_set	*cur_set;
 	t_set	*ek_set;
-	// t_list	*sets_list;
 	t_opts	opts;
-	// t_list	*paths_bef_ek;
 	int		moves_count;
 	t_room	*start;
 	t_room	*end;
@@ -201,7 +199,7 @@ void			read_room(t_lem *lem, char *line, \
 int				read_command(t_lem *lem, char *line);
 void			create_room_table(t_lem *lem);
 void			create_link_table(t_lem *lem);
-t_set			*init_set();
+t_set			*init_set(void);
 
 /*
 **	Finding functions
@@ -236,10 +234,7 @@ void			debug_out(t_lem *lem);
 **	Free functions
 */
 
-// void			free_lem(t_lem *lem);
 void			free_strsplit(char ***str);
-// void			free_room(void *room, size_t size);
-// void			free_link(void *link, size_t size);
 void			free_set(t_set **set);
 
 /*
@@ -252,10 +247,8 @@ t_room			**room_arr_reverse(t_room **arr);
 int				arr_size(char **arr);
 int				room_arr_size(t_room **arr);
 void			sort_paths(t_list *paths);
-void			add_path(t_lem *lem, t_room **path, t_list **path_list, t_set **set);
-// int				check_for_dup_path_size_1(t_lem *lem, t_room **path);
-// int				check_for_dup_path(t_list *paths_lst, t_room **path);
-// void			assign_weights(t_lem *lem, t_room **path);
+void			add_path(t_lem *lem, t_room **path, \
+					t_list **path_list, t_set **set);
 void			assign_flows(t_room **path);
 void			reset_rooms_bfs(t_lem *lem);
 void			reset_rooms_ek(t_lem *lem);
@@ -269,5 +262,6 @@ int				*split_remainder(int *ant_division, int remainder, \
 void			paths_to_ants(t_lem *lem, int *division, int max);
 unsigned int	hash(char *str, int size);
 int				get_max(t_lem *lem, t_list *lst);
+void			str_append(char **lines, char *append);
 
 #endif

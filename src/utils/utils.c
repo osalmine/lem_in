@@ -6,31 +6,16 @@
 /*   By: osalmine <osalmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/07 14:27:56 by osalmine          #+#    #+#             */
-/*   Updated: 2020/12/31 00:37:55 by osalmine         ###   ########.fr       */
+/*   Updated: 2021/01/26 13:59:13 by osalmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/lem.h"
 
-// int		room_count(t_lem *lem)
-// {
-// 	int		counter;
-// 	t_list	*tmp;
-
-// 	counter = 0;
-// 	tmp = lem->room_list;
-// 	while (tmp)
-// 	{
-// 		counter++;
-// 		tmp = tmp->next;
-// 	}
-// 	return (counter);
-// }
-
-unsigned int hash(char *str, int size)
+unsigned int	hash(char *str, int size)
 {
-	unsigned int hash;
-	int c;
+	unsigned int	hash;
+	int				c;
 
 	hash = 0;
 	while ((c = *str++))
@@ -39,7 +24,7 @@ unsigned int hash(char *str, int size)
 	return (hash);
 }
 
-int		arr_size(char **arr)
+int				arr_size(char **arr)
 {
 	int i;
 
@@ -49,7 +34,7 @@ int		arr_size(char **arr)
 	return (i);
 }
 
-int		find_from_que(t_room **que, t_room *room)
+int				find_from_que(t_room **que, t_room *room)
 {
 	int i;
 
@@ -63,17 +48,12 @@ int		find_from_que(t_room **que, t_room *room)
 	return (0);
 }
 
-void	free_strsplit(char ***str)
+void			str_append(char **lines, char *append)
 {
-	char **curr;
+	char *tmp;
 
-	if (str && *str)
-	{
-		curr = (*str);
-		while (*curr)
-			free(*(curr++));
-		free(*str);
-		*str = NULL;
-		str = NULL;
-	}
+	tmp = ft_strjoin(*lines, append);
+	ft_memdel((void**)lines);
+	*lines = ft_strdup(tmp);
+	ft_memdel((void**)&tmp);
 }

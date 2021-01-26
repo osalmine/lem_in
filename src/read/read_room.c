@@ -6,7 +6,7 @@
 /*   By: osalmine <osalmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/22 17:41:33 by osalmine          #+#    #+#             */
-/*   Updated: 2021/01/14 18:16:07 by osalmine         ###   ########.fr       */
+/*   Updated: 2021/01/26 13:42:31 by osalmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,19 +14,8 @@
 
 static void		check_room_dups(t_lem *lem, char **room_arr)
 {
-	// t_list *rooms;
 	t_room *room;
 
-	// rooms = lem->room_list;
-	// while (rooms)
-	// {
-	// 	if (((t_room*)rooms->content)->x == ft_atoi(room_arr[1]) && \
-	// 		((t_room*)rooms->content)->y == ft_atoi(room_arr[2]))
-	// 		ft_exit(RED"ERROR: duplicated coordinates"RESET);
-	// 	if (ft_strequ(((t_room*)rooms->content)->name, room_arr[0]))
-	// 		ft_exit(RED"ERROR: duplicated room name"RESET);
-	// 	rooms = rooms->next;
-	// }
 	if ((room = find_hashed_room(lem, room_arr[0])))
 		ft_exit(RED"ERROR: duplicated room name"RESET);
 }
@@ -48,7 +37,6 @@ static t_room	init_room(t_lem *lem, char **room_arr, int room_type)
 		room.has_ant = FALSE;
 	room.type = room_type;
 	room.links = NULL;
-	// room.weight = INF - 1;
 	room.in_path = FALSE;
 	return (room);
 }
@@ -75,14 +63,6 @@ void			read_room(t_lem *lem, char *line, \
 	list->content = lem->room_list->content;
 	list->content_size = lem->room_list->content_size;
 	list->next = NULL;
-	// ft_lstaddlast(&lem->link_list, list);
-	ft_lstaddlast(&lem->room_hash_table[hash(room.name, lem->room_count * 1.5)], list);
-
-	// ft_lstadd(&room->links, ft_lstnew(&path, (sizeof(t_link))));
-	// if (!(list = (t_list *)malloc(sizeof(t_list))))
-	// 	ft_exit(RED"ERROR: malloc error"RESET);
-	// list->content = room->links->content;
-	// list->content_size = room->links->content_size;
-	// list->next = NULL;
-	// ft_lstaddlast(&lem->link_list, list);
+	ft_lstaddlast(&lem->room_hash_table \
+		[hash(room.name, lem->room_count * 1.5)], list);
 }

@@ -6,7 +6,7 @@
 /*   By: osalmine <osalmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/26 23:36:24 by osalmine          #+#    #+#             */
-/*   Updated: 2021/01/13 16:02:27 by osalmine         ###   ########.fr       */
+/*   Updated: 2021/01/26 13:51:40 by osalmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ static int	*check_total(int *division, t_lem *lem, int *longest)
 	return (division);
 }
 
-int	get_max(t_lem *lem, t_list *lst)
+int			get_max(t_lem *lem, t_list *lst)
 {
 	int		max;
 	t_list	*paths;

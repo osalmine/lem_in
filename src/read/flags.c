@@ -6,7 +6,7 @@
 /*   By: osalmine <osalmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/30 22:36:00 by osalmine          #+#    #+#             */
-/*   Updated: 2020/12/30 12:44:18 by osalmine         ###   ########.fr       */
+/*   Updated: 2021/01/26 13:40:24 by osalmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 static void	display_help(void)
 {
-	ft_exit("Example usages:\n\\t./lem-in < big.map\n\t./lem-in -plc < test.map\
-\n\techo map | ./lem-in -dl\n\nMore info in GitHub repo\
+	ft_exit("Example usages:\n\t./lem-in < big.map\n\t./lem-in -plc < test.map\
+\n\tcat map | ./lem-in -dl\n\nMore info in GitHub repo\
 \nFlags:\n\t-d (--debug) \
 flag is for debug\n\t-l (--lines) is to see output line count\n\t\
 -p (--paths) to see the paths\n\t-c (--colours, --colors) \

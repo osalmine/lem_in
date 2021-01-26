@@ -6,14 +6,11 @@
 /*   By: osalmine <osalmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/30 18:33:54 by osalmine          #+#    #+#             */
-/*   Updated: 2021/01/22 15:30:35 by osalmine         ###   ########.fr       */
+/*   Updated: 2021/01/26 13:41:30 by osalmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/lem.h"
-
-#include <time.h>
-
 
 static void	add_room_ids(t_lem *lem)
 {
@@ -36,36 +33,24 @@ t_lem		*lem_init(int ac, char **av)
 {
 	t_lem *lem;
 
-	// clock_t begin;
-	// clock_t end;
-	// double time;
 	if (!(lem = (t_lem*)malloc(sizeof(t_lem))))
 		ft_exit(RED"Malloc error"RESET);
 	lem->ants = NULL;
 	lem->link_list = NULL;
 	lem->room_list = NULL;
-	lem->sets_list = NULL;
-	// lem->paths_list2 = NULL;
 	lem->best_set = NULL;
-	lem->cur_set = NULL;
 	lem->ek_set = NULL;
-	// lem->paths_bef_ek = NULL;
 	lem->moves_count = 0;
 	lem->path_amount = 0;
 	lem_flags(lem, ac, av);
 	lem_read(lem);
-	// begin = clock();
 	if (!(lem->start = find_room_by_type(START, lem)))
 		ft_exit(RED"ERROR: start room not found"RESET);
 	if (!(lem->end = find_room_by_type(END, lem)))
 		ft_exit(RED"ERROR: end room not found"RESET);
 	init_ants(lem);
-	// lem->room_count = room_count(lem);
 	add_room_ids(lem);
 	create_room_table(lem);
 	create_link_table(lem);
-	// end = clock();
-	// time = (double)(end - begin) / CLOCKS_PER_SEC;
-	// ft_printf(RED"INIT AFTER READ: %lf\n"RESET, time);
 	return (lem);
 }

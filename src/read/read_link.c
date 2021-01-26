@@ -6,7 +6,7 @@
 /*   By: osalmine <osalmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/22 16:23:58 by osalmine          #+#    #+#             */
-/*   Updated: 2021/01/22 14:50:42 by osalmine         ###   ########.fr       */
+/*   Updated: 2021/01/26 13:41:56 by osalmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,6 @@ static void	add_link(t_lem *lem, t_room *room, char **room_links, int i)
 
 	path.room1 = room;
 	path.room2 = find_hashed_room(lem, room_links[i ? 0 : 1]);
-	// path.flow = INF;
 	path.flow = INF;
 	ft_lstadd(&room->links, ft_lstnew(&path, (sizeof(t_link))));
 	if (!(list = (t_list *)malloc(sizeof(t_list))))
@@ -51,19 +50,6 @@ void		read_link(t_lem *lem, char *line)
 	int		i;
 	int		duplicate;
 
-	// t_list *lst;
-	// int j = 0;
-	// while (j < ((int)lem->room_count * 1.5))
-	// {
-	// 	lst = lem->room_hash_table[j];
-	// 	ft_printf("i: %d\n", j);
-	// 	while (lst)
-	// 	{
-	// 		ft_printf("%s\n", ((t_room*)lst->content)->name);
-	// 		lst = lst->next;
-	// 	}
-	// 	j++;
-	// }
 	if (!ft_strchr(line, '-') || line[0] == '-' \
 		|| line[ft_strlen(line) - 1] == '-')
 		ft_exit(RED"ERROR: link formatting error"RESET);

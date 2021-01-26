@@ -6,7 +6,7 @@
 /*   By: osalmine <osalmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/16 13:04:20 by osalmine          #+#    #+#             */
-/*   Updated: 2021/01/17 13:18:36 by osalmine         ###   ########.fr       */
+/*   Updated: 2021/01/26 13:58:03 by osalmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,4 +28,19 @@ void		free_set(t_set **set)
 		ft_memdel((void**)&(*set)->paths);
 	}
 	ft_memdel((void**)&(*set));
+}
+
+void		free_strsplit(char ***str)
+{
+	char **curr;
+
+	if (str && *str)
+	{
+		curr = (*str);
+		while (*curr)
+			free(*(curr++));
+		free(*str);
+		*str = NULL;
+		str = NULL;
+	}
 }

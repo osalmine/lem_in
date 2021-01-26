@@ -6,7 +6,7 @@
 /*   By: osalmine <osalmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/18 22:39:15 by osalmine          #+#    #+#             */
-/*   Updated: 2021/01/03 17:16:12 by osalmine         ###   ########.fr       */
+/*   Updated: 2021/01/26 13:57:43 by osalmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,24 +25,8 @@ t_room	*find_hashed_room(t_lem *lem, char *name)
 			return (((t_room*)room_lst->content));
 		room_lst = room_lst->next;
 	}
-	return (NULL);	
+	return (NULL);
 }
-
-// t_room	*find_room(char *name, t_lem *lem)
-// {
-// 	t_room *current_room;
-// 	t_list *tmp;
-
-// 	tmp = lem->room_list;
-// 	while (tmp && name)
-// 	{
-// 		current_room = (t_room*)tmp->content;
-// 		if (ft_strequ(current_room->name, name))
-// 			return (current_room);
-// 		tmp = tmp->next;
-// 	}
-// 	return (NULL);
-// }
 
 t_room	*find_room_by_type(int type, t_lem *lem)
 {
@@ -124,7 +108,8 @@ t_link	*find_link(t_room *room1, t_room *room2)
 	while (link_list)
 	{
 		link = (t_link*)link_list->content;
-		if (ft_strequ(room1->name, link->room1->name) && ft_strequ(room2->name, link->room2->name))
+		if (ft_strequ(room1->name, link->room1->name) \
+			&& ft_strequ(room2->name, link->room2->name))
 			return (link);
 		link_list = link_list->next;
 	}
