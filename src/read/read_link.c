@@ -6,7 +6,7 @@
 /*   By: osalmine <osalmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/22 16:23:58 by osalmine          #+#    #+#             */
-/*   Updated: 2021/01/26 13:41:56 by osalmine         ###   ########.fr       */
+/*   Updated: 2021/01/26 14:59:51 by osalmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,8 @@ void		read_link(t_lem *lem, char *line)
 	int		duplicate;
 
 	if (!ft_strchr(line, '-') || line[0] == '-' \
-		|| line[ft_strlen(line) - 1] == '-')
+		|| line[ft_strlen(line) - 1] == '-' \
+		|| line[ft_strchri(line, '-') + 1] == '-')
 		ft_exit(RED"ERROR: link formatting error"RESET);
 	room_links = ft_strsplit(line, '-');
 	i = 0;

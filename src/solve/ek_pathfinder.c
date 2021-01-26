@@ -6,7 +6,7 @@
 /*   By: osalmine <osalmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/24 20:17:58 by osalmine          #+#    #+#             */
-/*   Updated: 2021/01/26 13:54:09 by osalmine         ###   ########.fr       */
+/*   Updated: 2021/01/26 16:08:30 by osalmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,8 @@ void			flows_pathfinder(t_lem *lem)
 			mark_visited(lem, path);
 			add_path(lem, path, &(lem->ek_set->paths), &lem->ek_set);
 			lem->ek_set->flow++;
+			if (lem->ek_set->len == 1)
+				return ;
 		}
 	}
 }

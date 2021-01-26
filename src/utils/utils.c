@@ -6,7 +6,7 @@
 /*   By: osalmine <osalmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/07 14:27:56 by osalmine          #+#    #+#             */
-/*   Updated: 2021/01/26 13:59:13 by osalmine         ###   ########.fr       */
+/*   Updated: 2021/01/26 14:56:37 by osalmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,4 +56,16 @@ void			str_append(char **lines, char *append)
 	ft_memdel((void**)lines);
 	*lines = ft_strdup(tmp);
 	ft_memdel((void**)&tmp);
+}
+
+int				get_number(char *line)
+{
+	int digit;
+
+	digit = ft_atoi(line);
+	if (!ft_isdigit((int)line[0]) || digit >= INF)
+		ft_exit(RED"ERROR: bad number"RESET);
+	if ((int)ft_strlen(line) != ft_nb_len(digit, 10))
+		ft_exit(RED"ERROR: number formatting"RESET);
+	return (digit);
 }

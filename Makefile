@@ -6,13 +6,13 @@
 #    By: osalmine <osalmine@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/03/19 19:13:02 by osalmine          #+#    #+#              #
-#    Updated: 2021/01/21 13:51:37 by osalmine         ###   ########.fr        #
+#    Updated: 2021/01/26 16:24:00 by osalmine         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = lem-in
 
-FLAGS = -Wall -Werror -Wextra -g
+FLAGS = -Wall -Werror -Wextra -O2
 
 SOURCES_DIR = ./src/
 SOURCES_SUBDIR_READ = read/

@@ -6,7 +6,7 @@
 /*   By: osalmine <osalmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/19 19:01:54 by osalmine          #+#    #+#             */
-/*   Updated: 2021/01/26 13:56:31 by osalmine         ###   ########.fr       */
+/*   Updated: 2021/01/26 14:54:03 by osalmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -263,5 +263,6 @@ void			paths_to_ants(t_lem *lem, int *division, int max);
 unsigned int	hash(char *str, int size);
 int				get_max(t_lem *lem, t_list *lst);
 void			str_append(char **lines, char *append);
+int				get_number(char *line);
 
 #endif

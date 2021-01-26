@@ -6,7 +6,7 @@
 /*   By: osalmine <osalmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/22 17:41:33 by osalmine          #+#    #+#             */
-/*   Updated: 2021/01/26 13:42:31 by osalmine         ###   ########.fr       */
+/*   Updated: 2021/01/26 15:01:28 by osalmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,8 @@ static t_room	init_room(t_lem *lem, char **room_arr, int room_type)
 	room.name = ft_strdup(room_arr[0]);
 	if (!ft_isdigit(room_arr[1][0]) || !ft_isdigit(room_arr[2][0]))
 		ft_exit(RED"ERROR: room coordinate is not a number"RESET);
-	room.x = ft_atoi(room_arr[1]);
-	room.y = ft_atoi(room_arr[2]);
+	room.x = get_number(room_arr[1]);
+	room.y = get_number(room_arr[2]);
 	room.visited = FALSE;
 	room.visited_ek = FALSE;
 	if (room_type == START)

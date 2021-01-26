@@ -6,7 +6,7 @@
 /*   By: osalmine <osalmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/30 22:36:00 by osalmine          #+#    #+#             */
-/*   Updated: 2021/01/26 13:40:24 by osalmine         ###   ########.fr       */
+/*   Updated: 2021/01/26 16:15:10 by osalmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,8 @@ void		lem_flags(t_lem *lem, int ac, char **av)
 			lem->opts.colours = TRUE;
 		else if (av[i][0] == '-')
 			dash_flags(lem, av, i);
+		else
+			display_help();
 		i++;
 	}
 }

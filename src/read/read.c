@@ -6,7 +6,7 @@
 /*   By: osalmine <osalmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/30 22:20:06 by osalmine          #+#    #+#             */
-/*   Updated: 2021/01/26 13:49:42 by osalmine         ###   ########.fr       */
+/*   Updated: 2021/01/26 16:13:00 by osalmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,8 @@ static int		read_ant(char *line)
 {
 	int ants;
 
-	ants = ft_atoi(line);
-	if (!ft_isdigit((int)line[0]) || ants < 1 || ants >= INF)
+	ants = get_number(line);
+	if (ants < 1)
 		ft_exit(RED"ERROR: bad ant amount"RESET);
 	return (ants);
 }
@@ -56,6 +56,8 @@ static int		get_room_amount(t_lem *lem, char **input, int *i)
 			break ;
 		j++;
 	}
+	if (lem->room_count == 0)
+		ft_exit(RED"ERROR: No rooms"RESET);
 	lem->room_hash_table = create_hash_list(lem);
 	return (index);
 }
@@ -70,7 +72,7 @@ static void		read_input(t_lem *lem, char *lines)
 	i = 0;
 	room_type = NORMAL;
 	input = ft_strsplit(lines, '\n');
-	if (ft_strstr(lines, "\n\n"))
+	if (ft_strstr(lines, "\n\n") || lines[0] == '\n')
 		ft_exit(RED"ERROR: emtpy line in map"RESET);
 	j = get_room_amount(lem, input, &i);
 	while (input[j])
@@ -104,7 +106,7 @@ void			lem_read(t_lem *lem)
 		str_append(&lines, line);
 	}
 	if (ret < 0 || !lines)
-		ft_exit("ERROR: read error");
+		ft_exit(RED"ERROR: read error"RESET);
 	if (lines[ft_strlen(lines) - 1] != '\n')
 	{
 		tmp = ft_strjoin(lines, "\n");
