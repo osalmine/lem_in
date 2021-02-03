@@ -2,7 +2,7 @@
 Elementary algorithmic project
 >  This project is meant to make you code an ant farm manager.
 
-This is the second algorithms branch project at Hive.
+This is the second algorithms branch project at Hive. The objective is to create a path-finding algorithm to guide ants from the start room to the end room.
 
 ## Usage
 
