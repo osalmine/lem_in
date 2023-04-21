@@ -79,7 +79,7 @@ My lem-in uses [Edmonds-Karp](https://en.wikipedia.org/wiki/Edmonds%E2%80%93Karp
 1. It traverses the map starting from the start room using [BFS](https://en.wikipedia.org/wiki/Breadth-first_search). Edmonds-Karp adds flows to this. The algorithm can use links with flows that are undefined (all links initialize as undefined) or negative. Links with a flow of 0 or 1 can not be used here.
 2. After it finds a path, it assigns the flows of the links in that path. If a path consists of rooms `start, 1, end`, the flow of links start->1 and 1->end are set as 1 if they were undefined. On the contrary, links end->1 and 1->start are set as -1 if they were undefined. If the flow was 1 or -1, it is set as 0.
 3. When the flows are set, it tries to find as many paths as it can. At this point it only follows links with a flow of 1. It saves these paths to a set of paths.
-4. If the current set is better then the current best set, it assigns the current set as the best set.
+4. If the current set is better than the current best set, based on the total number of turns needed to move all ants from the start to the end, it assigns the current set as the best set.
 5. Repeat until no more paths are found.
 6. Assign the paths from the best set to the ants according to the lenght of the paths.
 
