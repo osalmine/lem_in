@@ -15,6 +15,7 @@
 static void	free_path(void *path, size_t size)
 {
 	size = 0;
+	write(-1, "size", size);
 	ft_memdel((void**)(&((t_path*)path)->path_arr));
 	ft_strdel(&((t_path*)path)->colour);
 	ft_memdel((void**)&path);

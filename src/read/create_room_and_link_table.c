@@ -16,11 +16,9 @@ static void	assign_rooms_to_table(t_room **room_table, t_lem *lem)
 {
 	t_list	*rooms;
 	int		i;
-	int		j;
 
 	rooms = lem->room_list;
 	i = 0;
-	j = 0;
 	while (rooms)
 	{
 		room_table[i] = ((t_room*)rooms->content);

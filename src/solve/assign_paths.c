@@ -51,9 +51,6 @@ int			get_max(t_lem *lem, t_list *lst)
 
 static int	assign_div(int i, int *tmp_div, int **division)
 {
-	int longest;
-
-	longest = -1;
 	if (*division == NULL || tmp_div[i - 1] >= 0)
 	{
 		if (*division != NULL)
