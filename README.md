@@ -6,7 +6,7 @@ This is the second algorithms branch project at Hive. The objective is to create
 
 Grade:
 
-[![osalmine's Lem_in Score](https://badge42.vercel.app/api/v2/cl2gijtz7003009mofz5pnp5t/project/1886031)](https://github.com/JaeSeoKim/badge42)
+[![osalmine's 42 lem_in Score: 111/100](https://badge42.coday.fr/api/v2/clysm3yyz5816201p4sqs880rw/project/3043746)](https://github.com/Coday-meric/badge42)
 
 **SEE [SUBJECT](lem-in.en.pdf) FOR MORE DETAILS**
 
